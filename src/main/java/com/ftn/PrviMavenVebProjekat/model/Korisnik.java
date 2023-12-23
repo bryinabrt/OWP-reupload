@@ -32,7 +32,22 @@ public class Korisnik {
 		this.trenutnoVreme = trenutnoVreme;
 		this.uloga = uloga;
 	}
-
+	
+	public Korisnik(String korisnickoIme, String lozinka, String email, String ime, String prezime,
+			String datumRodjenja, String adresa, String brojTelefona) {
+		super();
+		this.id = id;
+		this.korisnickoIme = korisnickoIme;
+		this.lozinka = lozinka;
+		this.email = email;
+		this.ime = ime;
+		this.prezime = prezime;
+		this.datumRodjenja = datumRodjenja;
+		this.adresa = adresa;
+		this.brojTelefona = brojTelefona;
+		this.trenutnoVreme = trenutnoVreme;
+		this.uloga = uloga;
+	}
 	
 
 

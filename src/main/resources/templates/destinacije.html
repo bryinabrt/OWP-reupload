@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<base th:href="@{/}">
+		<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
+		<link rel="stylesheet" type="text/css" href="css/StiloviHorizontalniMeni.css"/>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+	</head>
+	<body>
+		<ul>
+			<li>
+				<a href="destinacije">Destinacije</a>
+			</li>
+		</ul>
+		
+		<table>
+			<caption>Destinacije</caption>
+				<tr>
+					<th>Redni Broj</th>
+					<th>Grad</th>
+					<th>Drzava</th>
+					<th>Kontinent</th>
+				</tr>
+				<tr th:each="itDestinacija, status : ${destinacije}">
+					<td th:text="${(status.index + 1) + '.'}"></td>
+					<!--<td>
+						<a th:href="|destinacije/details?id=${itDestinacija.id}|"
+							th:text="${itDestinacija.grad}">
+						</a>
+					</td>-->
+					<td th:text="${itDestinacija.grad}"></td>
+					<td th:text="${itDestinacija.drzava}"></td>
+					<td th:text="${itDestinacija.kontinent}"></td>
+					<td>
+						<form method="post" action="destinacije/delete">
+							<input type="hidden" name="id" th:value="${itDestinacija.id}"/>
+							<input type="submit" value="Obrisi"/>
+						</form>
+					</td>
+					<td>
+						<form th:action="@{/}">
+							<a th:href="|destinacije/details?id=${itDestinacija.id}|"
+								th:text="Izmeni">
+							</a>
+						</form>
+					</td>
+				</tr>
+		</table>
+		<ul>
+			<li><a href="destinacije/add">Dodaj Destinaciju</a></li>
+		</ul>
+	
+	</body>
+</html>

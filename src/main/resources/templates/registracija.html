@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<base th:href="@{/}">
+	<meta charset="UTF-8" />
+	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
+	<link rel="stylesheet" type="text/css" href="css/StiloviHorizontalniMeni.css"/>
+	<title>Registracija</title>
+</head>
+<body>
+	<br/>
+		<form method="post" action="registracija/add">
+			<table>
+				<caption>Prijava korisnika na sistem</caption>
+				<input type="hidden" name="id" />
+				<tr><th>Korisnickoo Ime:</th><td><input type="text" value="" name="korisnickoIme" required/></td></tr>
+				<tr><th>Lozinka:</th><td><input type="password" value="" name="lozinka" required/></td></tr>
+				<tr><th>Email:</th><td><input type="text" value="" name="email" required/></td></tr>
+				<tr><th>Ime:</th><td><input type="text" value="" name="ime" required/></td></tr>
+				<tr><th>Prezime:</th><td><input type="text" value="" name="prezime" required/></td></tr>
+				<tr><th>Datum Rodjenja:</th><td><input type="date" value="" name="datumRodjenja" required/></td></tr>
+				<tr><th>Adresa:</th><td><input type="text" value="" name="adresa" required/></td></tr>
+				<tr><th>Broj Telefona:</th><td><input type="text" value="" name="brojTelefona" required/></td></tr>
+				<!--  
+				Zbog nekog razloga nemoguce je pozvati ovu metodu jer je null context object
+				<input type="hidden" name="trenutnoVreme" th:value="${korisnikService.trenutnoVreme()}" />
+				-->
+				<input type="hidden" name="uloga" value="putnik" />
+				<tr><th></th><td><input type="submit" name="dugme" value="Submit"/></td>
+			</table>
+		</form>
+</body>
+</html>

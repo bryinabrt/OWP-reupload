@@ -1,5 +1,6 @@
 package com.ftn.PrviMavenVebProjekat.controller;
 
+import java.util.List;
 import java.io.IOException;
 
 import javax.annotation.PostConstruct;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.ftn.PrviMavenVebProjekat.model.Destinacija;
 import com.ftn.PrviMavenVebProjekat.model.Korisnik;
 import com.ftn.PrviMavenVebProjekat.model.Uloga;
 import com.ftn.PrviMavenVebProjekat.service.KorisnikService;
@@ -36,9 +39,15 @@ public class KorisnikController {
 	
 	@GetMapping()
 	@ResponseBody
-	public String index() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("<!DOCTYPE html>\r\n"
+	public ModelAndView index() {
+		
+		List<Korisnik> korisnici = korisnikService.findAll();
+		ModelAndView result = new ModelAndView("registracija");
+		result.addObject("korisnici", korisnici);
+		return result;
+		
+		
+		/*sb.append("<!DOCTYPE html>\r\n"
 				+ "<html>\r\n"
 				+ "<head>\r\n"
 				+ "	<meta charset=\"UTF-8\" />\r\n"
@@ -56,7 +65,7 @@ public class KorisnikController {
 				+ "		<table>\r\n"
 				+ "			<caption>Prijava korisnika na sistem</caption>\r\n"
 				+ "			<input type=\"hidden\" name=\"id\">"
-				+ "			<tr><th>Korisnicko Ime:</th><td><input type=\"text\" value=\"\" name=\"korisnickoIme\" required/></td></tr>\r\n"
+				+ "			<tr><th>Korisnickoo Ime:</th><td><input type=\"text\" value=\"\" name=\"korisnickoIme\" required/></td></tr>\r\n"
 				+ "			<tr><th>Lozinka:</th><td><input type=\"password\" value=\"\" name=\"lozinka\" required/></td></tr>\r\n"
 				+ "			<tr><th>Email:</th><td><input type=\"text\" value=\"\" name=\"email\" required/></td></tr>\r\n"
 				+ "			<tr><th>Ime:</th><td><input type=\"text\" value=\"\" name=\"ime\" required/></td></tr>\r\n"
@@ -78,7 +87,7 @@ public class KorisnikController {
 				+ "	</form>\r\n"
 				+ "</body>\r\n"
 				+ "</html>");
-		return sb.toString();
+		return sb.toString();*/
 	}
 	
 	@PostMapping(value="/add")
@@ -104,5 +113,14 @@ public class KorisnikController {
 		response.sendRedirect(bURL);
 	}
 	
+	@GetMapping(value="/details")
+	public ModelAndView details(@RequestParam Long id, HttpServletResponse response) throws IOException {
+
+		Korisnik korisnik = korisnikService.findOneById(id);
+		
+		ModelAndView result = new ModelAndView("korisnik");
+		result.addObject("korisnik", korisnik);
+		return result;
+	}
 	
 }

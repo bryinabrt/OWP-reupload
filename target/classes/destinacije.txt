@@ -1,2 +1,3 @@
-1;Bg;Srbija;Evropa
+1;Beograd;Srbija;Evropa
 3;Parizz;Francuska;Evropa
+4;Novi Sad;Srbija;Evropa

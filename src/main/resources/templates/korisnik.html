@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<base th:href="@{/}"><!-- popuni href atribut vrednosšću context path-a -->
+	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
+	<link rel="stylesheet" type="text/css" href="css/StiloviKorisnik.css"/>
+	<title>Korisnik</title>
+</head>
+<body>
+	<ul>    
+ 		<li><a href="destinacije">Destinacije</a></li>    
+ 		<li><a href="korisnici">Korisnici</a></li>    
+ 	</ul>  
+	<form method="post" action="/edit">
+		<input type="hidden" name="id" th:value="${korisnik.id}"/><!-- popuni value atribut vrednošću -->
+		<table class="forma">
+			<caption>Korisnik</caption>
+			<tr><th>Korisnicko Ime:</th><td><input type="text" th:value="${korisnik.korisnickoIme}" name="korisnickoIme"/></td></tr>
+			<tr><th>Lozinka:</th><td><input type="password" th:value="${korisnik.lozinka}" name="lozinka"/></td></tr>
+			<tr><th>Email:</th><td><input type="text" th:value="${korisnik.email}" name="email"/></td></tr>
+			<tr><th>Ime:</th><td><input type="text" th:value="${korisnik.ime}" name="ime"/></td></tr>
+			<tr><th>Prezime:</th><td><input type="text" th:value="${korisnik.prezime}" name="prezime"/></td></tr>
+			<tr><th>Datum Rodjenja:</th><td><input type="date" th:value="${korisnik.datumRodjenja}" name="datumRodjenja"/></td></tr>
+			<tr><th>Adresa:</th><td><input type="text" th:value="${korisnik.adresa}" name="adresa"/></td></tr>
+			<tr><th>Broj Telefona:</th><td><input type="text" th:value="${korisnik.brojTelefona}" name="brojTelefona"/></td></tr>
+			<tr><th></th><td><input type="submit" value="Izmeni"/></td></tr>
+		</table>
+	</form>
+	<form method="post" action="destinacije/delete">
+		<input type="hidden" name="id" th:value="${destinacija.id}"/>
+		<table class="forma">
+			<tr><th></th><td><input type="submit" value="Obriši"/></td></tr>
+		</table>
+	</form>
+</body>
+</html>
