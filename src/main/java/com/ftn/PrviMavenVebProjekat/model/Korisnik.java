@@ -13,7 +13,7 @@ public class Korisnik {
 	private String trenutnoVreme;
 	private Uloga uloga;
 	
-	public Korisnik() {}
+	public Korisnik(Long id, String korisnickoIme, String lozinka, String email, String ime, String prezime, String datumRodjenja, String adresa, String brojTelefona, String trenutnoVreme, String uloga) {}
 	
 
 
@@ -34,9 +34,8 @@ public class Korisnik {
 	}
 	
 	public Korisnik(String korisnickoIme, String lozinka, String email, String ime, String prezime,
-			String datumRodjenja, String adresa, String brojTelefona) {
+			String datumRodjenja, String adresa, String brojTelefona, Uloga uloga) {
 		super();
-		this.id = id;
 		this.korisnickoIme = korisnickoIme;
 		this.lozinka = lozinka;
 		this.email = email;
@@ -45,7 +44,6 @@ public class Korisnik {
 		this.datumRodjenja = datumRodjenja;
 		this.adresa = adresa;
 		this.brojTelefona = brojTelefona;
-		this.trenutnoVreme = trenutnoVreme;
 		this.uloga = uloga;
 	}
 	
@@ -101,9 +99,18 @@ public class Korisnik {
 	public void setTrenutnoVreme(String trenutnoVreme) { this.trenutnoVreme = trenutnoVreme; }
 	
 
-	public Uloga getUloga() { return uloga; }
+	//public Uloga getUloga() { return uloga; }
 
-	public void setUloga(Uloga uloga) { this.uloga = uloga; }
+	//public void setUloga(Uloga uloga) { this.uloga = uloga; }
+	
+
+	public String getUloga() {
+	    return this.uloga.name();
+	}
+
+	public void setUloga(String uloga) {
+	    this.uloga = Uloga.valueOf(uloga);
+	}
 	
 
 	public String toFileString() {

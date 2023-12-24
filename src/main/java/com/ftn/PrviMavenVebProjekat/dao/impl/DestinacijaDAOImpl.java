@@ -1,4 +1,4 @@
-/*package com.ftn.PrviMavenVebProjekat.service.impl;
+package com.ftn.PrviMavenVebProjekat.dao.impl;
 
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -18,7 +18,7 @@ import com.ftn.PrviMavenVebProjekat.service.DestinacijaService;
 
 @Service
 @Qualifier("fajloviDestinacija")
-public class DestinacijaServiceImpl implements DestinacijaService {
+public class DestinacijaDAOImpl implements DestinacijaService {
 	
 	@Value("${destinacije.pathToFile}")
 	private String pathToFile;
@@ -133,4 +133,3 @@ public class DestinacijaServiceImpl implements DestinacijaService {
 
 }
 
-*/

@@ -12,7 +12,7 @@
  		<li><a href="destinacije">Destinacije</a></li>    
  		<li><a href="korisnici">Korisnici</a></li>    
  	</ul>  
-	<form method="post" action="/edit">
+	<form method="post" action="korisnici/edit">
 		<input type="hidden" name="id" th:value="${korisnik.id}"/><!-- popuni value atribut vrednošću -->
 		<table class="forma">
 			<caption>Korisnik</caption>
@@ -24,11 +24,13 @@
 			<tr><th>Datum Rodjenja:</th><td><input type="date" th:value="${korisnik.datumRodjenja}" name="datumRodjenja"/></td></tr>
 			<tr><th>Adresa:</th><td><input type="text" th:value="${korisnik.adresa}" name="adresa"/></td></tr>
 			<tr><th>Broj Telefona:</th><td><input type="text" th:value="${korisnik.brojTelefona}" name="brojTelefona"/></td></tr>
+			<tr><th></th><td><input type="hidden" th:value="${korisnik.trenutnoVreme}" name="trenutnoVreme"/></td></tr>
+			<tr><th></th><td><input type="hidden" th:value="${korisnik.uloga}" name="uloga"/></td></tr>
 			<tr><th></th><td><input type="submit" value="Izmeni"/></td></tr>
 		</table>
 	</form>
-	<form method="post" action="destinacije/delete">
-		<input type="hidden" name="id" th:value="${destinacija.id}"/>
+	<form method="post" action="korisnici/delete">
+		<input type="hidden" name="id" th:value="${korisnik.id}"/>
 		<table class="forma">
 			<tr><th></th><td><input type="submit" value="Obriši"/></td></tr>
 		</table>

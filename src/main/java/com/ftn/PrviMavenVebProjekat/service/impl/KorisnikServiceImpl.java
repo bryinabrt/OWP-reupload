@@ -1,11 +1,13 @@
-package com.ftn.PrviMavenVebProjekat.service.impl;
+/*package com.ftn.PrviMavenVebProjekat.service.impl;
 
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -181,8 +183,13 @@ public class KorisnikServiceImpl implements KorisnikService{
 	public String trenutnoVreme() {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		Date trenutnoVreme = new Date();
-		return formatter.format(trenutnoVreme);
+		String strTrenutnoVreme = formatter.format(trenutnoVreme);
+		return strTrenutnoVreme;
 		
+        Date date = Calendar.getInstance().getTime();  
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");  
+        String strDate = dateFormat.format(date);  
+		return strDate;
 	}
 	
-}
+}*/

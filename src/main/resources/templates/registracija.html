@@ -9,7 +9,7 @@
 </head>
 <body>
 	<br/>
-		<form method="post" action="registracija/add">
+		<form method="post" action="korisnici/registracija/add">
 			<table>
 				<caption>Prijava korisnika na sistem</caption>
 				<input type="hidden" name="id" />
@@ -22,9 +22,8 @@
 				<tr><th>Adresa:</th><td><input type="text" value="" name="adresa" required/></td></tr>
 				<tr><th>Broj Telefona:</th><td><input type="text" value="" name="brojTelefona" required/></td></tr>
 				<!--  
-				Zbog nekog razloga nemoguce je pozvati ovu metodu jer je null context object
-				<input type="hidden" name="trenutnoVreme" th:value="${korisnikService.trenutnoVreme()}" />
-				-->
+				Zbog nekog razloga nemoguce je pozvati ovu metodu jer je null context object-->
+				<input type="hidden" name="trenutnoVreme" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd HH:mm:ss')}" />
 				<input type="hidden" name="uloga" value="putnik" />
 				<tr><th></th><td><input type="submit" name="dugme" value="Submit"/></td>
 			</table>

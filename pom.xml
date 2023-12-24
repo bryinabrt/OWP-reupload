@@ -14,7 +14,7 @@
 	</parent>
 	
 	<groupId>com.ftn</groupId>
-	<artifactId>Biblioteka</artifactId>
+	<artifactId>TravelAgency</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<!-- lookup parent from repository -->
 	<!-- jar je predefinisana vrednost, ako se želi postavit war vrednost
@@ -87,6 +87,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
+		
+		<dependency>
+   		 	<groupId>org.jsoup</groupId>
+   		 	<artifactId>jsoup</artifactId>
+    		<version>1.14.2</version>
+		</dependency>
 
 		<!-- Add spring-boot-devtools -->
 		<!-- modul je poželjno koristiti tokom samog razvoja veb aplikacija jer omogućuje 
@@ -123,8 +129,12 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.6</version>
 			<!--  <scope>runtime</scope> -->
+		</dependency>
+		
+		<dependency>
+		   <groupId>org.springframework.boot</groupId>
+		   <artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
 		
 		<!-- webjar bootstrap and jquery dependencies -->
@@ -138,11 +148,11 @@
             <artifactId>jquery</artifactId>
             <version>3.2.1</version>
         </dependency>
-		<dependency>
-			<groupId>org.jsoup</groupId>
-			<artifactId>jsoup</artifactId>
-			<version>1.14.2</version>
-		</dependency>
+        <dependency>
+        	<groupId>org.webjars</groupId>
+        	<artifactId>jquery-ui</artifactId>
+        	<version>1.12.1</version>
+    	</dependency> 
 	</dependencies>
 
 	<build>
