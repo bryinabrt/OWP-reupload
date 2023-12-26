@@ -12,5 +12,5 @@ public interface KorisnikService {
 	Korisnik save(Korisnik korisnik); 
 	Korisnik update(Korisnik korisnik); 
 	Korisnik delete(Long id); 
-	String trenutnoVreme();
+	String datumRegistracije();
 }

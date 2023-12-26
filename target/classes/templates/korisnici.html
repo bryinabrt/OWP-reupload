@@ -28,18 +28,13 @@
 				</tr>
 				<tr th:each="itKorisnik, status : ${korisnici}">
 					<td th:text="${(status.index + 1) + '.'}"></td>
-					<!--<td>
-						<a th:href="|destinacije/details?id=${itKorisnik.id}|"
-							th:text="${itKorisnik.grad}">
-						</a>
-					</td>-->
-					<td th:text="${itKorisnik.korisnickoIme}"></td>
-					<td th:text="${itKorisnik.email}"></td>
-					<td th:text="${itKorisnik.ime}"></td>
-					<td th:text="${itKorisnik.prezime}"></td>
-					<td th:text="${itKorisnik.datumRodjenja}"></td>
-					<td th:text="${itKorisnik.adresa}"></td>
-					<td th:text="${itKorisnik.brojTelefona}"></td>
+					    <td th:text="${itKorisnik.korisnickoIme}"></td>
+					    <td th:text="${itKorisnik.email}"></td>
+					    <td th:text="${itKorisnik.ime}"></td>
+					    <td th:text="${itKorisnik.prezime}"></td>
+					    <td th:text="${itKorisnik.datumRodjenja}"></td>
+					    <td th:text="${itKorisnik.adresa}"></td>
+					    <td th:text="${itKorisnik.brojTelefona}"></td>
 					<td>
 						<form method="post" action="korisnici/delete">
 							<input type="hidden" name="id" th:value="${itKorisnik.id}"/>

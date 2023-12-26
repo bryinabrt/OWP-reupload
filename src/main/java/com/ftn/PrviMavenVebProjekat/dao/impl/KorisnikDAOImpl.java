@@ -26,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ftn.PrviMavenVebProjekat.dao.KorisnikDAO;
 import com.ftn.PrviMavenVebProjekat.model.Korisnik;
+import com.ftn.PrviMavenVebProjekat.model.Uloga;
 
 @Repository
 public class KorisnikDAOImpl implements KorisnikDAO {
@@ -34,8 +35,8 @@ public class KorisnikDAOImpl implements KorisnikDAO {
 	private JdbcTemplate jdbcTemplate;
 	
 	private class KorisnikRowCallBackHandler implements RowCallbackHandler {
-
-    	private Map<Long, Korisnik> korisnici = new LinkedHashMap<>();
+		
+		private Map<Long, Korisnik> korisnici = new LinkedHashMap<>();
     	
 		@Override
 		public void processRow(ResultSet resultSet) throws SQLException {
@@ -49,33 +50,65 @@ public class KorisnikDAOImpl implements KorisnikDAO {
 			String datumRodjenja = resultSet.getString(index++);
 			String adresa = resultSet.getString(index++);
 			String brojTelefona = resultSet.getString(index++);
-			String trenutnoVreme = resultSet.getString(index++);
-			String uloga = resultSet.getString(index++);
+			String datumRegistracije = resultSet.getString(index++);
+			Uloga uloga = Uloga.valueOf(resultSet.getString(index++));
 
 			Korisnik korisnik = korisnici.get(id);
 			if (korisnik == null) {
-				korisnik = new Korisnik(id, korisnickoIme, lozinka, email, ime, prezime, datumRodjenja, adresa, brojTelefona, trenutnoVreme, uloga);
+				korisnik = new Korisnik(id, korisnickoIme, lozinka, email, ime, prezime, datumRodjenja, adresa, brojTelefona, datumRegistracije, uloga);
 				korisnici.put(korisnik.getId(), korisnik); // dodavanje u kolekcijuu
+				
+			    System.out.println("id: " + id);
+			    System.out.println("korisnickoIme: " + korisnickoIme);
+			    System.out.println("lozinka: " + lozinka);
+			    System.out.println("email: " + email);
+			    System.out.println("ime: " + ime);
+			    System.out.println("prezime: " + prezime);
+			    System.out.println("datumRodjenja: " + datumRodjenja);
+			    System.out.println("adresa: " + adresa);
+			    System.out.println("brojTelefona: " + brojTelefona);
+			    System.out.println("datumRegistracije: " + datumRegistracije);
+			    System.out.println("uloga: " + uloga);
+				
 			}
+			
+			System.out.println("Added user to the map: " + korisnik.toString() + " with ID: " + String.valueOf(id));
+
 		}
-		public List<Korisnik> getKorisnici() {
+		public List<Korisnik> getKorisnik() {
+			System.out.println("Number of users in map: " + korisnici.size());
 			return new ArrayList<>(korisnici.values());
 		}
     }
+
+	
+	@Override
+	public List<Korisnik> findAll() {
+		String sql = 
+				"SELECT kor.id, kor.korisnickoIme, kor.lozinka, kor.email, kor.ime, kor.prezime, kor.datumRodjenja, "
+				+ "kor.adresa, kor.brojTelefona, kor.datumRegistracije, kor.uloga "
+				+ "FROM korisnici kor "
+				+ "ORDER BY kor.id";
+
+		KorisnikRowCallBackHandler rowCallbackHandler = new KorisnikRowCallBackHandler();
+		jdbcTemplate.query(sql, rowCallbackHandler);
+
+		return rowCallbackHandler.getKorisnik();
+	}
     
 	@Override
 	public Korisnik findOneById(Long id) {
 		String sql = 
 				"SELECT kor.id, kor.korisnickoIme, kor.lozinka, kor.email, kor.ime, kor.prezime, kor.datumRodjenja, kor.adresa, kor.brojTelefona,"
-				+ " kor.trenutnoVreme, kor.uloga"
-				+ "FROM korisnici kor " + 
+				+ " kor.datumRegistracije, kor.uloga"
+				+ " FROM korisnici kor " + 
 				"WHERE kor.id = ? " + 
 				"ORDER BY kor.id";
 
 		KorisnikRowCallBackHandler rowCallbackHandler = new KorisnikRowCallBackHandler();
 		jdbcTemplate.query(sql, rowCallbackHandler, id);
 
-		return rowCallbackHandler.getKorisnici().get(0);
+		return rowCallbackHandler.getKorisnik().get(0);
 	}
 	
 	
@@ -83,7 +116,7 @@ public class KorisnikDAOImpl implements KorisnikDAO {
 	public Korisnik findOne(String email) {
 		String sql = 
 				"SELECT kor.id, kor.korisnickoIme, kor.lozinka, kor.email, kor.ime, kor.prezime, kor.datumRodjenja, kor.adresa, kor.brojTelefona,"
-				+ " kor.trenutnoVreme, kor.uloga"
+				+ " kor.datumRegistracije, kor.uloga"
 				+ "FROM korisnici kor " + 
 				"WHERE kor.email = ? " + 
 				"ORDER BY kor.email";
@@ -91,37 +124,26 @@ public class KorisnikDAOImpl implements KorisnikDAO {
 		KorisnikRowCallBackHandler rowCallbackHandler = new KorisnikRowCallBackHandler();
 		jdbcTemplate.query(sql, rowCallbackHandler, email);
 
-		return rowCallbackHandler.getKorisnici().get(0);
+		return rowCallbackHandler.getKorisnik().get(0);
 	}
 	
 	
 	@Override
-	public Korisnik findOne(String email, String sifra) {
+	public Korisnik findOne(String email, String lozinka) {
 		String sql = 
 				"SELECT kor.id, kor.korisnickoIme, kor.lozinka, kor.email, kor.ime, kor.prezime, kor.datumRodjenja, kor.adresa, kor.brojTelefona,"
-				+ " kor.trenutnoVreme, kor.uloga"
-				+ "FROM korisnici kor " + 
-				"WHERE kor.email = ? and kor.sifra = ? " + 
-				"ORDER BY kor.email and kor.sifra";
+				+ " kor.datumRegistracije, kor.uloga"
+				+ " FROM korisnici kor" 
+				+ " WHERE kor.email = ? and kor.sifra = ?" 
+				+ " ORDER BY kor.email and kor.sifra";
 
 		KorisnikRowCallBackHandler rowCallbackHandler = new KorisnikRowCallBackHandler();
-		jdbcTemplate.query(sql, rowCallbackHandler, email, sifra);
+		jdbcTemplate.query(sql, rowCallbackHandler, email, lozinka);
 
-		return rowCallbackHandler.getKorisnici().get(0);
+		return rowCallbackHandler.getKorisnik().get(0);
 	}
 	
-	@Override
-	public List<Korisnik> findAll() {
-		String sql = 
-				"SELECT kor.id, kor.korisnickoIme, kor.lozinka, kor.email, kor.ime, kor.prezime, kor.datumRodjenja, kor.adresa, kor.brojTelefona,"
-				+ " kor.trenutnoVreme, kor.uloga"
-				+ "ORDER BY kor.id";
 
-		KorisnikRowCallBackHandler rowCallbackHandler = new KorisnikRowCallBackHandler();
-		jdbcTemplate.query(sql, rowCallbackHandler);
-
-		return rowCallbackHandler.getKorisnici();
-	}
 
 
 	@Transactional
@@ -132,7 +154,7 @@ public class KorisnikDAOImpl implements KorisnikDAO {
 			@Override
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
 				String sql = "INSERT INTO korisnici (korisnickoIme, lozinka, email, ime, prezime, datumRodjenja, adresa, brojTelefona"
-						+ ", trenutnoVreme, uloga) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+						+ ", datumRegistracije, uloga) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 				PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 				int index = 1;
@@ -144,7 +166,7 @@ public class KorisnikDAOImpl implements KorisnikDAO {
 				preparedStatement.setString(index++, korisnik.getDatumRodjenja());
 				preparedStatement.setString(index++, korisnik.getAdresa());
 				preparedStatement.setString(index++, korisnik.getBrojTelefona());
-				preparedStatement.setString(index++, korisnik.getTrenutnoVreme());
+				preparedStatement.setString(index++, korisnik.getDatumRegistracije());
 				preparedStatement.setString(index++, korisnik.getUloga());
 
 				return preparedStatement;
@@ -159,8 +181,11 @@ public class KorisnikDAOImpl implements KorisnikDAO {
 	@Transactional
 	@Override
 	public int update(Korisnik korisnik) {
-		String sql = "UPDATE korisnici SET ime = ?, prezime = ?, email = ?, lozinka = ? WHERE id = ?";	
-		boolean uspeh = jdbcTemplate.update(sql, korisnik.getIme() , korisnik.getPrezime(), korisnik.getEmail(), korisnik.getLozinka()) == 1;
+		String sql = "UPDATE korisnici SET korisnickoIme = ?, lozinka = ?, email = ?, ime = ?, prezime  = ?, datumRodjenja = ?,"
+				+ " adresa = ?, brojTelefona = ?, datumRegistracije = ?, uloga = ? WHERE id = ?";	
+		boolean uspeh = jdbcTemplate.update(sql, korisnik.getKorisnickoIme(), korisnik.getLozinka(), korisnik.getEmail(), korisnik.getIme(),
+				korisnik.getPrezime(), korisnik.getDatumRodjenja(), korisnik.getAdresa(), korisnik.getBrojTelefona(),
+				korisnik.getDatumRegistracije(), korisnik.getUloga()) == 1;
 		
 		return uspeh?1:0;
 	}
@@ -172,10 +197,10 @@ public class KorisnikDAOImpl implements KorisnikDAO {
 		return jdbcTemplate.update(sql, id);
 	}
 	
-	public String trenutnoVreme() {
+	public String datumRegistracije() {
 		/*SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-		Date trenutnoVreme = new Date();
-		String strTrenutnoVreme = formatter.format(trenutnoVreme);
+		Date datumRegistracije = new Date();
+		String strTrenutnoVreme = formatter.format(datumRegistracije);
 		return strTrenutnoVreme;*/
 		
         Date date = Calendar.getInstance().getTime();  

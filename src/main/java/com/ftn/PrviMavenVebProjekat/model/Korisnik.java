@@ -10,15 +10,16 @@ public class Korisnik {
 	private String datumRodjenja;
 	private String adresa;
 	private String brojTelefona;
-	private String trenutnoVreme;
+	private String datumRegistracije;
 	private Uloga uloga;
 	
-	public Korisnik(Long id, String korisnickoIme, String lozinka, String email, String ime, String prezime, String datumRodjenja, String adresa, String brojTelefona, String trenutnoVreme, String uloga) {}
+	public Korisnik(Long id, String korisnickoIme, String lozinka, String email, String ime,
+			String prezime, String datumRodjenja, String adresa, String brojTelefona, String datumRegistracije, String uloga) {}
 	
 
 
 	public Korisnik(Long id, String korisnickoIme, String lozinka, String email, String ime, String prezime,
-			String datumRodjenja, String adresa, String brojTelefona, String trenutnoVreme, Uloga uloga) {
+			String datumRodjenja, String adresa, String brojTelefona, String datumRegistracije, Uloga uloga) {
 		super();
 		this.id = id;
 		this.korisnickoIme = korisnickoIme;
@@ -29,7 +30,7 @@ public class Korisnik {
 		this.datumRodjenja = datumRodjenja;
 		this.adresa = adresa;
 		this.brojTelefona = brojTelefona;
-		this.trenutnoVreme = trenutnoVreme;
+		this.datumRegistracije = datumRegistracije;
 		this.uloga = uloga;
 	}
 	
@@ -94,9 +95,9 @@ public class Korisnik {
 	public void setBrojTelefona(String brojTelefona) { this.brojTelefona = brojTelefona; }
 	
 
-	public String getTrenutnoVreme() { return trenutnoVreme; }
+	public String getDatumRegistracije() { return datumRegistracije; }
 
-	public void setTrenutnoVreme(String trenutnoVreme) { this.trenutnoVreme = trenutnoVreme; }
+	public void setDatumRegistracije(String datumRegistracije) { this.datumRegistracije = datumRegistracije; }
 	
 
 	//public Uloga getUloga() { return uloga; }
@@ -117,7 +118,7 @@ public class Korisnik {
 		return this.getId() + ";" + this.getKorisnickoIme() + ";" + this.getLozinka() + ";" +
 				this.getEmail() + ";" + this.getIme() + ";" + this.getPrezime() + ";" +
 				this.getDatumRodjenja() + ";" + this.getAdresa() + ";" + this.getBrojTelefona() + ";" +
-				this.getTrenutnoVreme() + ";" + this.getUloga();
+				this.getDatumRegistracije() + ";" + this.getUloga();
 	}
 	
 	

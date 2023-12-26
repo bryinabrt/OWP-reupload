@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<base th:href="@{/}"><!-- popuni href atribut vrednosšću context path-a -->
+	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
+	<link rel="stylesheet" type="text/css" href="css/StiloviKorisnik.css"/>
+	<title>Putovanje</title>
+</head>
+<body>
+	<ul>    
+ 		<li><a href="destinacije">Destinacije</a></li>    
+ 		<li><a href="korisnici">Korisnici</a></li>    
+ 	</ul>  
+	<form method="post" action="putovanje/edit">
+		<input type="hidden" name="id" th:value="${putovanje.id}"/>
+		<table class="forma">
+			<caption>Putovanje</caption>
+			<tr><th>Sifra putovanja:</th><td><input type="text" th:value="${putovanje.sifraPutovanja}" name="sifraPutovanja"/></td></tr>
+			<tr><th>Sifra putovanja:</th><td><input type="text" th:value="${putovanje.idDestinacije}" name="idDestinacije"/></td></tr>
+			<tr><th>Prevozno Sredstvo:</th><td><input type="text" th:value="${putovanje.prevoznoSredstvo}" name="prevoznoSredstvo"/></td></tr>
+			<tr><th>Smestajna Jedinica:</th><td><input type="text" th:value="${putovanje.smestajnaJedinica}" name="smestajnaJedinica"/></td></tr>
+			<tr><th>Kategorija:</th><td><input type="text" th:value="${putovanje.kategorija}" name="kategorija"/></td></tr>
+			<tr><th>Datum Polaska:</th><td><input type="date" th:value="${putovanje.datumPolaska}" name="datumPolaska"/></td></tr>
+			<tr><th>Datum Povratka:</th><td><input type="date" th:value="${putovanje.datumPovratka}" name="datumPovratka"/></td></tr>
+			<tr><th>Broj Nocenja:</th><td><input type="text" th:value="${putovanje.brojNocenja}" name="brojNocenja"/></td></tr>
+			<tr><th>Cena:</th><td><input type="text" th:value="${putovanje.cena}" name="cena"/></td></tr>
+			<!-- <tr><th></th><td><input type="hidden" th:value="${korisnik.uloga}" name="uloga"/></td></tr> --> 
+			<tr><th></th><td><input type="submit" value="Izmeni"/></td></tr>
+		</table>
+	</form>
+	<form method="post" action="putovanja/delete">
+		<input type="hidden" name="id" th:value="${putovanje.id}"/>
+		<table class="forma">
+			<tr><th></th><td><input type="submit" value="Obriši"/></td></tr>
+		</table>
+	</form>
+</body>
+</html>

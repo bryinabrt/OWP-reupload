@@ -6,9 +6,9 @@ import com.ftn.PrviMavenVebProjekat.model.Destinacija;
 
 public interface DestinacijaDAO {
 
-	Destinacija findOne(Long id); 
-	List<Destinacija> findAll(); 
-	Destinacija save(Destinacija destinacija); 
-	Destinacija update(Destinacija destinacija); 
-	Destinacija delete(Long id); 
+	public Destinacija findOne(Long id); 
+	public List<Destinacija> findAll(); 
+	public int save(Destinacija destinacija); 
+	public int update(Destinacija destinacija); 
+	public int delete(Long id); 
 }

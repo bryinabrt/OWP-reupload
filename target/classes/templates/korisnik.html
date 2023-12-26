@@ -24,8 +24,8 @@
 			<tr><th>Datum Rodjenja:</th><td><input type="date" th:value="${korisnik.datumRodjenja}" name="datumRodjenja"/></td></tr>
 			<tr><th>Adresa:</th><td><input type="text" th:value="${korisnik.adresa}" name="adresa"/></td></tr>
 			<tr><th>Broj Telefona:</th><td><input type="text" th:value="${korisnik.brojTelefona}" name="brojTelefona"/></td></tr>
-			<tr><th></th><td><input type="hidden" th:value="${korisnik.trenutnoVreme}" name="trenutnoVreme"/></td></tr>
-			<tr><th></th><td><input type="hidden" th:value="${korisnik.uloga}" name="uloga"/></td></tr>
+			<tr><th></th><td><input type="hidden" th:value="${korisnik.datumRegistracije}" name="datumRegistracije"/></td></tr>
+			<!-- <tr><th></th><td><input type="hidden" th:value="${korisnik.uloga}" name="uloga"/></td></tr> --> 
 			<tr><th></th><td><input type="submit" value="Izmeni"/></td></tr>
 		</table>
 	</form>

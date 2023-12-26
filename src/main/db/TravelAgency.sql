@@ -9,13 +9,15 @@ CREATE TABLE Destinacije (
     kontinent VARCHAR(255) NOT NULL
 );
 
--- Create Trips table
+DROP TABLE PUTOVANJA;
+
 CREATE TABLE Putovanja (
-    sifraPutovanja VARCHAR(255) PRIMARY KEY,
+	id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    sifraPutovanja VARCHAR(255),
     idDestinacije BIGINT,
     prevoznoSredstvo VARCHAR(255) NOT NULL,
     smestajnaJedinica VARCHAR(255) NOT NULL,
-    kategorija ENUM('zimovanje', 'letovanje', 'last minute', 'novogodisnja'),
+    kategorija ENUM('zimovanje', 'letovanje', 'lastMinute', 'novogodisnja'),
     datumPolaska DATETIME NOT NULL,
     datumPovratka DATETIME NOT NULL,
     brojNocenja INT NOT NULL,
@@ -23,11 +25,11 @@ CREATE TABLE Putovanja (
     FOREIGN KEY (idDestinacije) REFERENCES Destinacije(id)
 );
 
--- Create Users table
+
 CREATE TABLE Korisnici (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     korisnickoIme VARCHAR(255) NOT NULL,
-    sifra VARCHAR(255) NOT NULL,
+    lozinka VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
     ime VARCHAR(255) NOT NULL,
     prezime VARCHAR(255) NOT NULL,
@@ -46,6 +48,7 @@ INSERT INTO Destinacije values (1, 'Novi Sad', 'Srbija', 'Evropa');
 INSERT INTO Destinacije values (2, 'Barselona', 'Spanija', 'Evropa');
 INSERT INTO Destinacije values (3, 'Tokio', 'Japan', 'Azija');
 
-INSERT INTO Putovanja values (154, 3, 'Avion', 'Hotel Zvezda', 'zimovanje', '2024-06-29 19:00:00', '2024-07-05 07:00:00', 6, 40000);
-INSERT INTO Putovanja values (254, 2, 'Autobus', 'Hotel nzm', 'letovanje', '2024-06-29 19:00:00', '2024-07-05 07:00:00', 6, 9000);
-INSERT INTO Putovanja values (354, 1, 'Autobus', 'Hotel Sheraton', 'zimovanje', '2024-06-29 19:00:00', '2024-07-05 07:00:00', 6, 6000);
+INSERT INTO Putovanja values (1, 154, 3, 'Avion', 'Hotel Zvezda', 'zimovanje', '2024-06-29 19:00:00', '2024-07-05 07:00:00', 6, 40000);
+INSERT INTO Putovanja values (2, 254, 2, 'Autobus', 'Hotel nzm', 'letovanje', '2024-06-29 19:00:00', '2024-07-05 07:00:00', 6, 9000);
+INSERT INTO Putovanja values (3, 354, 1, 'Autobus', 'Hotel Sheraton', 'zimovanje', '2024-06-29 19:00:00', '2024-07-05 07:00:00', 6, 6000);
+

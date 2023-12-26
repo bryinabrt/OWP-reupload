@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<base th:href="@{/}">
+		<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
+		<link rel="stylesheet" type="text/css" href="css/StiloviHorizontalniMeni.css"/>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+	</head>
+	<body>
+		<ul>
+			<li>
+				<a href="destinacije">Destinacije</a>
+				<a href="korisnici">Korisnici</a>
+			</li>
+		</ul>
+		
+		<table>
+			<caption>Putovanja</caption>
+				<tr>
+					<th>Redni Broj</th>
+					<th>Sifra Putovanja</th>
+					<th>Destinacija</th>
+					<th>Prevozno Sredstvo</th>
+					<th>Smestajna Jedinica</th>
+					<th>Kategorija</th>
+					<th>Datum Polaska</th>
+					<th>Datum Povratka</th>
+					<th>Broj Nocenja</th>
+					<th>Cena</th>
+				</tr>
+				<tr th:each="itPutovanje, status : ${putovanja}">
+					<td th:text="${(status.index + 1) + '.'}"></td>
+					<!--<td>
+						<a th:href="|destinacije/details?id=${itDestinacija.id}|"
+							th:text="${itDestinacija.grad}">
+						</a>
+					</td>-->
+					<td th:text="${itPutovanje.sifraPutovanja}"></td>
+					<td><a th:text="${itPutovanje.idDestinacije}" th:href="|destinacije/details?id=${itPutovanje.idDestinacije}|"></a></td>
+					<td th:text="${itPutovanje.prevoznoSredstvo}"></td>
+					<td th:text="${itPutovanje.smestajnaJedinica}"></td>
+					<td th:text="${itPutovanje.kategorija}"></td>
+					<td th:text="${itPutovanje.datumPolaska}"></td>
+					<td th:text="${itPutovanje.datumPovratka}"></td>
+					<td th:text="${itPutovanje.brojNocenja}"></td>
+					<td th:text="${itPutovanje.cena}"></td>
+					<td>
+						<form method="post" action="putovanja/delete">
+							<input type="hidden" name="id" th:value="${itPutovanje.id}"/>
+							<input type="submit" value="Obrisi"/>
+						</form>
+					</td>
+					<td>
+						<form th:action="@{/}">
+							<a th:href="|putovanja/details?id=${itPutovanje.id}|"
+								th:text="Izmeni">
+							</a>
+						</form>
+					</td>
+				</tr>
+		</table>
+		<ul>
+			<li><a href="destinacije/add">Dodaj Destinaciju</a></li>
+		</ul>
+	
+	</body>
+</html>

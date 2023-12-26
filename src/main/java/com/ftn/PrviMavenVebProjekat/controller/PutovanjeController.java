@@ -1,7 +1,7 @@
 package com.ftn.PrviMavenVebProjekat.controller;
 
-import java.util.List;
 import java.io.IOException;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
@@ -18,20 +18,24 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ftn.PrviMavenVebProjekat.model.Kategorija;
 import com.ftn.PrviMavenVebProjekat.model.Korisnik;
+import com.ftn.PrviMavenVebProjekat.model.Putovanje;
 import com.ftn.PrviMavenVebProjekat.model.Uloga;
 import com.ftn.PrviMavenVebProjekat.service.KorisnikService;
+import com.ftn.PrviMavenVebProjekat.service.PutovanjeService;
+
 
 @Controller
-@RequestMapping(value="/korisnici")
-public class KorisnikController implements ServletContextAware {
+@RequestMapping(value="/putovanja")
+public class PutovanjeController implements ServletContextAware {
 	
 	@Autowired
 	private ServletContext servletContext;
 	private  String bURL;
 	
 	@Autowired
-	private KorisnikService korisnikService;
+	private PutovanjeService putovanjeService;
 	
 	@PostConstruct
 	public void init() {	
@@ -47,61 +51,60 @@ public class KorisnikController implements ServletContextAware {
 	@ResponseBody
 	public ModelAndView index() {
 		
-		List<Korisnik> korisnici = korisnikService.findAll();
-		ModelAndView result = new ModelAndView("korisnici");
-		result.addObject("korisnici", korisnici);
+		List<Putovanje> putovanja = putovanjeService.findAll();
+		ModelAndView result = new ModelAndView("putovanja");
+		result.addObject("putovanja", putovanja);
 		return result;
 	}
 	
-	
-	@GetMapping(value="/registracija")
-	public String create(HttpServletResponse response) throws IOException {
-		return "registracija";
+	@GetMapping(value="/add")
+	public String dodajPutovanje(HttpServletResponse response) throws IOException {
+		return "dodavanjePutovanja";
 	}
 	
+	
 	@PostMapping(value="/add")
-	public void dodajKorisnika(HttpServletResponse response,@RequestParam Long id,@RequestParam String korisnickoIme,
-			@RequestParam String lozinka,
-			@RequestParam String email,@RequestParam String ime, @RequestParam String prezime, 
-			@RequestParam String datumRodjenja, @RequestParam String adresa,
-			@RequestParam String brojTelefona,@RequestParam String datumRegistracije, @RequestParam Uloga uloga
-			) throws IOException {
-		Korisnik korisnik = new Korisnik(id,
-				korisnickoIme,
-				lozinka,
-				email,
-				ime,
-				prezime,
-				datumRodjenja,
-				adresa,
-				brojTelefona,
-				datumRegistracije,
-				uloga);
+	public void dodajPutovanje(HttpServletResponse response,@RequestParam Long id,@RequestParam String sifraPutovanja,
+			@RequestParam Long idDestinacije,
+			@RequestParam String prevoznoSredstvo,@RequestParam String smestajnaJedinica,
+			@RequestParam Kategorija kategorija, 
+			@RequestParam String datumPolaska, @RequestParam String datumPovratka,
+			@RequestParam int brojNocenja, @RequestParam double cena) throws IOException {
+		Putovanje putovanje = new Putovanje(
+				sifraPutovanja,
+				idDestinacije,
+				prevoznoSredstvo,
+				smestajnaJedinica,
+				kategorija,
+				datumPolaska,
+				datumPovratka,
+				brojNocenja,
+				cena);
 		
-		korisnikService.save(korisnik);
+		putovanjeService.save(putovanje);
 		response.sendRedirect(bURL);
 	}
 	
 	@GetMapping(value="/details")
 	public ModelAndView details(@RequestParam Long id, HttpServletResponse response) throws IOException {
 
-		Korisnik korisnik = korisnikService.findOneById(id);
+		Putovanje putovanje = putovanjeService.findOne(id);
 		
-		ModelAndView result = new ModelAndView("korisnik");
-		result.addObject("korisnik", korisnik);
+		ModelAndView result = new ModelAndView("putovanje");
+		result.addObject("putovanje", putovanje);
 		return result;
 	}
 	
 	@PostMapping(value="/delete")
 	public void delete(@RequestParam Long id, HttpServletResponse response) throws IOException {
-		korisnikService.delete(id);
-		response.sendRedirect(bURL+"korisnici");
+		putovanjeService.delete(id);
+		response.sendRedirect(bURL+"putovanja");
 	}
 	
 	@PostMapping(value="/edit")
-	public void edit(@ModelAttribute Korisnik korisnikEdited , HttpServletResponse response) throws IOException {	
-		korisnikService.update(korisnikEdited);
-		response.sendRedirect(bURL+"korisnici");
+	public void edit(@ModelAttribute Putovanje putovanjeEdited , HttpServletResponse response) throws IOException {	
+		putovanjeService.update(putovanjeEdited);
+		response.sendRedirect(bURL+"putovanja");
 	}
-	
+
 }

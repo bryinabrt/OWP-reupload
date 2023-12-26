@@ -1,135 +1,120 @@
 package com.ftn.PrviMavenVebProjekat.dao.impl;
 
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.RowCallbackHandler;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.ftn.PrviMavenVebProjekat.dao.DestinacijaDAO;
 import com.ftn.PrviMavenVebProjekat.model.Destinacija;
-import com.ftn.PrviMavenVebProjekat.service.DestinacijaService;
 
-@Service
-@Qualifier("fajloviDestinacija")
-public class DestinacijaDAOImpl implements DestinacijaService {
-	
-	@Value("${destinacije.pathToFile}")
-	private String pathToFile;
-	
-	private Long nextId = 1L;
-	
-    private Map<Long, Destinacija> readFromFile() {
+@Repository
+public class DestinacijaDAOImpl implements DestinacijaDAO {
 
-    	Map<Long, Destinacija> destinacije = new HashMap<>();
-    	
-    	try {
-			Path path = Paths.get(pathToFile);
-			System.out.println(path.toFile().getAbsolutePath());
-			List<String> lines = Files.readAllLines(path, Charset.forName("UTF-8"));
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+	
+	private class DestinacijaRowCallBackHandler implements RowCallbackHandler {
 
-			for (String line : lines) {
-				line = line.trim();
-				if (line.equals("") || line.indexOf('#') == 0)
-					continue;
-				
-				String[] tokens = line.split(";");
-				Long id = Long.parseLong(tokens[0]);
-				String grad = tokens[1];
-				String drzava = tokens[2];
-				String kontinent = tokens[3];
-				
-				Destinacija destinacija = new Destinacija(id, grad, drzava, kontinent);
-				
-				destinacije.put(id, destinacija);
-				
-				if(nextId<id)
-					nextId=id;
+		private Map<Long, Destinacija> destinacije = new LinkedHashMap<>();
+		
+		@Override
+		public void processRow(ResultSet resultSet) throws SQLException {
+			int index = 1;
+			Long id = resultSet.getLong(index++);
+			String grad = resultSet.getString(index++);
+			String drzava = resultSet.getString(index++);
+			String kontinent = resultSet.getString(index++);
+
+			Destinacija destinacija = destinacije.get(id);
+			if (destinacija == null) {
+				destinacija = new Destinacija(id, grad, drzava, kontinent);
+				destinacije.put(destinacija.getId(), destinacija); // dodavanje u kolekciju
 			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
-    	return destinacije;
-    }
-    
-    private Map<Long, Destinacija> saveToFile(Map<Long, Destinacija> destinacije) {
-    	
-    	Map<Long, Destinacija> ret = new HashMap<>();
-    	
-    	try {
-			Path path = Paths.get(pathToFile);
-			System.out.println(path.toFile().getAbsolutePath());
-			List<String> lines = new ArrayList<>();
-			
-			for (Destinacija destinacija : destinacije.values()) {
-					String line = destinacija.getId() + ";"
-					+ destinacija.getGrad() + ";" 
-					+ destinacija.getDrzava() + ";"
-					+ destinacija.getKontinent();
-				lines.add(line);
-				ret.put(destinacija.getId(), destinacija);
-			}
-			Files.write(path, lines, Charset.forName("UTF-8"));
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+		public List<Destinacija> getDestinacije() {
+			return new ArrayList<>(destinacije.values());
 		}
-    	return ret;
-    }
+
+	}
 
 	@Override
 	public Destinacija findOne(Long id) {
-		Map<Long, Destinacija> destinacije = readFromFile();
-		return destinacije.get(id);
+		String sql = 
+				"SELECT d.id, d.grad, d.drzava, d.kontinent FROM destinacije d " + 
+				"WHERE d.id = ? " + 
+				"ORDER BY d.id";
+
+		DestinacijaRowCallBackHandler rowCallbackHandler = new DestinacijaRowCallBackHandler();
+		jdbcTemplate.query(sql, rowCallbackHandler, id);
+
+		return rowCallbackHandler.getDestinacije().get(0);
 	}
 
 	@Override
 	public List<Destinacija> findAll() {
-		Map<Long, Destinacija> destinacije = readFromFile();
-		return new ArrayList<Destinacija>(destinacije.values());
+		String sql = 
+				"SELECT d.id, d.grad, d.drzava, d.kontinent FROM destinacije d " + 
+				"ORDER BY d.id";
+
+		DestinacijaRowCallBackHandler rowCallbackHandler = new DestinacijaRowCallBackHandler();
+		jdbcTemplate.query(sql, rowCallbackHandler);
+
+		return rowCallbackHandler.getDestinacije();
 	}
 
+	@Transactional
 	@Override
-	public Destinacija save(Destinacija destinacija) {
-		Map<Long, Destinacija> destinacije = readFromFile();
-		if (destinacija.getId() == null) {
-			destinacija.setId(++nextId);
-		}
-		destinacije.put(destinacija.getId(), destinacija);
-		saveToFile(destinacije);
-		return destinacija;
+	public int save(Destinacija destinacija) {
+		PreparedStatementCreator preparedStatementCreator = new PreparedStatementCreator() {
+			
+			@Override
+			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+				String sql = "INSERT INTO destinacije (grad, drzava, kontinent) VALUES (?, ?, ?)";
+
+				PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+				int index = 1;
+				preparedStatement.setString(index++, destinacija.getGrad());
+				preparedStatement.setString(index++, destinacija.getDrzava());
+				preparedStatement.setString(index++, destinacija.getKontinent());
+
+				return preparedStatement;
+			}
+
+		};
+		GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+		boolean uspeh = jdbcTemplate.update(preparedStatementCreator, keyHolder) == 1;
+		return uspeh?1:0;
 	}
 	
-
+	@Transactional
 	@Override
-	public Destinacija update(Destinacija destinacija) {
-		Map<Long, Destinacija> destinacije = readFromFile();
-		destinacije.put(destinacija.getId(), destinacija);
-		saveToFile(destinacije);
-		return destinacija;
+	public int update(Destinacija destinacija) {		
+		String sql = "UPDATE destinacije SET grad = ?, drzava = ?, kontinent = ? WHERE id = ?";	
+		boolean uspeh = jdbcTemplate.update(sql, destinacija.getGrad(), destinacija.getDrzava(), destinacija.getKontinent(), destinacija.getId()) == 1;
+		
+		return uspeh?1:0;
 	}
-
+	
+	@Transactional
 	@Override
-	public Destinacija delete(Long id) {
-		Map<Long, Destinacija> destinacije = readFromFile();
-		if (!destinacije.containsKey(id)) {
-			throw new IllegalArgumentException("tried to remove non existing destination");
-		}
-		Destinacija destinacija = destinacije.get(id);
-		if (destinacija != null) {
-			destinacije.remove(id);
-		}
-		saveToFile(destinacije);
-		return destinacija;
+	public int delete(Long id) {
+		String sql = "DELETE FROM destinacije WHERE id = ?";
+		return jdbcTemplate.update(sql, id);
 	}
-
+	
 }
-
