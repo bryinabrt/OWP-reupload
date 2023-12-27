@@ -19,10 +19,7 @@ import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ftn.PrviMavenVebProjekat.model.Kategorija;
-import com.ftn.PrviMavenVebProjekat.model.Korisnik;
 import com.ftn.PrviMavenVebProjekat.model.Putovanje;
-import com.ftn.PrviMavenVebProjekat.model.Uloga;
-import com.ftn.PrviMavenVebProjekat.service.KorisnikService;
 import com.ftn.PrviMavenVebProjekat.service.PutovanjeService;
 
 

@@ -12,6 +12,7 @@ public class Korisnik {
 	private String brojTelefona;
 	private String datumRegistracije;
 	private Uloga uloga;
+	private boolean ulogovan = false;
 	
 	public Korisnik(Long id, String korisnickoIme, String lozinka, String email, String ime,
 			String prezime, String datumRodjenja, String adresa, String brojTelefona, String datumRegistracije, String uloga) {}
@@ -113,12 +114,12 @@ public class Korisnik {
 	    this.uloga = Uloga.valueOf(uloga);
 	}
 	
+	public boolean isPrijavljen() {
+		return ulogovan;
+	}
 
-	public String toFileString() {
-		return this.getId() + ";" + this.getKorisnickoIme() + ";" + this.getLozinka() + ";" +
-				this.getEmail() + ";" + this.getIme() + ";" + this.getPrezime() + ";" +
-				this.getDatumRodjenja() + ";" + this.getAdresa() + ";" + this.getBrojTelefona() + ";" +
-				this.getDatumRegistracije() + ";" + this.getUloga();
+	public void setUlogovan(boolean ulogovan) {
+		this.ulogovan = ulogovan;
 	}
 	
 	

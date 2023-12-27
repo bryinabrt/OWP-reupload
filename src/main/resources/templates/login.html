@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<base th:href="@{/}">
+	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
+	<link rel="stylesheet" type="text/css" href="css/StiloviKorisnik.css"/>
+	<title>Prijava</title>
+</head>
+<body>
+	<h2>Travel Agency</h2>
+	<ul>
+		<li><a href="">početna</a></li>
+	</ul>
+	<ul>
+		<li><a href="destinacije">Destinacije</a></li>
+		<li><a href="putovanja">Putovanja</a></li>
+	</ul>
+	<form method="post" action="korisnici/login">
+		<table class="forma">
+			<caption>Prijava</caption>
+			<tr><th>korisničko ime:</th><td><input type="text" name="korisnickoIme"/></td></tr>
+			<tr><th>lozinka:</th><td><input type="password" name="lozinka"/></td></tr>
+			<tr><th></th><td><input type="submit" value="Prijava"/></td></tr>
+		</table>
+	</form>
+	<p class="greska"></p>
+</body>
+</html>

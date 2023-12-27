@@ -6,6 +6,7 @@ import java.io.IOException;
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,8 @@ import com.ftn.PrviMavenVebProjekat.service.KorisnikService;
 @Controller
 @RequestMapping(value="/korisnici")
 public class KorisnikController implements ServletContextAware {
+	
+	public static final String KORISNIK_KEY = "prijavljeniKorisnik";
 	
 	@Autowired
 	private ServletContext servletContext;
@@ -79,6 +82,58 @@ public class KorisnikController implements ServletContextAware {
 				uloga);
 		
 		korisnikService.save(korisnik);
+		response.sendRedirect(bURL);
+	}
+	
+	@GetMapping("/login")
+	@ResponseBody
+	public ModelAndView Login(HttpServletResponse response) throws IOException {
+		ModelAndView result = new ModelAndView("login");
+		result.addObject("login");
+		return result;
+	}
+	
+	@PostMapping(value="/login")
+	public void Login(@RequestParam String korisnickoIme, @RequestParam String lozinka, 
+			HttpSession session, HttpServletResponse response) throws IOException {
+		try {
+			// validacija
+			Korisnik korisnik = korisnikService.findOne(korisnickoIme, lozinka);
+			if (korisnik == null) {
+				System.out.println("neuspeh: ");
+				throw new Exception("Neispravno korisničko ime ili lozinka!");
+			}			
+			if (korisnik.isPrijavljen()) {
+				System.out.println("vec prijavljen ");
+				throw new Exception("Već ste prijavljeni!");
+			}
+
+			// prijava
+			korisnik.setUlogovan(true);
+			session.setAttribute(KorisnikController.KORISNIK_KEY, korisnik);
+			
+			response.sendRedirect(bURL);
+		} 	catch (Exception ex) {
+			// ispis greške
+			String poruka = ex.getMessage();
+			if (poruka == "") {
+				System.out.println("neuspeh");
+				poruka = "Neuspešna prijava!";
+			}
+		}
+	}
+	
+	@GetMapping(value="/logout")
+	public void logout(HttpSession session, HttpServletResponse response) throws IOException {
+		// čitanje
+		Korisnik prijavljeniKorisnik = (Korisnik) session.getAttribute(KorisnikController.KORISNIK_KEY);
+
+		// odjava
+		if (prijavljeniKorisnik != null)
+			prijavljeniKorisnik.setUlogovan(false);
+	
+		session.invalidate();
+		
 		response.sendRedirect(bURL);
 	}
 	
