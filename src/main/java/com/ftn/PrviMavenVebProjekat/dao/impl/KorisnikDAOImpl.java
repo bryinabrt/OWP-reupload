@@ -134,8 +134,8 @@ public class KorisnikDAOImpl implements KorisnikDAO {
 				"SELECT kor.id, kor.korisnickoIme, kor.lozinka, kor.email, kor.ime, kor.prezime, kor.datumRodjenja, kor.adresa, kor.brojTelefona,"
 				+ " kor.datumRegistracije, kor.uloga"
 				+ " FROM korisnici kor" 
-				+ " WHERE kor.email = ? and kor.sifra = ?" 
-				+ " ORDER BY kor.email and kor.sifra";
+				+ " WHERE kor.email = ? and kor.lozinka = ?" 
+				+ " ORDER BY kor.email and kor.lozinka";
 
 		KorisnikRowCallBackHandler rowCallbackHandler = new KorisnikRowCallBackHandler();
 		jdbcTemplate.query(sql, rowCallbackHandler, email, lozinka);

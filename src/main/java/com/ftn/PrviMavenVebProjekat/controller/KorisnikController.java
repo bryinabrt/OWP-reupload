@@ -85,20 +85,16 @@ public class KorisnikController implements ServletContextAware {
 		response.sendRedirect(bURL);
 	}
 	
-	@GetMapping("/login")
-	@ResponseBody
-	public ModelAndView Login(HttpServletResponse response) throws IOException {
-		ModelAndView result = new ModelAndView("login");
-		result.addObject("login");
-		return result;
+	@GetMapping(value="/login")
+	public String login(HttpServletResponse response) throws IOException {
+		return "login";
 	}
 	
 	@PostMapping(value="/login")
-	public void Login(@RequestParam String korisnickoIme, @RequestParam String lozinka, 
+	public void login(@RequestParam String email, @RequestParam String lozinka, 
 			HttpSession session, HttpServletResponse response) throws IOException {
 		try {
-			// validacija
-			Korisnik korisnik = korisnikService.findOne(korisnickoIme, lozinka);
+			Korisnik korisnik = korisnikService.findOne(email, lozinka);
 			if (korisnik == null) {
 				System.out.println("neuspeh: ");
 				throw new Exception("Neispravno korisničko ime ili lozinka!");
@@ -110,6 +106,7 @@ public class KorisnikController implements ServletContextAware {
 
 			// prijava
 			korisnik.setUlogovan(true);
+			System.out.println("uspeh jej");
 			session.setAttribute(KorisnikController.KORISNIK_KEY, korisnik);
 			
 			response.sendRedirect(bURL);
@@ -133,7 +130,7 @@ public class KorisnikController implements ServletContextAware {
 			prijavljeniKorisnik.setUlogovan(false);
 	
 		session.invalidate();
-		
+		System.out.println("Izlogovan" + prijavljeniKorisnik.getEmail());
 		response.sendRedirect(bURL);
 	}
 	
