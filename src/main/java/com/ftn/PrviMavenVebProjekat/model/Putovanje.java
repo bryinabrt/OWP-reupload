@@ -8,54 +8,59 @@ public class Putovanje {
 	private Long id;
 	private String sifraPutovanja;
 	private Long idDestinacije;
-	private String prevoznoSredstvo;
-	private String smestajnaJedinica;
+	private Long idPrevoznoSredstvo;
+	private Long idSmestajnaJedinica;
 	private Kategorija kategorija;
 	private String datumPolaska;
 	private String datumPovratka;
 	private int brojNocenja;
 	private double cena;
 	private List<Destinacija> destinacije;
+	private List<PrevoznoSredstvo> prevoznaSredstva;
+	private List<SmestajnaJedinica> smestajneJedinice;
 	
 	public Putovanje() {
 		this.destinacije = new ArrayList<Destinacija>();
+		this.prevoznaSredstva = new ArrayList<PrevoznoSredstvo>();
+		this.smestajneJedinice = new ArrayList<SmestajnaJedinica>();
 	}
 
-	
-
-	public Putovanje(Long id, String sifraPutovanja, Long idDestinacije, String prevoznoSredstvo, String smestajnaJedinica, Kategorija kategorija,
-			String datumPolaska, String datumPovratka, int brojNocenja, double cena) {
+	public Putovanje(Long id, String sifraPutovanja, Long idDestinacije, Long idPrevoznoSredstvo,
+			Long idSmestajnaJedinica, Kategorija kategorija, String datumPolaska, String datumPovratka, int brojNocenja,
+			double cena) {
 		super();
 		this.id = id;
 		this.sifraPutovanja = sifraPutovanja;
 		this.idDestinacije = idDestinacije;
-		this.prevoznoSredstvo = prevoznoSredstvo;
-		this.smestajnaJedinica = smestajnaJedinica;
+		this.idPrevoznoSredstvo = idPrevoznoSredstvo;
+		this.idSmestajnaJedinica = idSmestajnaJedinica;
 		this.kategorija = kategorija;
 		this.datumPolaska = datumPolaska;
 		this.datumPovratka = datumPovratka;
 		this.brojNocenja = brojNocenja;
 		this.cena = cena;
 		this.destinacije = new ArrayList<Destinacija>();
+		this.prevoznaSredstva = new ArrayList<PrevoznoSredstvo>();
+		this.smestajneJedinice = new ArrayList<SmestajnaJedinica>();
 	}
-
-	public Putovanje(String sifraPutovanja, Long idDestinacije, String prevoznoSredstvo, String smestajnaJedinica, Kategorija kategorija,
-			String datumPolaska, String datumPovratka, int brojNocenja, double cena) {
+	
+	public Putovanje(String sifraPutovanja, Long idDestinacije, Long idPrevoznoSredstvo,
+			Long idSmestajnaJedinica, Kategorija kategorija, String datumPolaska, String datumPovratka, int brojNocenja,
+			double cena) {
 		super();
 		this.sifraPutovanja = sifraPutovanja;
 		this.idDestinacije = idDestinacije;
-		this.prevoznoSredstvo = prevoznoSredstvo;
-		this.smestajnaJedinica = smestajnaJedinica;
+		this.idPrevoznoSredstvo = idPrevoznoSredstvo;
+		this.idSmestajnaJedinica = idSmestajnaJedinica;
 		this.kategorija = kategorija;
 		this.datumPolaska = datumPolaska;
 		this.datumPovratka = datumPovratka;
 		this.brojNocenja = brojNocenja;
 		this.cena = cena;
 		this.destinacije = new ArrayList<Destinacija>();
+		this.prevoznaSredstva = new ArrayList<PrevoznoSredstvo>();
+		this.smestajneJedinice = new ArrayList<SmestajnaJedinica>();
 	}
-
-
-
 
 	public Long getId() {
 		return id;
@@ -65,8 +70,6 @@ public class Putovanje {
 		this.id = id;
 	}
 
-
-
 	public String getSifraPutovanja() {
 		return sifraPutovanja;
 	}
@@ -74,8 +77,6 @@ public class Putovanje {
 	public void setSifraPutovanja(String sifraPutovanja) {
 		this.sifraPutovanja = sifraPutovanja;
 	}
-
-
 
 	public Long getIdDestinacije() {
 		return idDestinacije;
@@ -85,27 +86,21 @@ public class Putovanje {
 		this.idDestinacije = idDestinacije;
 	}
 
-
-
-	public String getPrevoznoSredstvo() {
-		return prevoznoSredstvo;
+	public Long getIdPrevoznoSredstvo() {
+		return idPrevoznoSredstvo;
 	}
 
-	public void setPrevoznoSredstvo(String prevoznoSredstvo) {
-		this.prevoznoSredstvo = prevoznoSredstvo;
-	}
-	
-	
-	
-	public String getSmestajnaJedinica() {
-		return smestajnaJedinica;
+	public void setIdPrevoznoSredstvo(Long idPrevoznoSredstvo) {
+		this.idPrevoznoSredstvo = idPrevoznoSredstvo;
 	}
 
-	public void setSmestajnaJedinica(String smestajnaJedinica) {
-		this.smestajnaJedinica = smestajnaJedinica;
+	public Long getIdSmestajnaJedinica() {
+		return idSmestajnaJedinica;
 	}
 
-
+	public void setIdSmestajnaJedinica(Long idSmestajnaJedinica) {
+		this.idSmestajnaJedinica = idSmestajnaJedinica;
+	}
 
 	public Kategorija getKategorija() {
 		return kategorija;
@@ -124,7 +119,6 @@ public class Putovanje {
 	}
 
 
-
 	public String getDatumPolaska() {
 		return datumPolaska;
 	}
@@ -132,8 +126,6 @@ public class Putovanje {
 	public void setDatumPolaska(String datumPolaska) {
 		this.datumPolaska = datumPolaska;
 	}
-
-
 
 	public String getDatumPovratka() {
 		return datumPovratka;
@@ -143,8 +135,6 @@ public class Putovanje {
 		this.datumPovratka = datumPovratka;
 	}
 
-
-
 	public int getBrojNocenja() {
 		return brojNocenja;
 	}
@@ -152,8 +142,6 @@ public class Putovanje {
 	public void setBrojNocenja(int brojNocenja) {
 		this.brojNocenja = brojNocenja;
 	}
-
-
 
 	public double getCena() {
 		return cena;
@@ -163,8 +151,6 @@ public class Putovanje {
 		this.cena = cena;
 	}
 
-
-
 	public List<Destinacija> getDestinacije() {
 		return destinacije;
 	}
@@ -172,5 +158,24 @@ public class Putovanje {
 	public void setDestinacije(List<Destinacija> destinacije) {
 		this.destinacije = destinacije;
 	}
+
+	public List<PrevoznoSredstvo> getPrevoznaSredstva() {
+		return prevoznaSredstva;
+	}
+
+	public void setPrevoznaSredstva(List<PrevoznoSredstvo> prevoznaSredstva) {
+		this.prevoznaSredstva = prevoznaSredstva;
+	}
+
+	public List<SmestajnaJedinica> getSmestajneJedinice() {
+		return smestajneJedinice;
+	}
+
+	public void setSmestajneJedinice(List<SmestajnaJedinica> smestajneJedinice) {
+		this.smestajneJedinice = smestajneJedinice;
+	}
+	
+	
+	
 
 }

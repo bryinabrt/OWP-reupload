@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<base th:href="@{/}">
+		<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
+		<link rel="stylesheet" type="text/css" href="css/StiloviHorizontalniMeni.css"/>
+		<meta charset="UTF-8">
+		<title>Smestajne Jedinice</title>
+	</head>
+	<body>
+		<ul>
+			<li>
+				<a href="destinacije">Destinacije</a>
+				<a href="korisnici">Korisnici</a>
+				<a href="putovanja">Putovanja</a>
+			</li>
+		</ul>
+		
+		<table>
+			<caption>Smestajne Jedinice</caption>
+				<tr>
+					<th>Redni Broj</th>
+					<th>Naziv Jedinice</th>
+					<th>Tip jedinice</th>
+					<th>Kapacitet</th>
+					<th>Destinacija</th>
+					<th>Recenzija</th>
+					<th>Usluge</th>
+					<th>Opis</th>
+				</tr>
+				<tr th:each="itSmestajnaJedinica, status : ${smestajneJedinice}">
+					<td th:text="${(status.index + 1) + '.'}"></td>
+					<!--<td>
+						<a th:href="|destinacije/details?id=${itDestinacija.id}|"
+							th:text="${itDestinacija.grad}">
+						</a>
+					</td>-->
+					<td th:text="${itSmestajnaJedinica.nazivJedinice}"></td>
+					<td><a th:text="${tipJedinica[status.index].nazivTipaJedinice}" th:href="|tipJedinica/details?id=${itSmestajnaJedinica.idTipJedinice}|"></a></td>
+					<td th:text="${itSmestajnaJedinica.kapacitet}"></td>
+					<td><a th:text="${destinacije[status.index].grad}" th:href="|destinacije/details?id=${itSmestajnaJedinica.idDestinacije}|"></a></td>
+					<td th:text="${itSmestajnaJedinica.recenzija}"></td>
+					<td><a th:text="${usluge[status.index].nazivUsluge}" th:href="|usluge/details?id=${itSmestajnaJedinica.idUsluge}|"></a></td>
+					<td th:text="${itSmestajnaJedinica.opis}"></td>
+					<td>
+						<form method="post" action="smestajneJedinice/delete">
+							<input type="hidden" name="id" th:value="${itSmestajnaJedinica.id}"/>
+							<input type="submit" value="Obrisi"/>
+						</form>
+					</td>
+					<td>
+						<form th:action="@{/}">
+							<a th:href="|smestajnaJedinica/details?id=${itSmestajnaJedinica.id}|"
+								th:text="Izmeni">
+							</a>
+						</form>
+					</td>
+				</tr>
+		</table>
+		<ul>
+			<li><a href="destinacije/add">Dodaj Destinaciju</a></li>
+		</ul>
+	
+	</body>
+</html>

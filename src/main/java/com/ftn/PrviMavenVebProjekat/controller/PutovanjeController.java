@@ -2,6 +2,7 @@ package com.ftn.PrviMavenVebProjekat.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
@@ -18,9 +19,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ftn.PrviMavenVebProjekat.model.Destinacija;
+import com.ftn.PrviMavenVebProjekat.service.DestinacijaService;
+import com.ftn.PrviMavenVebProjekat.service.PrevoznoSredstvoService;
 import com.ftn.PrviMavenVebProjekat.model.Kategorija;
+import com.ftn.PrviMavenVebProjekat.model.PrevoznoSredstvo;
 import com.ftn.PrviMavenVebProjekat.model.Putovanje;
+import com.ftn.PrviMavenVebProjekat.model.SmestajnaJedinica;
 import com.ftn.PrviMavenVebProjekat.service.PutovanjeService;
+import com.ftn.PrviMavenVebProjekat.service.SmestajnaJedinicaService;
 
 
 @Controller
@@ -33,6 +40,15 @@ public class PutovanjeController implements ServletContextAware {
 	
 	@Autowired
 	private PutovanjeService putovanjeService;
+	
+	@Autowired
+	private DestinacijaService destinacijaService;
+	
+	@Autowired
+	private SmestajnaJedinicaService smestajnaJedinicaService;
+	
+	@Autowired
+	private PrevoznoSredstvoService prevoznoSredstvoService;
 	
 	@PostConstruct
 	public void init() {	
@@ -49,8 +65,20 @@ public class PutovanjeController implements ServletContextAware {
 	public ModelAndView index() {
 		
 		List<Putovanje> putovanja = putovanjeService.findAll();
+	    List<Destinacija> destinacije = putovanja.stream()
+	            .map(putovanje -> destinacijaService.findOne(putovanje.getIdDestinacije()))
+	            .collect(Collectors.toList());
+	    List<SmestajnaJedinica> smestajneJedinice = putovanja.stream()
+	    		.map(putovanje -> smestajnaJedinicaService.findOne(putovanje.getIdSmestajnaJedinica()))
+	    		.collect(Collectors.toList());
+	    List<PrevoznoSredstvo> prevoznaSredstva = putovanja.stream()
+	    		.map(putovanje -> prevoznoSredstvoService.findOne(putovanje.getIdPrevoznoSredstvo()))
+	    		.collect(Collectors.toList());
 		ModelAndView result = new ModelAndView("putovanja");
 		result.addObject("putovanja", putovanja);
+		result.addObject("destinacije", destinacije);
+		result.addObject("smestajneJedinice", smestajneJedinice);
+		result.addObject("prevoznaSredstva", prevoznaSredstva);
 		return result;
 	}
 	
@@ -63,15 +91,15 @@ public class PutovanjeController implements ServletContextAware {
 	@PostMapping(value="/add")
 	public void dodajPutovanje(HttpServletResponse response,@RequestParam Long id,@RequestParam String sifraPutovanja,
 			@RequestParam Long idDestinacije,
-			@RequestParam String prevoznoSredstvo,@RequestParam String smestajnaJedinica,
+			@RequestParam Long idPrevoznoSredstvo,@RequestParam Long idSmestajnaJedinica,
 			@RequestParam Kategorija kategorija, 
 			@RequestParam String datumPolaska, @RequestParam String datumPovratka,
 			@RequestParam int brojNocenja, @RequestParam double cena) throws IOException {
 		Putovanje putovanje = new Putovanje(
 				sifraPutovanja,
 				idDestinacije,
-				prevoznoSredstvo,
-				smestajnaJedinica,
+				idPrevoznoSredstvo,
+				idSmestajnaJedinica,
 				kategorija,
 				datumPolaska,
 				datumPovratka,

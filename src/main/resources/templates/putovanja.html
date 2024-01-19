@@ -37,7 +37,7 @@
 						</a>
 					</td>-->
 					<td th:text="${itPutovanje.sifraPutovanja}"></td>
-					<td><a th:text="${itPutovanje.idDestinacije}" th:href="|destinacije/details?id=${itPutovanje.idDestinacije}|"></a></td>
+					<td><a th:text="${destinacije[status.index].grad}" th:href="|destinacije/details?id=${itPutovanje.idDestinacije}|"></a></td>
 					<td th:text="${itPutovanje.prevoznoSredstvo}"></td>
 					<td th:text="${itPutovanje.smestajnaJedinica}"></td>
 					<td th:text="${itPutovanje.kategorija}"></td>
