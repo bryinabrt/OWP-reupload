@@ -64,6 +64,19 @@ public class DestinacijaDAOImpl implements DestinacijaDAO {
 
 		return rowCallbackHandler.getDestinacije().get(0);
 	}
+	
+	@Override
+	public Destinacija findOneByGrad(String grad) {
+		String sql = 
+				"SELECT d.id, d.grad, d.drzava, d.kontinent FROM destinacije d " + 
+				"WHERE d.grad = ? " + 
+				"ORDER BY d.grad";
+
+		DestinacijaRowCallBackHandler rowCallbackHandler = new DestinacijaRowCallBackHandler();
+		jdbcTemplate.query(sql, rowCallbackHandler, grad);
+
+		return rowCallbackHandler.getDestinacije().get(0);
+	}
 
 	@Override
 	public List<Destinacija> findAll() {

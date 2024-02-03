@@ -19,6 +19,11 @@ public class DatabaseTipJediniceServiceImpl implements TipJediniceService {
 	public TipJedinice findOne(Long id) {
 		return tipJediniceDAO.findOne(id);
 	}
+	
+	@Override
+	public TipJedinice findOneByNaziv(String nazivTipaJedinice) {
+		return tipJediniceDAO.findOneByNaziv(nazivTipaJedinice);
+	}
 
 	@Override
 	public List<TipJedinice> findAll() {

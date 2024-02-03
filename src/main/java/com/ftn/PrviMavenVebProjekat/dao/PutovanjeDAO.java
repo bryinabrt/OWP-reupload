@@ -8,6 +8,8 @@ public interface PutovanjeDAO {
 	
 	public Putovanje findOne(Long id); 
 	
+	public Putovanje findOneBySifra(String sifraPutovanja);
+	
 	public List<Putovanje> findAll(); 
 	
 	int save(Putovanje putovanje); 

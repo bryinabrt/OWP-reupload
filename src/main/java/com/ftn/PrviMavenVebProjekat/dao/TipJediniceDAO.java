@@ -6,7 +6,9 @@ import com.ftn.PrviMavenVebProjekat.model.TipJedinice;
 
 public interface TipJediniceDAO {
 	
-	public TipJedinice findOne(Long id); 
+	public TipJedinice findOne(Long id);
+	
+	public TipJedinice findOneByNaziv(String nazivTipaJedinice); 
 	
 	public List<TipJedinice> findAll(); 
 	

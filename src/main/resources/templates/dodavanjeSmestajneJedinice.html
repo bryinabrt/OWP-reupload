@@ -1,0 +1,53 @@
+<!DOCTYPE html>    
+ <html xmlns:th="http://www.thymeleaf.org">    
+ <head>    
+ 	<meta charset="UTF-8">    
+ 	<base th:href="@{/}">  
+ 	<title>Dodaj smestajnu jedinicu</title>    
+ 	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>    
+ 	<link rel="stylesheet" type="text/css" href="css/StiloviHorizontalniMeni.css"/>  
+ </head>    
+ <body>    
+ 	<ul>    
+ 		<li><a href="./">Pocetna</a></li>
+ 		<li><a href="destinacije">Destinacije</a></li>    
+ 		<li><a href="korisnici">Korisnici</a></li>    
+ 	</ul>    
+ 	<form method="post" action="smestajneJedinice/add">    
+ 		<table>
+ 			<caption>Smestajna Jedinica</caption>
+ 			<input type="hidden" name="id" />
+ 			<tr><th>Naziv Jedinice<td><input type="text" value="" name="nazivJedinice"/></td></tr>   
+ 			<tr><th>Destinacija:</th><td>
+ 			<select class="form-control" id="dropDownListaDestinacije" name="grad">
+    		<option value="0">Izaberi Destinaciju</option>
+    		<option th:each="itDestinacija : ${destinacije}" th:value="${itDestinacija.grad}" th:text="${itDestinacija.grad}"></option>
+			</select>
+			</td></tr>
+ 			<tr><th>Kapacitet:</th><td><input type="number" value="" name="kapacitet" /></td></tr>
+ 			<tr><th>Tip Jedinice:</th><td>    
+ 			<select class="form-control" id="dropDownListaTipJedinica" name="nazivTipaJedinice">
+    		<option value="0">Izaberi tip</option>
+    		<option th:each="itTipJedinice : ${tipJedinica}" th:value="${itTipJedinice.nazivTipaJedinice}" th:text="${itTipJedinice.nazivTipaJedinice}"></option>
+			</select>
+			</td></tr>
+ 			<tr><th>Wifi<td>
+ 			<input type="checkbox" name="uslugaWifi" th:checked="${smestajnaJedinica.uslugaWifi}" />
+ 			<input type="hidden" name="uslugaWifi" th:value="false" />
+ 			</td></tr>
+ 			<tr><th>TV<td>
+ 			<input type="checkbox" name="uslugaTv" th:checked="${smestajnaJedinica.uslugaTv}" />
+ 			<input type="hidden" name="uslugaTv" th:value="false" />
+ 			</td></tr>
+ 			<tr><th>Kupatilo<td>
+ 			<input type="checkbox" name="uslugaKupatilo" th:checked="${smestajnaJedinica.uslugaKupatilo}" />
+ 			<input type="hidden" name="uslugaKupatilo" th:value="false" />
+ 			</td></tr>
+ 			<tr><th>Opis<td><input type="text" value="" name="opis"/></td></tr>
+ 			<input type="hidden" name="recenzija" value="0"/>
+ 			<tr><th></th><td><input type="submit" value="Dodaj"/></td>    
+ 		</table>    
+ 	</form>   
+ 	<br/>  
+ </body>  
+ </html>  		

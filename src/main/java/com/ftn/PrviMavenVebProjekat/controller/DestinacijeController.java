@@ -35,7 +35,6 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(value="/destinacije")
 public class DestinacijeController implements ServletContextAware {
 
-	public static final String DESTINACIJE_KEY = "destinacije";
 	
 	@Autowired
 	private ServletContext servletContext;

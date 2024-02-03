@@ -19,6 +19,16 @@ public class DatabaseSmestajnaJedinicaServiceImpl implements SmestajnaJedinicaSe
 	public SmestajnaJedinica findOne(Long id) {
 		return smestajnaJedinicaDAO.findOne(id);
 	}
+	
+	@Override
+	public List<SmestajnaJedinica> findOneByDestinacija(Long idDestinacijeSmestaja) {
+		return smestajnaJedinicaDAO.findOneByDestinacija(idDestinacijeSmestaja);
+	}
+	
+	@Override
+	public SmestajnaJedinica findOneByNaziv(String nazivJedinice) {
+		return smestajnaJedinicaDAO.findOneByNaziv(nazivJedinice);
+	}
 
 	@Override
 	public List<SmestajnaJedinica> findAll() {

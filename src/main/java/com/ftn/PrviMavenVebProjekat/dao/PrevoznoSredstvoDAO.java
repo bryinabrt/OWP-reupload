@@ -7,6 +7,10 @@ import com.ftn.PrviMavenVebProjekat.model.PrevoznoSredstvo;
 public interface PrevoznoSredstvoDAO {
 	public PrevoznoSredstvo findOne(Long id); 
 	
+	public List<PrevoznoSredstvo> findOneByDestinacija(Long krajnjaDestinacija);
+	
+	public PrevoznoSredstvo findOneByTip(String tipSredstva); 
+	
 	public List<PrevoznoSredstvo> findAll(); 
 	
 	int save(PrevoznoSredstvo prevoznaSredstva); 

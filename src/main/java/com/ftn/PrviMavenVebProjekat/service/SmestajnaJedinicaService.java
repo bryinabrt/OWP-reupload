@@ -8,6 +8,10 @@ public interface SmestajnaJedinicaService {
 	
 	SmestajnaJedinica findOne(Long id); 
 	
+	List<SmestajnaJedinica> findOneByDestinacija(Long idDestinacijeSmestaja); 
+	
+	SmestajnaJedinica findOneByNaziv(String nazivJedinice); 
+	
 	List<SmestajnaJedinica> findAll(); 
 	
 	SmestajnaJedinica save(SmestajnaJedinica smestajneJedinice); 

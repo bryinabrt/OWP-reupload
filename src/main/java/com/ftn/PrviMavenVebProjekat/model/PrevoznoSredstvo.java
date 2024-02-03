@@ -42,14 +42,6 @@ public class PrevoznoSredstvo {
 		this.id = id;
 	}
 	
-	
-	public String getNaziv() {
-		return tipSredstva;
-	}
-	public void setNaziv(String tipSredstva) {
-		this.tipSredstva = tipSredstva;
-	}
-	
 
 	public String getTipSredstva() {
 		return tipSredstva;

@@ -25,7 +25,7 @@
 					<th>Kapacitet</th>
 					<th>Destinacija</th>
 					<th>Recenzija</th>
-					<th>Usluge</th>
+					<th>Wifi, Kupatilo, TV</th>
 					<th>Opis</th>
 				</tr>
 				<tr th:each="itSmestajnaJedinica, status : ${smestajneJedinice}">
@@ -38,9 +38,16 @@
 					<td th:text="${itSmestajnaJedinica.nazivJedinice}"></td>
 					<td><a th:text="${tipJedinica[status.index].nazivTipaJedinice}" th:href="|tipJedinica/details?id=${itSmestajnaJedinica.idTipJedinice}|"></a></td>
 					<td th:text="${itSmestajnaJedinica.kapacitet}"></td>
-					<td><a th:text="${destinacije[status.index].grad}" th:href="|destinacije/details?id=${itSmestajnaJedinica.idDestinacije}|"></a></td>
+					<td><a th:text="${destinacije[status.index].grad}" th:href="|destinacije/details?id=${itSmestajnaJedinica.idDestinacijeSmestaja}|"></a></td>
 					<td th:text="${itSmestajnaJedinica.recenzija}"></td>
-					<td><a th:text="${usluge[status.index].nazivUsluge}" th:href="|usluge/details?id=${itSmestajnaJedinica.idUsluge}|"></a></td>
+					<td>
+						<span th:if="${itSmestajnaJedinica.uslugaWifi == true}">Da, </span>
+						<span th:if="${itSmestajnaJedinica.uslugaWifi == false}">Ne, </span>
+						<span th:if="${itSmestajnaJedinica.uslugaKupatilo == true}">Da, </span>
+						<span th:if="${itSmestajnaJedinica.uslugaKupatilo == false}">Ne, </span>
+						<span th:if="${itSmestajnaJedinica.uslugaTv == true}">Da</span>
+						<span th:if="${itSmestajnaJedinica.uslugaTv == false}">Ne</span>
+					</td>
 					<td th:text="${itSmestajnaJedinica.opis}"></td>
 					<td>
 						<form method="post" action="smestajneJedinice/delete">
@@ -50,7 +57,7 @@
 					</td>
 					<td>
 						<form th:action="@{/}">
-							<a th:href="|smestajnaJedinica/details?id=${itSmestajnaJedinica.id}|"
+							<a th:href="|smestajneJedinice/details?id=${itSmestajnaJedinica.id}|"
 								th:text="Izmeni">
 							</a>
 						</form>
@@ -58,7 +65,7 @@
 				</tr>
 		</table>
 		<ul>
-			<li><a href="destinacije/add">Dodaj Destinaciju</a></li>
+			<li><a href="smestajneJedinice/add">Dodaj Smestajnu Jedinicu</a></li>
 		</ul>
 	
 	</body>

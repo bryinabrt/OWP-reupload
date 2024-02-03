@@ -7,6 +7,10 @@ import com.ftn.PrviMavenVebProjekat.model.PrevoznoSredstvo;
 public interface PrevoznoSredstvoService {
 	PrevoznoSredstvo findOne(Long id); 
 	
+	PrevoznoSredstvo findOneByTip(String tipSredstva);
+	
+	List<PrevoznoSredstvo> findOneByDestinacija(Long krajnjaDestinacija);
+	
 	List<PrevoznoSredstvo> findAll(); 
 	
 	PrevoznoSredstvo save(PrevoznoSredstvo prevoznaSredstva); 

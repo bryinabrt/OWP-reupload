@@ -14,20 +14,21 @@ public class Putovanje {
 	private String datumPolaska;
 	private String datumPovratka;
 	private int brojNocenja;
-	private double cena;
+	private String slika;
 	private List<Destinacija> destinacije;
 	private List<PrevoznoSredstvo> prevoznaSredstva;
 	private List<SmestajnaJedinica> smestajneJedinice;
+	private List<Price> prices;
 	
 	public Putovanje() {
 		this.destinacije = new ArrayList<Destinacija>();
 		this.prevoznaSredstva = new ArrayList<PrevoznoSredstvo>();
 		this.smestajneJedinice = new ArrayList<SmestajnaJedinica>();
+		this.prices = new ArrayList<Price>();
 	}
 
 	public Putovanje(Long id, String sifraPutovanja, Long idDestinacije, Long idPrevoznoSredstvo,
-			Long idSmestajnaJedinica, Kategorija kategorija, String datumPolaska, String datumPovratka, int brojNocenja,
-			double cena) {
+			Long idSmestajnaJedinica, Kategorija kategorija, String datumPolaska, String datumPovratka, int brojNocenja, String slika) {
 		super();
 		this.id = id;
 		this.sifraPutovanja = sifraPutovanja;
@@ -38,15 +39,15 @@ public class Putovanje {
 		this.datumPolaska = datumPolaska;
 		this.datumPovratka = datumPovratka;
 		this.brojNocenja = brojNocenja;
-		this.cena = cena;
+		this.slika = slika;
 		this.destinacije = new ArrayList<Destinacija>();
 		this.prevoznaSredstva = new ArrayList<PrevoznoSredstvo>();
 		this.smestajneJedinice = new ArrayList<SmestajnaJedinica>();
+		this.prices = new ArrayList<Price>();
 	}
 	
 	public Putovanje(String sifraPutovanja, Long idDestinacije, Long idPrevoznoSredstvo,
-			Long idSmestajnaJedinica, Kategorija kategorija, String datumPolaska, String datumPovratka, int brojNocenja,
-			double cena) {
+			Long idSmestajnaJedinica, Kategorija kategorija, String datumPolaska, String datumPovratka, int brojNocenja, String slika) {
 		super();
 		this.sifraPutovanja = sifraPutovanja;
 		this.idDestinacije = idDestinacije;
@@ -56,10 +57,44 @@ public class Putovanje {
 		this.datumPolaska = datumPolaska;
 		this.datumPovratka = datumPovratka;
 		this.brojNocenja = brojNocenja;
-		this.cena = cena;
+		this.slika = slika;
 		this.destinacije = new ArrayList<Destinacija>();
 		this.prevoznaSredstva = new ArrayList<PrevoznoSredstvo>();
 		this.smestajneJedinice = new ArrayList<SmestajnaJedinica>();
+		this.prices = new ArrayList<Price>();
+	}
+
+	public Putovanje(String sifraPutovanja, Long idDestinacije, Long idPrevoznoSredstvo, Long idSmestajnaJedinica,
+			Kategorija kategorija, int brojNocenja, String slika) {
+		super();
+		this.sifraPutovanja = sifraPutovanja;
+		this.idDestinacije = idDestinacije;
+		this.idPrevoznoSredstvo = idPrevoznoSredstvo;
+		this.idSmestajnaJedinica = idSmestajnaJedinica;
+		this.kategorija = kategorija;
+		this.brojNocenja = brojNocenja;
+		this.slika = slika;
+		this.destinacije = new ArrayList<Destinacija>();
+		this.prevoznaSredstva = new ArrayList<PrevoznoSredstvo>();
+		this.smestajneJedinice = new ArrayList<SmestajnaJedinica>();
+		this.prices = new ArrayList<Price>();	
+	}
+	
+	public Putovanje(Long id, String sifraPutovanja, Long idDestinacije, Long idPrevoznoSredstvo, Long idSmestajnaJedinica,
+			Kategorija kategorija, int brojNocenja, String slika) {
+		super();
+		this.id = id;
+		this.sifraPutovanja = sifraPutovanja;
+		this.idDestinacije = idDestinacije;
+		this.idPrevoznoSredstvo = idPrevoznoSredstvo;
+		this.idSmestajnaJedinica = idSmestajnaJedinica;
+		this.kategorija = kategorija;
+		this.brojNocenja = brojNocenja;
+		this.slika = slika;
+		this.destinacije = new ArrayList<Destinacija>();
+		this.prevoznaSredstva = new ArrayList<PrevoznoSredstvo>();
+		this.smestajneJedinice = new ArrayList<SmestajnaJedinica>();
+		this.prices = new ArrayList<Price>();	
 	}
 
 	public Long getId() {
@@ -143,12 +178,12 @@ public class Putovanje {
 		this.brojNocenja = brojNocenja;
 	}
 
-	public double getCena() {
-		return cena;
+	public String getSlika() {
+		return slika;
 	}
 
-	public void setCena(double cena) {
-		this.cena = cena;
+	public void setSlika(String slika) {
+		this.slika = slika;
 	}
 
 	public List<Destinacija> getDestinacije() {
@@ -173,6 +208,14 @@ public class Putovanje {
 
 	public void setSmestajneJedinice(List<SmestajnaJedinica> smestajneJedinice) {
 		this.smestajneJedinice = smestajneJedinice;
+	}
+
+	public List<Price> getPrices() {
+		return prices;
+	}
+
+	public void setPrices(List<Price> prices) {
+		this.prices = prices;
 	}
 	
 	

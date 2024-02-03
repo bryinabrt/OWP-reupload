@@ -22,9 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ftn.PrviMavenVebProjekat.model.Destinacija;
 import com.ftn.PrviMavenVebProjekat.model.SmestajnaJedinica;
 import com.ftn.PrviMavenVebProjekat.model.TipJedinice;
-import com.ftn.PrviMavenVebProjekat.model.Usluga;
 import com.ftn.PrviMavenVebProjekat.service.DestinacijaService;
-import com.ftn.PrviMavenVebProjekat.service.UslugaService;
 import com.ftn.PrviMavenVebProjekat.service.SmestajnaJedinicaService;
 import com.ftn.PrviMavenVebProjekat.service.TipJediniceService;
 
@@ -75,19 +73,41 @@ public class SmestajnaJedinicaController implements ServletContextAware {
 	}
 	
 	@GetMapping(value="/add")
-	public String dodajPutovanje(HttpServletResponse response) throws IOException {
-		return "dodavanjeSmestajnihJedinica";
+	@ResponseBody
+	public ModelAndView dodajSmestajnuJedinicu(){
+		List<TipJedinice> tipJedinica = tipJediniceService.findAll();
+		
+		List<Destinacija> destinacije = destinacijaService.findAll();
+		
+		ModelAndView result = new ModelAndView("dodavanjeSmestajneJedinice");
+		//dodata prazna smestajna jedinica zbog boolova
+		result.addObject("smestajnaJedinica", new SmestajnaJedinica());
+		result.addObject("tipJedinica", tipJedinica);
+		result.addObject("destinacije", destinacije);
+		
+		return result;
 	}
 	
 	
 	@PostMapping(value="/add")
-	public void dodajPutovanje(HttpServletResponse response,@RequestParam Long id,@RequestParam String nazivJedinice,
-			@RequestParam Long idTipJedinice,
-			@RequestParam Integer kapacitet,@RequestParam Long idDestinacije,
+	public void dodajSmestajnuJedinicu(HttpServletResponse response,@RequestParam Long id,@RequestParam String nazivJedinice,
+			@RequestParam String nazivTipaJedinice,
+			@RequestParam Integer kapacitet, @RequestParam String grad,
 			@RequestParam Double recenzija, 
 			@RequestParam Boolean uslugaWifi, @RequestParam Boolean uslugaKupatilo, 
 			@RequestParam Boolean uslugaTv, @RequestParam String opis) throws IOException {
-		SmestajnaJedinica smestajnaJedinica = new SmestajnaJedinica(
+		
+
+		
+		Destinacija destinacija = destinacijaService.findOneByGrad(grad);
+		
+		TipJedinice tipJedinice = tipJediniceService.findOneByNaziv(nazivTipaJedinice);
+		
+		Long idDestinacije = destinacija.getId();
+		
+		Long idTipJedinice = tipJedinice.getId();
+		
+		SmestajnaJedinica SmestajnaJedinica = new SmestajnaJedinica(
 				nazivJedinice,
 				idTipJedinice,
 				kapacitet,
@@ -98,17 +118,23 @@ public class SmestajnaJedinicaController implements ServletContextAware {
 				uslugaTv,
 				opis);
 		
-		smestajnaJedinicaService.save(smestajnaJedinica);
+		smestajnaJedinicaService.save(SmestajnaJedinica);
 		response.sendRedirect(bURL);
 	}
 	
 	@GetMapping(value="/details")
 	public ModelAndView details(@RequestParam Long id, HttpServletResponse response) throws IOException {
-
+		
 		SmestajnaJedinica smestajnaJedinica = smestajnaJedinicaService.findOne(id);
 		
+	    TipJedinice tipJedinice = tipJediniceService.findOne(smestajnaJedinica.getIdTipJedinice());
+	    
+	    Destinacija destinacija = destinacijaService.findOne(smestajnaJedinica.getIdDestinacijeSmestaja());
+	    
 		ModelAndView result = new ModelAndView("smestajnaJedinica");
 		result.addObject("smestajnaJedinica", smestajnaJedinica);
+		result.addObject("tipJedinice", tipJedinice);
+		result.addObject("destinacija", destinacija);
 		return result;
 	}
 	
@@ -121,7 +147,7 @@ public class SmestajnaJedinicaController implements ServletContextAware {
 	@PostMapping(value="/edit")
 	public void edit(@ModelAttribute SmestajnaJedinica smestajnaJedinicaEdited , HttpServletResponse response) throws IOException {	
 		smestajnaJedinicaService.update(smestajnaJedinicaEdited);
-		response.sendRedirect(bURL+"putovanja");
+		response.sendRedirect(bURL+"smestajneJedinice");
 	}
 
 }

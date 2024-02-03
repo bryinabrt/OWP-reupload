@@ -56,23 +56,8 @@ public class KorisnikDAOImpl implements KorisnikDAO {
 			Korisnik korisnik = korisnici.get(id);
 			if (korisnik == null) {
 				korisnik = new Korisnik(id, korisnickoIme, lozinka, email, ime, prezime, datumRodjenja, adresa, brojTelefona, datumRegistracije, uloga);
-				korisnici.put(korisnik.getId(), korisnik); // dodavanje u kolekcijuu
-				
-			    System.out.println("id: " + id);
-			    System.out.println("korisnickoIme: " + korisnickoIme);
-			    System.out.println("lozinka: " + lozinka);
-			    System.out.println("email: " + email);
-			    System.out.println("ime: " + ime);
-			    System.out.println("prezime: " + prezime);
-			    System.out.println("datumRodjenja: " + datumRodjenja);
-			    System.out.println("adresa: " + adresa);
-			    System.out.println("brojTelefona: " + brojTelefona);
-			    System.out.println("datumRegistracije: " + datumRegistracije);
-			    System.out.println("uloga: " + uloga);
-				
+				korisnici.put(korisnik.getId(), korisnik);
 			}
-			
-			System.out.println("Added user to the map: " + korisnik.toString() + " with ID: " + String.valueOf(id));
 
 		}
 		public List<Korisnik> getKorisnik() {
@@ -141,6 +126,48 @@ public class KorisnikDAOImpl implements KorisnikDAO {
 		jdbcTemplate.query(sql, rowCallbackHandler, email, lozinka);
 
 		return rowCallbackHandler.getKorisnik().get(0);
+	}
+	
+	@Override
+	public List<Korisnik> findOneForSort(String korisnickoIme, String uloga) {
+		
+		
+		ArrayList<Object> listaArgumenata = new ArrayList<Object>();
+		
+		String sql = "SELECT korisnickoIme, uloga FROM korisnici ";
+		
+		StringBuffer whereSql = new StringBuffer(" WHERE ");
+		boolean imaArgumenata = false;
+		
+		if(korisnickoIme!=null) {
+			korisnickoIme = "%" + korisnickoIme + "%";
+			if(imaArgumenata)
+				whereSql.append(" AND ");
+			whereSql.append("korisnickoIme LIKE ?");
+			imaArgumenata = true;
+			listaArgumenata.add(korisnickoIme);
+		}
+		
+		if(uloga!=null) {	
+			uloga = "%" + uloga + "%";
+			if(imaArgumenata)
+				whereSql.append(" AND ");
+			whereSql.append("korisnickoIme LIKE ?");
+			imaArgumenata = true;
+			listaArgumenata.add(uloga);
+		}
+		
+		
+		if(imaArgumenata)
+			sql=sql + whereSql.toString()+" ORDER BY korisnickoIme";
+		else
+			sql=sql + " ORDER BY korisnickoIme";
+		System.out.println(sql);
+		
+		KorisnikRowCallBackHandler rowCallbackHandler = new KorisnikRowCallBackHandler();
+		jdbcTemplate.query(sql, rowCallbackHandler);
+
+		return rowCallbackHandler.getKorisnik();
 	}
 	
 

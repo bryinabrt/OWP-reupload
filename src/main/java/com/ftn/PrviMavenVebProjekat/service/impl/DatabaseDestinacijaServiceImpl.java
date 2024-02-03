@@ -20,6 +20,11 @@ public class DatabaseDestinacijaServiceImpl implements DestinacijaService {
 	public Destinacija findOne(Long id) {
 		return destinacijaDAO.findOne(id);
 	}
+	
+	@Override
+	public Destinacija findOneByGrad(String grad) {
+		return destinacijaDAO.findOneByGrad(grad);
+	}
 
 	@Override
 	public List<Destinacija> findAll() {

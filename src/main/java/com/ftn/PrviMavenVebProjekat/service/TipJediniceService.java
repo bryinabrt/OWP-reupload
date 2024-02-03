@@ -8,6 +8,8 @@ public interface TipJediniceService {
 	
 	TipJedinice findOne(Long id); 
 	
+	TipJedinice findOneByNaziv(String naziv);
+	
 	List<TipJedinice> findAll(); 
 	
 	TipJedinice save(TipJedinice tipJedinica); 

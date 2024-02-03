@@ -7,6 +7,7 @@ import com.ftn.PrviMavenVebProjekat.model.Destinacija;
 public interface DestinacijaService {
 
 	Destinacija findOne(Long id); 
+	Destinacija findOneByGrad(String grad);
 	List<Destinacija> findAll(); 
 	Destinacija save(Destinacija destinacija); 
 	Destinacija update(Destinacija destinacija); 

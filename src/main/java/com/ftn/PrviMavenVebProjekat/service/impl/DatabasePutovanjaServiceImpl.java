@@ -19,6 +19,11 @@ public class DatabasePutovanjaServiceImpl implements PutovanjeService{
 	public Putovanje findOne(Long id) {
 		return putovanjeDAO.findOne(id);
 	}
+	
+	@Override
+	public Putovanje findOneBySifra(String sifraPutovanja) {
+		return putovanjeDAO.findOneBySifra(sifraPutovanja);
+	}
 
 	@Override
 	public List<Putovanje> findAll() {

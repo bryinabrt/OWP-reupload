@@ -20,10 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ftn.PrviMavenVebProjekat.dao.SmestajnaJedinicaDAO;
 import com.ftn.PrviMavenVebProjekat.model.Destinacija;
-import com.ftn.PrviMavenVebProjekat.model.Putovanje;
 import com.ftn.PrviMavenVebProjekat.model.SmestajnaJedinica;
 import com.ftn.PrviMavenVebProjekat.model.TipJedinice;
-import com.ftn.PrviMavenVebProjekat.model.Usluga;
 
 @Repository
 public class SmestajnaJedinicaDAOImpl implements SmestajnaJedinicaDAO{
@@ -48,6 +46,7 @@ public class SmestajnaJedinicaDAOImpl implements SmestajnaJedinicaDAO{
 		    Boolean uslugaKupatilo = resultSet.getBoolean(index++);
 		    Boolean uslugaTv = resultSet.getBoolean(index++);
 			String opis = resultSet.getString(index++);
+			System.out.println("wifi: " + uslugaWifi + " kupatilo: " + uslugaKupatilo + " tv: " + uslugaTv);
 			
 			
 			String nazivTipaJedinice = resultSet.getString(index++);
@@ -123,15 +122,51 @@ public class SmestajnaJedinicaDAOImpl implements SmestajnaJedinicaDAO{
 		String sql = 
 				"select s.id, s.nazivJedinice, s.idTipJedinice, s.kapacitet, s.idDestinacijeSmestaja, s.recenzija, s.uslugaWifi, s.uslugaKupatilo, "
 				+ "s.uslugaTv, s.opis, "
-				+ "t.id, t.nazivTipaJedinice, d.id, d.grad, d.drzava, d.kontinent, "
+				+ "t.id, t.nazivTipaJedinice, d.id, d.grad, d.drzava, d.kontinent "
 				+ "from smestajnajedinica s "
 						+ "left join tipjedinice t on t.id = s.idTipJedinice "
 						+ "left join destinacije d on d.id = s.idDestinacijeSmestaja "
 						+ "WHERE s.id = ? " + 
-				"ORDER BY p.id";
+				"ORDER BY s.id";
 
 		SmestajnaJedinicaRowCallbackHandler rowCallbackHandler = new SmestajnaJedinicaRowCallbackHandler();
 		jdbcTemplate.query(sql, rowCallbackHandler, id);
+
+		return rowCallbackHandler.getSve().get(0);
+	}
+	
+	@Override
+	public List<SmestajnaJedinica> findOneByDestinacija(Long idDestinacijeSmestaja) {
+		String sql = 
+				"select s.id, s.nazivJedinice, s.idTipJedinice, s.kapacitet, s.idDestinacijeSmestaja, s.recenzija, s.uslugaWifi, s.uslugaKupatilo, "
+				+ "s.uslugaTv, s.opis, "
+				+ "t.id, t.nazivTipaJedinice, d.id, d.grad, d.drzava, d.kontinent "
+				+ "from smestajnajedinica s "
+						+ "left join tipjedinice t on t.id = s.idTipJedinice "
+						+ "left join destinacije d on d.id = s.idDestinacijeSmestaja "
+						+ "WHERE s.idDestinacijeSmestaja = ? " + 
+				"ORDER BY s.id";
+
+		SmestajnaJedinicaRowCallbackHandler rowCallbackHandler = new SmestajnaJedinicaRowCallbackHandler();
+		jdbcTemplate.query(sql, rowCallbackHandler, idDestinacijeSmestaja);
+
+		return rowCallbackHandler.getSve();
+	}
+	
+	@Override
+	public SmestajnaJedinica findOneByNaziv(String nazivJedinice) {
+		String sql = 
+				"select s.id, s.nazivJedinice, s.idTipJedinice, s.kapacitet, s.idDestinacijeSmestaja, s.recenzija, s.uslugaWifi, s.uslugaKupatilo, "
+				+ "s.uslugaTv, s.opis, "
+				+ "t.id, t.nazivTipaJedinice, d.id, d.grad, d.drzava, d.kontinent "
+				+ "from smestajnajedinica s "
+						+ "left join tipjedinice t on t.id = s.idTipJedinice "
+						+ "left join destinacije d on d.id = s.idDestinacijeSmestaja "
+						+ "WHERE s.nazivJedinice = ? " + 
+				"ORDER BY s.id";
+
+		SmestajnaJedinicaRowCallbackHandler rowCallbackHandler = new SmestajnaJedinicaRowCallbackHandler();
+		jdbcTemplate.query(sql, rowCallbackHandler, nazivJedinice);
 
 		return rowCallbackHandler.getSve().get(0);
 	}
@@ -140,9 +175,9 @@ public class SmestajnaJedinicaDAOImpl implements SmestajnaJedinicaDAO{
 	public List<SmestajnaJedinica> findAll() {
 		String sql = 
 				"select s.id, s.nazivJedinice, s.idTipJedinice, "
-				+"s.kapacitet, s.idDestinacijeSmestaja, s.recenzija, s.uslugaWifi, s.uslugaKupatilo, s.uslugaTv s.opis, "
+				+"s.kapacitet, s.idDestinacijeSmestaja, s.recenzija, s.uslugaWifi, s.uslugaKupatilo, s.uslugaTv, s.opis, "
 				+"t.id, t.nazivTipaJedinice, "
-				+"d.id, d.grad, d.drzava, d.kontinent, "
+				+"d.id, d.grad, d.drzava, d.kontinent "
 				+"from smestajnajedinica s "
 				+"left join destinacije d on d.id = s.idDestinacijeSmestaja "
 				+"LEFT JOIN tipjedinice t ON t.id = s.idTipJedinice";
@@ -160,8 +195,8 @@ public class SmestajnaJedinicaDAOImpl implements SmestajnaJedinicaDAO{
 			
 			@Override
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-				String sql = "INSERT INTO smestajnaJedinica (id, nazivJedinice, idTipJedinice, kapacitet, idDestinacijeSmestaja, recenzija,"
-									+ "	uslugaWifi, uslugaKupatilo, uslugaTv, opis) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				String sql = "INSERT INTO smestajnaJedinica (nazivJedinice, idTipJedinice, kapacitet, idDestinacijeSmestaja, recenzija,"
+									+ "	uslugaWifi, uslugaKupatilo, uslugaTv, opis) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 				PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 				int index = 1;
@@ -186,15 +221,16 @@ public class SmestajnaJedinicaDAOImpl implements SmestajnaJedinicaDAO{
 	
 	@Transactional
 	@Override
-	public int update(SmestajnaJedinica smestajnaJedinica) {		
-		String sql = "UPDATE smestajnaJedinica SET nazivJedinice = ?, idTipJedinice = ?, kapacitet = ?, idDestinacijeSmestaja = ?, "
-					+ "recenzija = ?, uslugaWifi = ?, uslugaKupatilo = ?, uslugaTv = ?, opis = ?"
-					+ " WHERE id = ?";	
-		boolean uspeh = jdbcTemplate.update(sql, smestajnaJedinica.getId(), smestajnaJedinica.getNazivJedinice(), smestajnaJedinica.getIdTipJedinice(),
-				smestajnaJedinica.getKapacitet(), smestajnaJedinica.getIdDestinacijeSmestaja(), smestajnaJedinica.getRecenzija(), smestajnaJedinica.getUslugaWifi(),
-				smestajnaJedinica.getUslugaKupatilo(), smestajnaJedinica.getUslugaTv(), smestajnaJedinica.getOpis()) == 1;
-		
-		return uspeh?1:0;
+	public int update(SmestajnaJedinica smestajnaJedinica) {        
+	    String sql = "UPDATE smestajnaJedinica SET nazivJedinice = ?, kapacitet = ?, opis = ?"
+	                + " WHERE id = ?";
+	    boolean uspeh = jdbcTemplate.update(sql, 
+	            smestajnaJedinica.getNazivJedinice(),
+	            smestajnaJedinica.getKapacitet(), 
+	            smestajnaJedinica.getOpis(),
+	            smestajnaJedinica.getId()) == 1;
+	    
+	    return uspeh ? 1 : 0;
 	}
 	
 	@Transactional

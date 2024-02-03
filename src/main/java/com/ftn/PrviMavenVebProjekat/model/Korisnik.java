@@ -12,6 +12,7 @@ public class Korisnik {
 	private String brojTelefona;
 	private String datumRegistracije;
 	private Uloga uloga;
+	private boolean blokiran = false;
 	private boolean ulogovan = false;
 	
 	public Korisnik(Long id, String korisnickoIme, String lozinka, String email, String ime,
@@ -117,9 +118,29 @@ public class Korisnik {
 	public boolean isPrijavljen() {
 		return ulogovan;
 	}
+	
+	public boolean isAdmin() {
+	    return uloga == Uloga.administrator;
+	}
+	
+	public boolean isOrganizator() {
+	    return uloga == Uloga.organizator;
+	}
+	
+	public boolean isPutnik() {
+	    return uloga == Uloga.putnik;
+	}
 
 	public void setUlogovan(boolean ulogovan) {
 		this.ulogovan = ulogovan;
+	}
+	
+	public boolean isBlokiran() {
+		return blokiran;
+	}
+	
+	public void setBlokiran(boolean blokiran) {
+		this.blokiran = blokiran;
 	}
 	
 	

@@ -7,6 +7,10 @@ import com.ftn.PrviMavenVebProjekat.model.SmestajnaJedinica;
 public interface SmestajnaJedinicaDAO {
 	public SmestajnaJedinica findOne(Long id); 
 	
+	public List<SmestajnaJedinica> findOneByDestinacija(Long idDestinacijeSmestaja);
+	
+	public SmestajnaJedinica findOneByNaziv(String nazivJedinice); 
+	
 	public List<SmestajnaJedinica> findAll(); 
 	
 	int save(SmestajnaJedinica smestajnaJedinica); 

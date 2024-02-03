@@ -1,6 +1,9 @@
 package com.ftn.PrviMavenVebProjekat.controller;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,10 +25,13 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ftn.PrviMavenVebProjekat.model.Destinacija;
 import com.ftn.PrviMavenVebProjekat.service.DestinacijaService;
 import com.ftn.PrviMavenVebProjekat.service.PrevoznoSredstvoService;
+import com.ftn.PrviMavenVebProjekat.service.PriceService;
 import com.ftn.PrviMavenVebProjekat.model.Kategorija;
 import com.ftn.PrviMavenVebProjekat.model.PrevoznoSredstvo;
+import com.ftn.PrviMavenVebProjekat.model.Price;
 import com.ftn.PrviMavenVebProjekat.model.Putovanje;
 import com.ftn.PrviMavenVebProjekat.model.SmestajnaJedinica;
+import com.ftn.PrviMavenVebProjekat.model.TipJedinice;
 import com.ftn.PrviMavenVebProjekat.service.PutovanjeService;
 import com.ftn.PrviMavenVebProjekat.service.SmestajnaJedinicaService;
 
@@ -50,6 +56,9 @@ public class PutovanjeController implements ServletContextAware {
 	@Autowired
 	private PrevoznoSredstvoService prevoznoSredstvoService;
 	
+	@Autowired
+	private PriceService priceService;
+	
 	@PostConstruct
 	public void init() {	
 		bURL = servletContext.getContextPath()+"/";
@@ -65,6 +74,17 @@ public class PutovanjeController implements ServletContextAware {
 	public ModelAndView index() {
 		
 		List<Putovanje> putovanja = putovanjeService.findAll();
+		
+	    for (Putovanje putovanje : putovanja) {
+	        Long putovanjeId = putovanje.getId();
+	        
+	        // Fetch prices for the current Putovanje
+	        List<Price> prices = priceService.findAllByPutovanjeId(putovanjeId);
+	        
+	        // Set the prices for the current Putovanje
+	        putovanje.setPrices(prices);
+	    }
+		
 	    List<Destinacija> destinacije = putovanja.stream()
 	            .map(putovanje -> destinacijaService.findOne(putovanje.getIdDestinacije()))
 	            .collect(Collectors.toList());
@@ -74,39 +94,116 @@ public class PutovanjeController implements ServletContextAware {
 	    List<PrevoznoSredstvo> prevoznaSredstva = putovanja.stream()
 	    		.map(putovanje -> prevoznoSredstvoService.findOne(putovanje.getIdPrevoznoSredstvo()))
 	    		.collect(Collectors.toList());
+	    System.out.println("Trazenje prices...");
+	    /*List<Price> prices = putovanja.stream()
+	            .map(putovanje -> priceService.findAllByPutovanjeId(putovanje.getId()))
+	            .flatMap(List::stream)
+	            .collect(Collectors.toList());*/
+	    List<List<Price>> pricesList = putovanja.stream()
+	            .map(putovanje -> priceService.findAllByPutovanjeId(putovanje.getId()))
+	            .collect(Collectors.toList());
+	    System.out.println("Prices controller: " + pricesList);
 		ModelAndView result = new ModelAndView("putovanja");
 		result.addObject("putovanja", putovanja);
 		result.addObject("destinacije", destinacije);
 		result.addObject("smestajneJedinice", smestajneJedinice);
 		result.addObject("prevoznaSredstva", prevoznaSredstva);
+		result.addObject("pricesList", pricesList);
+		return result;
+	}
+	
+	@GetMapping(value="/odabirDestinacije")
+	@ResponseBody
+	public ModelAndView odabirDestinacije() {
+		List<Destinacija> destinacije = destinacijaService.findAll();
+		ModelAndView result = new ModelAndView("odabirDestinacije");
+		result.addObject("destinacije", destinacije);
 		return result;
 	}
 	
 	@GetMapping(value="/add")
-	public String dodajPutovanje(HttpServletResponse response) throws IOException {
-		return "dodavanjePutovanja";
+	@ResponseBody
+	public ModelAndView dodajPutovanje(@RequestParam("grad") String grad){
+		
+		Destinacija destinacija = destinacijaService.findOneByGrad(grad);
+		
+		Long idDestinacijeSmestaja = destinacija.getId();
+		Long krajnjaDestinacija = destinacija.getId();
+		
+		List<SmestajnaJedinica> smestajneJedinice = smestajnaJedinicaService.findOneByDestinacija(idDestinacijeSmestaja);
+		
+		List<PrevoznoSredstvo> prevoznaSredstva = prevoznoSredstvoService.findOneByDestinacija(krajnjaDestinacija);
+		
+		List<Price> prices = priceService.findAll();
+		
+		ModelAndView result = new ModelAndView("dodavanjePutovanja");
+		//result.addObject("destinacije", destinacije);
+		result.addObject("smestajneJedinice", smestajneJedinice);
+		result.addObject("prevoznaSredstva", prevoznaSredstva);
+		result.addObject("prices", prices);
+		return result;
 	}
 	
 	
 	@PostMapping(value="/add")
-	public void dodajPutovanje(HttpServletResponse response,@RequestParam Long id,@RequestParam String sifraPutovanja,
-			@RequestParam Long idDestinacije,
-			@RequestParam Long idPrevoznoSredstvo,@RequestParam Long idSmestajnaJedinica,
-			@RequestParam Kategorija kategorija, 
-			@RequestParam String datumPolaska, @RequestParam String datumPovratka,
-			@RequestParam int brojNocenja, @RequestParam double cena) throws IOException {
+	public void dodajPutovanje(HttpServletResponse response, @RequestParam Long id, @RequestParam String sifraPutovanja,
+	        @RequestParam String grad, @RequestParam String tipSredstva, @RequestParam String nazivJedinice,
+	        @RequestParam Kategorija kategorija, @RequestParam List<String> startDateList,
+	        @RequestParam List<String> endDateList, @RequestParam List<Double> priceOfTravelList,
+	        @RequestParam int brojNocenja, @RequestParam String slika) throws IOException {
+		
+		Destinacija destinacija = destinacijaService.findOneByGrad(grad);
+		
+		PrevoznoSredstvo prevoznoSredstvo = prevoznoSredstvoService.findOneByTip(tipSredstva);
+		
+		SmestajnaJedinica smestajnaJedinica = smestajnaJedinicaService.findOneByNaziv(nazivJedinice);
+		
+		Long idDestinacije = destinacija.getId();
+		
+		Long idPrevoznoSredstvo = prevoznoSredstvo.getId();
+		
+		Long idSmestajnaJedinica = smestajnaJedinica.getId();
+		
 		Putovanje putovanje = new Putovanje(
 				sifraPutovanja,
 				idDestinacije,
 				idPrevoznoSredstvo,
 				idSmestajnaJedinica,
 				kategorija,
-				datumPolaska,
-				datumPovratka,
 				brojNocenja,
-				cena);
-		
+				slika);
 		putovanjeService.save(putovanje);
+		
+		Putovanje putovanjePrices = putovanjeService.findOneBySifra(sifraPutovanja);
+		
+		Long putovanjeId = putovanjePrices.getId();
+
+        // Format for parsing and formatting LocalDateTime
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+		
+	    // Assuming that startDate, endDate, and priceOfTravel lists have the same size
+	    for (int i = 0; i < startDateList.size(); i++) {
+	        String startDateString = startDateList.get(i);
+	        System.out.println("start " + startDateString);
+	        String endDateString = endDateList.get(i);
+	        System.out.println("end " + endDateString);
+	        Double priceOfTravel = priceOfTravelList.get(i);
+	        
+
+
+	        // Parse the start date string and convert it to LocalDateTime
+	        LocalDateTime startDate = LocalDateTime.parse(startDateString, formatter);
+	        System.out.println("start " + startDate);
+
+	        // Parse the end date string and convert it to LocalDateTimee
+	        LocalDateTime endDate = LocalDateTime.parse(endDateString, formatter);
+	        System.out.println("end " + endDate);
+
+	        // Assuming you have a constructor in Prices class that takes these values
+	        Price prices = new Price(idDestinacije, putovanjeId, startDate, endDate, priceOfTravel);
+	        priceService.save(prices);
+	    }
+		
 		response.sendRedirect(bURL);
 	}
 	
@@ -115,8 +212,21 @@ public class PutovanjeController implements ServletContextAware {
 
 		Putovanje putovanje = putovanjeService.findOne(id);
 		
+		Destinacija destinacija = destinacijaService.findOne(putovanje.getIdDestinacije());
+		
+		PrevoznoSredstvo prevoznoSredstvo = prevoznoSredstvoService.findOne(putovanje.getIdPrevoznoSredstvo());
+		
+		SmestajnaJedinica smestajnaJedinica = smestajnaJedinicaService.findOne(putovanje.getIdSmestajnaJedinica());
+		
+		List<Price> prices = priceService.findAllByPutovanjeId(putovanje.getId());
+		
+		
 		ModelAndView result = new ModelAndView("putovanje");
 		result.addObject("putovanje", putovanje);
+		result.addObject("destinacija", destinacija);
+		result.addObject("prevoznoSredstvo", prevoznoSredstvo);
+		result.addObject("smestajnaJedinica", smestajnaJedinica);
+		result.addObject("prices", prices);
 		return result;
 	}
 	

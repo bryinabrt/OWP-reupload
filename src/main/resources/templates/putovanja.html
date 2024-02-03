@@ -12,6 +12,7 @@
 			<li>
 				<a href="destinacije">Destinacije</a>
 				<a href="korisnici">Korisnici</a>
+				<a href="./">Pocetna</a>
 			</li>
 		</ul>
 		
@@ -19,15 +20,16 @@
 			<caption>Putovanja</caption>
 				<tr>
 					<th>Redni Broj</th>
+					<th>Slika</th>
 					<th>Sifra Putovanja</th>
 					<th>Destinacija</th>
-					<th>Prevozno Sredstvo</th>
 					<th>Smestajna Jedinica</th>
+					<th>Prevozno Sredstvo</th>
 					<th>Kategorija</th>
 					<th>Datum Polaska</th>
 					<th>Datum Povratka</th>
-					<th>Broj Nocenja</th>
 					<th>Cena</th>
+					<th>Broj Nocenja</th>
 				</tr>
 				<tr th:each="itPutovanje, status : ${putovanja}">
 					<td th:text="${(status.index + 1) + '.'}"></td>
@@ -37,21 +39,48 @@
 						</a>
 					</td>-->
 					<td th:text="${itPutovanje.sifraPutovanja}"></td>
+					<td> 
+						<img alt="slika" th:src="${itPutovanje.slika}" width="256" height="128">
+					</td>
 					<td><a th:text="${destinacije[status.index].grad}" th:href="|destinacije/details?id=${itPutovanje.idDestinacije}|"></a></td>
-					<td th:text="${itPutovanje.prevoznoSredstvo}"></td>
-					<td th:text="${itPutovanje.smestajnaJedinica}"></td>
+					<td><a th:text="${smestajneJedinice[status.index].nazivJedinice}" th:href="|smestajneJedinice/details?id=${itPutovanje.idSmestajnaJedinica}|"></a></td>
+					<td><a th:text="${prevoznaSredstva[status.index].tipSredstva}" th:href="|prevoznaSredstva/details?id=${itPutovanje.idPrevoznoSredstvo}|"></a></td>
 					<td th:text="${itPutovanje.kategorija}"></td>
-					<td th:text="${itPutovanje.datumPolaska}"></td>
-					<td th:text="${itPutovanje.datumPovratka}"></td>
-					<td th:text="${itPutovanje.brojNocenja}"></td>
-					<td th:text="${itPutovanje.cena}"></td>
 					<td>
+						<ul>
+							<li th:each="itPrice: ${pricesList[status.index]}"><p th:text="${itPrice.startDate}"></p></li>
+						</ul>
+					</td>
+					<td>
+						<ul>
+							<li th:each="itPrice: ${pricesList[status.index]}"><p th:text="${itPrice.endDate}"></p></li>
+						</ul>
+					</td>
+					<td>
+						<ul>
+							<li th:each="itPrice: ${pricesList[status.index]}"><p th:text="${itPrice.priceOfTravel}"></p></li>
+						</ul>
+					</td>
+					<!-- <ul><span th:text="${pricesList[status.index].class.simpleName}"></span></ul> -->
+					<td th:text="${itPutovanje.brojNocenja}"></td>
+					<td th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.isPutnik()}">
+					<li th:each="itPrice, priceStatus : ${pricesList[status.index]}">
+						<form th:action="@{/}">
+							<a th:href="|kolica/add?id=${itPutovanje.id}&grad=${destinacije[status.index].grad}&tipSredstva=${prevoznaSredstva[status.index].tipSredstva}
+								&nazivJedinice=${smestajneJedinice[status.index].nazivJedinice}&priceId=${itPrice.id}&startDate=${itPrice.startDate}&endDate=${itPrice.endDate}&priceOfTravel=${itPrice.priceOfTravel}|"
+
+								th:text="DodajUKorpu">
+							</a>
+						</form>
+					</li>
+					</td>
+					<td th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.isOrganizator()}">
 						<form method="post" action="putovanja/delete">
 							<input type="hidden" name="id" th:value="${itPutovanje.id}"/>
 							<input type="submit" value="Obrisi"/>
 						</form>
 					</td>
-					<td>
+					<td th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.isOrganizator()}">
 						<form th:action="@{/}">
 							<a th:href="|putovanja/details?id=${itPutovanje.id}|"
 								th:text="Izmeni">
@@ -61,7 +90,7 @@
 				</tr>
 		</table>
 		<ul>
-			<li><a href="destinacije/add">Dodaj Destinaciju</a></li>
+			<li th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.isAdmin()}"><a href="putovanja/odabirDestinacije">Dodaj putovanje</a></li>
 		</ul>
 	
 	</body>

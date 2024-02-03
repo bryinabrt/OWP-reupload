@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<base th:href="@{/}">
+	<meta charset="UTF-8" />
+	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
+	<link rel="stylesheet" type="text/css" href="css/StiloviHorizontalniMeni.css"/>
+	<title>Odabir destinacije</title>
+</head>
+<body>
+	<br/>
+		<form method="post" action="/add">
+			<table>
+				<caption>Prijava korisnika na sistem</caption>
+				<input type="hidden" name="id" />
+				<tr><th>Odabir destinacije:</th><td>   
+				<ul>
+           		<li th:each="destinacija : ${destinacije}">
+            		<a th:href="@{/putovanja/add(grad=${destinacija.grad})}" th:text="${destinacija.grad}"></a>
+        		</li>
+    			</ul>
+    			</td></tr>
+			</table>
+		</form>
+</body>
+</html>

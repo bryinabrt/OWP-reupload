@@ -7,6 +7,8 @@ import com.ftn.PrviMavenVebProjekat.model.Putovanje;
 public interface PutovanjeService {
 	Putovanje findOne(Long id); 
 	
+	Putovanje findOneBySifra(String sifraPutovanja);
+	
 	List<Putovanje> findAll(); 
 	
 	Putovanje save(Putovanje putovanje); 

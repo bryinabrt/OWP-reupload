@@ -62,6 +62,19 @@ public class TipJediniceDAOImpl implements TipJediniceDAO {
 
 		return rowCallbackHandler.getTipJedinica().get(0);
 	}
+	
+	@Override
+	public TipJedinice findOneByNaziv(String nazivTipaJedinice) {
+		String sql = 
+				"SELECT t.id, t.nazivTipaJedinice FROM tipJedinice t " + 
+				"WHERE t.nazivTipajedinice = ? " + 
+				"ORDER BY t.nazivTipaJedinice";
+
+		TipJediniceRowCallbackHandler rowCallbackHandler = new TipJediniceRowCallbackHandler();
+		jdbcTemplate.query(sql, rowCallbackHandler, nazivTipaJedinice);
+
+		return rowCallbackHandler.getTipJedinica().get(0);
+	}
 
 	@Override
 	public List<TipJedinice> findAll() {
