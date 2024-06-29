@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.ftn.PrviMavenVebProjekat.model.ShoppingCart;
 
+import javax.servlet.http.HttpSession;
+
 public interface ShoppingCartService {
 	ShoppingCart findOne(Long id); 
 	
@@ -13,5 +15,7 @@ public interface ShoppingCartService {
 	
 	ShoppingCart update(ShoppingCart shoppingCart); 
 	
-	ShoppingCart delete(Long id); 
+	ShoppingCart delete(Long id);
+
+	ShoppingCart remove(Long cartId, Long korisnikId, HttpSession session);
 }

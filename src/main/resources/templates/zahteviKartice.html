@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <base th:href="@{/}"><!-- popuni href atribut vrednosšću context path-a -->
+  <link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
+  <link rel="stylesheet" type="text/css" href="css/StiloviKorisnik.css"/>
+  <title>Zahtevi Kartice</title>
+</head>
+<body>
+  <table class="korisnik" th:unless="${session.prijavljeniKorisnik == null}">
+    <tr><th>Prijavljeni ste kao</th><td><a th:href="|korisnici/details?id=${session.prijavljeniKorisnik.id}|" th:text="${session.prijavljeniKorisnik.korisnickoIme}"></a>.</td></tr>
+    <tr>
+      <td colspan="2">
+        <ul>
+          <li><a th:href="|kolica?id=${session.prijavljeniKorisnik.id}|">Kolica</a></li>
+          <li><a href="korisnici/logout">odjava</a></li>
+          <li th:if="${session.prijavljeniKorisnik.isAdmin()}"><a href="zahtevi">Zahtevi</a></li>
+        </ul>
+      </td>
+    </tr>
+  </table>
+  <table class="korisnik" th:if="${session.prijavljeniKorisnik == null}">
+    <tr><th>Niste prijavljeni</th></tr>
+    <tr>
+      <td>
+        <ul>
+          <li><a href="korisnici/registracija">registracija</a></li>
+          <li><a href="korisnici/login">prijava</a></li>
+        </ul>
+      </td>
+    </tr>
+  </table>
+
+  <table>
+    <caption>Zahtevi kartice</caption>
+    <tr>
+      <th>Redni broj</th>
+      <th>Ime</th>
+      <th>Prezime</th>
+    </tr>
+    <tr th:each="itZahtev, status : ${zahteviKartice}">
+      <td th:text="${(status.index + 1) + '.'}"></td>
+      <td th:text="${korisnici[status.index].ime}"></td>
+      <td th:text="${korisnici[status.index].prezime}"></td>
+      <td>
+        <form method="post" action="zahtevi/odbij">
+          <input type="hidden" name="id" th:value="${itZahtev.id}"/>
+          <input type="hidden" name="idKorisnika" th:value="${korisnici[status.index].id}" />
+          <input type="submit" value="Odbij"/>
+        </form>
+      </td>
+      <td>
+        <form method="post" action="zahtevi/odobri">
+          <input type="hidden" name="id" th:value="${itZahtev.id}"/>
+          <input type="hidden" name="idKorisnika" th:value="${korisnici[status.index].id}" />
+          <input type="submit" value="Odobri"/>
+        </form>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

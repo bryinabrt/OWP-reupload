@@ -4,6 +4,8 @@ public class LoyaltyKartica {
 	private Long id;
 	private Long idKorisnika;
 	private Integer brojBodova;
+
+	private Integer potrosenNovac;
 	
 	public LoyaltyKartica(Long idKorisnika, Integer brojBodova) {
 		super();
@@ -16,6 +18,23 @@ public class LoyaltyKartica {
 		this.idKorisnika = idKorisnika;
 		this.brojBodova = brojBodova;
 	}
+
+	public LoyaltyKartica(Long idKorisnika, Integer brojBodova, Integer potrosenNovac) {
+		super();
+		this.id = id;
+		this.idKorisnika = idKorisnika;
+		this.brojBodova = brojBodova;
+		this.potrosenNovac = potrosenNovac;
+	}
+
+	public LoyaltyKartica(Long id, Long idKorisnika, Integer brojBodova, Integer potrosenNovac) {
+		super();
+		this.id = id;
+		this.idKorisnika = idKorisnika;
+		this.brojBodova = brojBodova;
+		this.potrosenNovac = potrosenNovac;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -34,5 +53,10 @@ public class LoyaltyKartica {
 	public void setBrojBodova(Integer brojBodova) {
 		this.brojBodova = brojBodova;
 	}
-	
+	public Integer getPotrosenNovac() {
+		return potrosenNovac;
+	}
+	public void setPotrosenNovac(Integer potrosenNovac) {
+		this.potrosenNovac = potrosenNovac;
+	}
 }

@@ -97,8 +97,6 @@ public class Price {
         return startDate.format(formatter);
     }
 
-
-    // Setter for startDate with custom parsing
     public void setFormattedStartDate(String formattedStartDate) {
         this.startDate = LocalDateTime.parse(formattedStartDate, DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
     }
@@ -108,7 +106,6 @@ public class Price {
         return endDate.format(formatter);
     }
 
-    // Setter for endDate with custom parsing
     public void setFormattedEndDate(String formattedEndDate) {
         this.endDate = LocalDateTime.parse(formattedEndDate, DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
     }

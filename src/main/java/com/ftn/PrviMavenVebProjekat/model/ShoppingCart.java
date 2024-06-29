@@ -41,6 +41,16 @@ public class ShoppingCart {
 		this.putovanja = new ArrayList<Putovanje>();
 		this.prices = new ArrayList<Price>();
 	}
+	
+	public ShoppingCart(Long korisnikId, Integer brojPutnika, Double ukupnaCena, Long pricesId) {
+		super();
+		this.korisnikId = korisnikId;
+		this.brojPutnika = brojPutnika;
+		this.pricesId = pricesId;
+		this.ukupnaCena = ukupnaCena;
+		this.putovanja = new ArrayList<Putovanje>();
+		this.prices = new ArrayList<Price>();
+	}
 
 
 	public Long getId() {

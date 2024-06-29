@@ -11,7 +11,29 @@
 	<ul>    
  		<li><a href="destinacije">Destinacije</a></li>    
  		<li><a href="korisnici">Korisnici</a></li>    
- 	</ul>  
+ 		<li><a href="./">Pocetna</a></li> 
+ 	</ul>
+ 	<table class="korisnik" th:unless="${session.prijavljeniKorisnik == null}">
+		<tr><th>Prijavljeni ste kao</th><td><a th:href="|Korisnici/Details?korisnickoIme=${session.prijavljeniKorisnik.korisnickoIme}|" th:text="${session.prijavljeniKorisnik.korisnickoIme}"></a>.</td></tr>
+		<tr>
+			<td colspan="2">
+				<ul>
+					<li><a href="korisnici/logout">odjava</a></li>
+				</ul>
+			</td>
+		</tr>
+	</table>
+	<table class="korisnik" th:if="${session.prijavljeniKorisnik == null}">
+		<tr><th>Niste prijavljeni</th></tr>
+		<tr>
+			<td>
+				<ul>
+					<li><a href="korisnici/registracija">registracija</a></li>
+					<li><a href="korisnici/login">prijava</a></li>
+				</ul>
+			</td>
+		</tr>
+	</table>  
 	<form method="post" action="putovanje/edit">
 		<input type="hidden" name="id" th:value="${putovanje.id}"/>
 		<table class="forma">

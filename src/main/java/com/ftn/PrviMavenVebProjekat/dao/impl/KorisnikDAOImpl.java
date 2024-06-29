@@ -212,7 +212,7 @@ public class KorisnikDAOImpl implements KorisnikDAO {
 				+ " adresa = ?, brojTelefona = ?, datumRegistracije = ?, uloga = ? WHERE id = ?";	
 		boolean uspeh = jdbcTemplate.update(sql, korisnik.getKorisnickoIme(), korisnik.getLozinka(), korisnik.getEmail(), korisnik.getIme(),
 				korisnik.getPrezime(), korisnik.getDatumRodjenja(), korisnik.getAdresa(), korisnik.getBrojTelefona(),
-				korisnik.getDatumRegistracije(), korisnik.getUloga()) == 1;
+				korisnik.getDatumRegistracije(), korisnik.getUloga(), korisnik.getId()) == 1;
 		
 		return uspeh?1:0;
 	}

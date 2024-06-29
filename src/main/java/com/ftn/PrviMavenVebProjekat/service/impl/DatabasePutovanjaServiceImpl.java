@@ -1,5 +1,7 @@
 package com.ftn.PrviMavenVebProjekat.service.impl;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,16 @@ public class DatabasePutovanjaServiceImpl implements PutovanjeService{
 	@Override
 	public List<Putovanje> findAll() {
 		return putovanjeDAO.findAll();
+	}
+
+	@Override
+	public List<Putovanje> find(String destinacija, String prevoznoSredstvo, String smestajnaJedinica,
+								String kategorijaPutovanja, String datumPolaska, String datumPovratka, Double cenaOd, Double cenaDo,
+								String sortDes, String sortPS, String sortSJ, String sortKat, String sortDatumStart, String sortDatumEnd,
+								String sortCena, Integer brojNocenjaOd, Integer brojNocenjaDo, String sortNoc, Integer brojMesta, Integer putId) {
+		return putovanjeDAO.find(destinacija, prevoznoSredstvo, smestajnaJedinica, kategorijaPutovanja, datumPolaska,
+				datumPovratka, cenaOd, cenaDo, sortDes, sortPS, sortSJ, sortKat, sortDatumStart, sortDatumEnd, sortCena,
+				brojNocenjaOd, brojNocenjaDo, sortNoc, brojMesta,putId);
 	}
 
 	@Override

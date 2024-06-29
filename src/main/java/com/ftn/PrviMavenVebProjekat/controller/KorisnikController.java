@@ -135,7 +135,7 @@ public class KorisnikController implements ServletContextAware {
 	}
 	
 	@GetMapping(value="/details")
-	public ModelAndView details(@RequestParam Long id, HttpServletResponse response) throws IOException {
+	public ModelAndView details(Long id, HttpServletResponse response) throws IOException {
 
 		Korisnik korisnik = korisnikService.findOneById(id);
 		
@@ -151,9 +151,25 @@ public class KorisnikController implements ServletContextAware {
 	}
 	
 	@PostMapping(value="/edit")
-	public void edit(@ModelAttribute Korisnik korisnikEdited , HttpServletResponse response) throws IOException {	
-		korisnikService.update(korisnikEdited);
-		response.sendRedirect(bURL+"korisnici");
+	public void edit(HttpServletResponse response,@RequestParam Long id,@RequestParam String korisnickoIme,
+					 @RequestParam String lozinka,
+					 @RequestParam String email,@RequestParam String ime, @RequestParam String prezime,
+					 @RequestParam String datumRodjenja, @RequestParam String adresa,
+					 @RequestParam String brojTelefona,@RequestParam String datumRegistracije, @RequestParam Uloga uloga
+	) throws IOException {
+		Korisnik korisnik = new Korisnik(id,
+				korisnickoIme,
+				lozinka,
+				email,
+				ime,
+				prezime,
+				datumRodjenja,
+				adresa,
+				brojTelefona,
+				datumRegistracije,
+				uloga);
+		korisnikService.update(korisnik);
+		response.sendRedirect(bURL);
 	}
 	
 }

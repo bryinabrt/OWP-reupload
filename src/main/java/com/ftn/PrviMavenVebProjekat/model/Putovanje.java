@@ -2,6 +2,7 @@ package com.ftn.PrviMavenVebProjekat.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Putovanje {
 	
@@ -15,17 +16,11 @@ public class Putovanje {
 	private String datumPovratka;
 	private int brojNocenja;
 	private String slika;
-	private List<Destinacija> destinacije;
-	private List<PrevoznoSredstvo> prevoznaSredstva;
-	private List<SmestajnaJedinica> smestajneJedinice;
+	private Destinacija destinacija;
+	private PrevoznoSredstvo prevoznoSredstvo;
+	private SmestajnaJedinica smestajnaJedinica;
 	private List<Price> prices;
-	
-	public Putovanje() {
-		this.destinacije = new ArrayList<Destinacija>();
-		this.prevoznaSredstva = new ArrayList<PrevoznoSredstvo>();
-		this.smestajneJedinice = new ArrayList<SmestajnaJedinica>();
-		this.prices = new ArrayList<Price>();
-	}
+
 
 	public Putovanje(Long id, String sifraPutovanja, Long idDestinacije, Long idPrevoznoSredstvo,
 			Long idSmestajnaJedinica, Kategorija kategorija, String datumPolaska, String datumPovratka, int brojNocenja, String slika) {
@@ -40,9 +35,9 @@ public class Putovanje {
 		this.datumPovratka = datumPovratka;
 		this.brojNocenja = brojNocenja;
 		this.slika = slika;
-		this.destinacije = new ArrayList<Destinacija>();
-		this.prevoznaSredstva = new ArrayList<PrevoznoSredstvo>();
-		this.smestajneJedinice = new ArrayList<SmestajnaJedinica>();
+		this.destinacija = destinacija;
+		this.prevoznoSredstvo = prevoznoSredstvo;
+		this.smestajnaJedinica = smestajnaJedinica;
 		this.prices = new ArrayList<Price>();
 	}
 	
@@ -58,9 +53,9 @@ public class Putovanje {
 		this.datumPovratka = datumPovratka;
 		this.brojNocenja = brojNocenja;
 		this.slika = slika;
-		this.destinacije = new ArrayList<Destinacija>();
-		this.prevoznaSredstva = new ArrayList<PrevoznoSredstvo>();
-		this.smestajneJedinice = new ArrayList<SmestajnaJedinica>();
+		this.destinacija = destinacija;
+		this.prevoznoSredstvo = prevoznoSredstvo;
+		this.smestajnaJedinica = smestajnaJedinica;
 		this.prices = new ArrayList<Price>();
 	}
 
@@ -74,9 +69,9 @@ public class Putovanje {
 		this.kategorija = kategorija;
 		this.brojNocenja = brojNocenja;
 		this.slika = slika;
-		this.destinacije = new ArrayList<Destinacija>();
-		this.prevoznaSredstva = new ArrayList<PrevoznoSredstvo>();
-		this.smestajneJedinice = new ArrayList<SmestajnaJedinica>();
+		this.destinacija = destinacija;
+		this.prevoznoSredstvo = prevoznoSredstvo;
+		this.smestajnaJedinica = smestajnaJedinica;
 		this.prices = new ArrayList<Price>();	
 	}
 	
@@ -91,10 +86,24 @@ public class Putovanje {
 		this.kategorija = kategorija;
 		this.brojNocenja = brojNocenja;
 		this.slika = slika;
-		this.destinacije = new ArrayList<Destinacija>();
-		this.prevoznaSredstva = new ArrayList<PrevoznoSredstvo>();
-		this.smestajneJedinice = new ArrayList<SmestajnaJedinica>();
+		this.destinacija = destinacija;
+		this.prevoznoSredstvo = prevoznoSredstvo;
+		this.smestajnaJedinica = smestajnaJedinica;
 		this.prices = new ArrayList<Price>();	
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Putovanje putovanje = (Putovanje) o;
+		return Objects.equals(id, putovanje.id) &&
+				Objects.equals(sifraPutovanja, putovanje.sifraPutovanja);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, sifraPutovanja);
 	}
 
 	public Long getId() {
@@ -186,28 +195,28 @@ public class Putovanje {
 		this.slika = slika;
 	}
 
-	public List<Destinacija> getDestinacije() {
-		return destinacije;
+	public Destinacija getDestinacija() {
+		return destinacija;
 	}
 
-	public void setDestinacije(List<Destinacija> destinacije) {
-		this.destinacije = destinacije;
+	public void setDestinacija(Destinacija destinacija) {
+		this.destinacija = destinacija;
 	}
 
-	public List<PrevoznoSredstvo> getPrevoznaSredstva() {
-		return prevoznaSredstva;
+	public PrevoznoSredstvo getPrevoznoSredstvo() {
+		return prevoznoSredstvo;
 	}
 
-	public void setPrevoznaSredstva(List<PrevoznoSredstvo> prevoznaSredstva) {
-		this.prevoznaSredstva = prevoznaSredstva;
+	public void setPrevoznoSredstvo(PrevoznoSredstvo prevoznoSredstvo) {
+		this.prevoznoSredstvo = prevoznoSredstvo;
 	}
 
-	public List<SmestajnaJedinica> getSmestajneJedinice() {
-		return smestajneJedinice;
+	public SmestajnaJedinica getSmestajnaJedinica() {
+		return smestajnaJedinica;
 	}
 
-	public void setSmestajneJedinice(List<SmestajnaJedinica> smestajneJedinice) {
-		this.smestajneJedinice = smestajneJedinice;
+	public void setSmestajnaJedinica(SmestajnaJedinica smestajnaJedinica) {
+		this.smestajnaJedinica = smestajnaJedinica;
 	}
 
 	public List<Price> getPrices() {

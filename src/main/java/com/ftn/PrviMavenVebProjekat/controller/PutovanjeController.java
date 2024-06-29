@@ -1,17 +1,21 @@
 package com.ftn.PrviMavenVebProjekat.controller;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.ftn.PrviMavenVebProjekat.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.datetime.joda.LocalDateTimeParser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,16 +26,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ftn.PrviMavenVebProjekat.model.Destinacija;
 import com.ftn.PrviMavenVebProjekat.service.DestinacijaService;
 import com.ftn.PrviMavenVebProjekat.service.PrevoznoSredstvoService;
 import com.ftn.PrviMavenVebProjekat.service.PriceService;
-import com.ftn.PrviMavenVebProjekat.model.Kategorija;
-import com.ftn.PrviMavenVebProjekat.model.PrevoznoSredstvo;
-import com.ftn.PrviMavenVebProjekat.model.Price;
-import com.ftn.PrviMavenVebProjekat.model.Putovanje;
-import com.ftn.PrviMavenVebProjekat.model.SmestajnaJedinica;
-import com.ftn.PrviMavenVebProjekat.model.TipJedinice;
 import com.ftn.PrviMavenVebProjekat.service.PutovanjeService;
 import com.ftn.PrviMavenVebProjekat.service.SmestajnaJedinicaService;
 
@@ -71,21 +68,68 @@ public class PutovanjeController implements ServletContextAware {
 	
 	@GetMapping()
 	@ResponseBody
-	public ModelAndView index() {
+	public ModelAndView index(
+			@RequestParam(required=false) String destinacijaId,
+			@RequestParam(required=false) String prevoznoSredstvoId,
+			@RequestParam(required=false) String smestajnaJedinicaId,
+			@RequestParam(required=false) String kategorijaPutovanjaId,
+			@RequestParam(required=false) String datumOd,
+			@RequestParam(required=false) String datumDo,
+			@RequestParam(required=false) Double cenaOd,
+			@RequestParam(required=false) Double cenaDo,
+			@RequestParam(required=false) String sortDes,
+			@RequestParam(required=false) String sortPS,
+			@RequestParam(required=false) String sortSJ,
+			@RequestParam(required=false) String sortKat,
+			@RequestParam(required=false) String sortDatumStart,
+			@RequestParam(required=false) String sortDatumEnd,
+			@RequestParam(required=false) String sortCena,
+			@RequestParam(required=false) Integer brojNocenjaOd,
+			@RequestParam(required=false) Integer brojNocenjaDo,
+			@RequestParam(required=false) String sortNoc,
+			@RequestParam(required=false) Integer brMesta,
+			@RequestParam(required=false) Integer pId,
+			HttpSession session)  throws IOException, ParseException {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+		LocalDateTime dateOd = null;
+		LocalDateTime dateDo = null;
+
+		if (datumOd == null) {
+			dateOd = LocalDateTime.of(1970, 01, 1, 00, 00, 00);
+		} else {
+			dateOd = LocalDateTime.parse(datumOd, formatter);
+		}
+		if (datumDo == null) {
+			dateDo = LocalDateTime.of(2070, 01, 1, 00, 00, 00);
+		} else {
+			dateDo = LocalDateTime.parse(datumDo, formatter);
+		}
+
+		DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+		// Convert the dates to the desired format
+		String formattedDateOd = dateOd.format(outputFormatter);
+		String formattedDateDo = dateDo.format(outputFormatter);
+		System.out.println("BRM BRMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA contr: "+smestajnaJedinicaId);
+
+		List<Putovanje> putovanja = putovanjeService.find(destinacijaId, prevoznoSredstvoId, smestajnaJedinicaId,
+				kategorijaPutovanjaId, formattedDateOd, formattedDateDo, cenaOd, cenaDo, sortDes, sortPS,
+				sortSJ, sortKat, sortDatumStart, sortDatumEnd, sortCena, brojNocenjaOd, brojNocenjaDo, sortNoc, brMesta, pId);
+
+		for (Putovanje putovanje : putovanja) {
+			Long putovanjeId = putovanje.getId();
+
+			// Fetch prices for the current Putovanje
+			List<Price> prices = priceService.findAllByPutovanjeId(putovanjeId);
+
+			// Set the prices for the current Putovanje
+			putovanje.setPrices(prices);
+		}
+		List<Destinacija> destinacije = destinacijaService.findAll();
+		List<SmestajnaJedinica> smestajneJedinice = smestajnaJedinicaService.findAll();
+		List<PrevoznoSredstvo> prevoznaSredstva = prevoznoSredstvoService.findAll();
 		
-		List<Putovanje> putovanja = putovanjeService.findAll();
-		
-	    for (Putovanje putovanje : putovanja) {
-	        Long putovanjeId = putovanje.getId();
-	        
-	        // Fetch prices for the current Putovanje
-	        List<Price> prices = priceService.findAllByPutovanjeId(putovanjeId);
-	        
-	        // Set the prices for the current Putovanje
-	        putovanje.setPrices(prices);
-	    }
-		
-	    List<Destinacija> destinacije = putovanja.stream()
+	    /*List<Destinacija> destinacije = putovanja.stream()
 	            .map(putovanje -> destinacijaService.findOne(putovanje.getIdDestinacije()))
 	            .collect(Collectors.toList());
 	    List<SmestajnaJedinica> smestajneJedinice = putovanja.stream()
@@ -93,21 +137,22 @@ public class PutovanjeController implements ServletContextAware {
 	    		.collect(Collectors.toList());
 	    List<PrevoznoSredstvo> prevoznaSredstva = putovanja.stream()
 	    		.map(putovanje -> prevoznoSredstvoService.findOne(putovanje.getIdPrevoznoSredstvo()))
-	    		.collect(Collectors.toList());
-	    System.out.println("Trazenje prices...");
+	    		.collect(Collectors.toList());*/
+		System.out.println("Trazenje prices...");
 	    /*List<Price> prices = putovanja.stream()
 	            .map(putovanje -> priceService.findAllByPutovanjeId(putovanje.getId()))
 	            .flatMap(List::stream)
 	            .collect(Collectors.toList());*/
-	    List<List<Price>> pricesList = putovanja.stream()
-	            .map(putovanje -> priceService.findAllByPutovanjeId(putovanje.getId()))
-	            .collect(Collectors.toList());
-	    System.out.println("Prices controller: " + pricesList);
+		List<List<Price>> pricesList = putovanja.stream()
+				.map(putovanje -> priceService.findAllByPutovanjeId(putovanje.getId()))
+				.collect(Collectors.toList());
+		System.out.println("Prices controller: " + pricesList);
 		ModelAndView result = new ModelAndView("putovanja");
 		result.addObject("putovanja", putovanja);
 		result.addObject("destinacije", destinacije);
 		result.addObject("smestajneJedinice", smestajneJedinice);
 		result.addObject("prevoznaSredstva", prevoznaSredstva);
+		result.addObject("kategorija", Kategorija.values());
 		result.addObject("pricesList", pricesList);
 		return result;
 	}
@@ -178,10 +223,10 @@ public class PutovanjeController implements ServletContextAware {
 		
 		Long putovanjeId = putovanjePrices.getId();
 
-        // Format for parsing and formatting LocalDateTime
+        
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 		
-	    // Assuming that startDate, endDate, and priceOfTravel lists have the same size
+	    
 	    for (int i = 0; i < startDateList.size(); i++) {
 	        String startDateString = startDateList.get(i);
 	        System.out.println("start " + startDateString);
@@ -190,16 +235,12 @@ public class PutovanjeController implements ServletContextAware {
 	        Double priceOfTravel = priceOfTravelList.get(i);
 	        
 
-
-	        // Parse the start date string and convert it to LocalDateTime
 	        LocalDateTime startDate = LocalDateTime.parse(startDateString, formatter);
 	        System.out.println("start " + startDate);
 
-	        // Parse the end date string and convert it to LocalDateTimee
 	        LocalDateTime endDate = LocalDateTime.parse(endDateString, formatter);
 	        System.out.println("end " + endDate);
 
-	        // Assuming you have a constructor in Prices class that takes these values
 	        Price prices = new Price(idDestinacije, putovanjeId, startDate, endDate, priceOfTravel);
 	        priceService.save(prices);
 	    }
@@ -211,6 +252,8 @@ public class PutovanjeController implements ServletContextAware {
 	public ModelAndView details(@RequestParam Long id, HttpServletResponse response) throws IOException {
 
 		Putovanje putovanje = putovanjeService.findOne(id);
+
+		System.out.println("Destinacija: "+putovanje.getDestinacija().getGrad());
 		
 		Destinacija destinacija = destinacijaService.findOne(putovanje.getIdDestinacije());
 		
@@ -228,6 +271,59 @@ public class PutovanjeController implements ServletContextAware {
 		result.addObject("smestajnaJedinica", smestajnaJedinica);
 		result.addObject("prices", prices);
 		return result;
+	}
+
+	@PostMapping(value="/search")
+	@ResponseBody
+	public Map<String, Object> search(
+			@RequestParam(required=false) String destinacijaId,
+			@RequestParam(required=false) String prevoznoSredstvoId,
+			@RequestParam(required=false) String smestajnaJedinicaId,
+			@RequestParam(required=false) String kategorijaPutovanjaId,
+			@RequestParam(required=false) String datumOd,
+			@RequestParam(required=false) String datumDo,
+			@RequestParam(required=false) Double cenaOd,
+			@RequestParam(required=false) Double cenaDo,
+			@RequestParam(required=false) String sortDes,
+			@RequestParam(required=false) String sortPS,
+			@RequestParam(required=false) String sortSJ,
+			@RequestParam(required=false) String sortKat,
+			@RequestParam(required=false) String sortDatumStart,
+			@RequestParam(required=false) String sortDatumEnd,
+			@RequestParam(required=false) String sortCena,
+			@RequestParam(required=false) int brojNocenjaOd,
+			@RequestParam(required=false) int brojNocenjaDo,
+			@RequestParam(required=false) String sortNoc,
+			@RequestParam(required=false) int brMesta,
+			@RequestParam(required=false) Integer pId,
+			HttpSession session)  throws IOException, ParseException {
+
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+		LocalDateTime dateOd = LocalDateTime.parse(datumOd, formatter);
+		LocalDateTime dateDo = LocalDateTime.parse(datumDo, formatter);
+
+		DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+		// Convert the dates to the desired format
+		String formattedDateOd = dateOd.format(outputFormatter);
+		String formattedDateDo = dateDo.format(outputFormatter);
+
+		List<Putovanje> putovanja = putovanjeService.find(destinacijaId, prevoznoSredstvoId, smestajnaJedinicaId,
+				kategorijaPutovanjaId, formattedDateOd, formattedDateDo, cenaOd, cenaDo, sortDes, sortPS,
+				sortSJ, sortKat, sortDatumStart, sortDatumEnd, sortCena, brojNocenjaOd, brojNocenjaDo, sortNoc, brMesta,pId);
+		for (Putovanje putovanje : putovanja) {
+			System.out.println("GRAD: "+putovanje.getDestinacija().getGrad());
+		}
+		Korisnik prijavljeniKorisnik = (Korisnik) session.getAttribute(KorisnikController.KORISNIK_KEY);
+		Map<String, Object> odgovor = new LinkedHashMap<>();
+		System.out.println("putovanjabrt "+putovanja);
+		odgovor.put("status", "ok");
+		odgovor.put("putovanja", putovanja);
+		if(prijavljeniKorisnik != null) {
+			odgovor.put("ulogaIme", prijavljeniKorisnik.getUloga());
+		}
+
+		return odgovor;
 	}
 	
 	@PostMapping(value="/delete")

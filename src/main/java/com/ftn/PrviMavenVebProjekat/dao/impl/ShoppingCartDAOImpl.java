@@ -137,7 +137,7 @@ public class ShoppingCartDAOImpl implements ShoppingCartDAO {
 				+ "ORDER BY sc.id";
 
 		ShoppingCartRowCallBackHandler rowCallbackHandler = new ShoppingCartRowCallBackHandler();
-		jdbcTemplate.query(sql, rowCallbackHandler, korisnikId);
+		jdbcTemplate.query(sql, rowCallbackHandler);
 
 		return rowCallbackHandler.getSve();
 	}
@@ -171,11 +171,13 @@ public class ShoppingCartDAOImpl implements ShoppingCartDAO {
 	@Transactional
 	@Override
 	public int update(ShoppingCart shoppingCart) {        
-	    String sql = "UPDATE shoppingCart SET brojPutnika = ?, ukupnaCena = ?"
+	    String sql = "UPDATE shoppingCart SET korisnikId = ?, brojPutnika = ?, ukupnaCena = ?, pricesId = ?"
 	                + " WHERE id = ?";
-	    boolean uspeh = jdbcTemplate.update(sql, 
+	    boolean uspeh = jdbcTemplate.update(sql,
+	    		shoppingCart.getKorisnikId(),
 	            shoppingCart.getBrojPutnika(),
 	            shoppingCart.getUkupnaCena(),
+	            shoppingCart.getPricesId(),
 	            shoppingCart.getId()) == 1;
 	    
 	    return uspeh ? 1 : 0;

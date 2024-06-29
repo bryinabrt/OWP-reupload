@@ -1,7 +1,6 @@
 package com.ftn.PrviMavenVebProjekat.dao.impl;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,20 +8,18 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import com.ftn.PrviMavenVebProjekat.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowCallbackHandler;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ftn.PrviMavenVebProjekat.dao.PutovanjeDAO;
 import com.ftn.PrviMavenVebProjekat.model.Destinacija;
 import com.ftn.PrviMavenVebProjekat.model.Kategorija;
 import com.ftn.PrviMavenVebProjekat.model.PrevoznoSredstvo;
@@ -32,9 +29,27 @@ import com.ftn.PrviMavenVebProjekat.model.SmestajnaJedinica;
 
 @Repository
 public class PutovanjeDAOImpl implements PutovanjeDAO{
-	
+
+	@Autowired
+	private DestinacijaDAO destinacijaDAO;
+
+	@Autowired
+	private SmestajnaJedinicaDAO smestajnaJedinicaDAO;
+
+	@Autowired
+	private PriceDAO priceDAO;
+
+	@Autowired
+	private PrevoznoSredstvoDAO prevoznoSredstvoDAO;
+
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+
+	public static List<Putovanje> removeDuplicates(List<Putovanje> putovanja) {
+		Set<Putovanje> uniquePutovanja = new HashSet<>(putovanja);
+		return new ArrayList<>(uniquePutovanja);
+	}
+
 	
 	private class PutovanjeRowCallBackHandler implements RowCallbackHandler {
 
@@ -101,46 +116,13 @@ public class PutovanjeDAOImpl implements PutovanjeDAO{
 				List<Price> prices = new ArrayList<Price>();
 				
 				putovanje = new Putovanje(id, sifraPutovanja, idDestinacije, idPrevoznoSredstvo, idSmestajnaJedinica, kategorija, brojNocenja, slika);
-				putovanje.setDestinacije(destinacije);
-				putovanje.setPrevoznaSredstva(prevoznaSredstva);
-				putovanje.setSmestajneJedinice(smestajneJedinice);
+				putovanje.setDestinacija(destinacija);
+				putovanje.setPrevoznoSredstvo(prevoznoSredstvo);
+				putovanje.setSmestajnaJedinica(smestajnaJedinica);
 				putovanje.setPrices(prices);
 				putovanja.put(putovanje.getId(), putovanje);
 			} else {
 				boolean found = false;
-				for (Destinacija d : putovanje.getDestinacije()) {
-					if (d.getId() == idDestinacije) {
-						found = true;
-						break;
-					}
-				}
-				
-				if (!found) {
-					putovanje.getDestinacije().add(destinacija);
-				}
-				
-				for (PrevoznoSredstvo p : putovanje.getPrevoznaSredstva()) {
-					if (p.getId() == idPrevoznoSredstvo) {
-						found = true;
-						break;
-					}
-				}
-				
-				if (!found) {
-					putovanje.getPrevoznaSredstva().add(prevoznoSredstvo);
-				}
-				
-				for (SmestajnaJedinica s : putovanje.getSmestajneJedinice()) {
-					if (s.getId() == idSmestajnaJedinica) {
-						found = true;
-						break;
-					}
-				}
-				
-				if (!found) {
-					putovanje.getSmestajneJedinice().add(smestajnaJedinica);
-				}
-				
 				for (Price p : putovanje.getPrices()) {
 					if (p.getDestinationId() == idDestinacije) {
 						found = true;
@@ -243,6 +225,253 @@ public class PutovanjeDAOImpl implements PutovanjeDAO{
 		jdbcTemplate.query(sql, rowCallbackHandler);
 
 		return rowCallbackHandler.getSve();
+	}
+
+	@Override
+	public List<Putovanje> find(String destinacijaId, String prevoznoSredstvoId, String smestajnaJedinicaId, String kategorijaPutovanja , String datumPolaska , String datumPovratka , Double cenaOd , Double cenaDo,
+								String sortDes, String sortPS, String sortSJ, String sortKat, String sortDatumStart, String sortDatumEnd, String sortCena, Integer brojNocenjaOd, Integer brojNocenjaDo, String sortNoc, Integer brojMesta, Integer putId) {
+
+		ArrayList<Object> listaArgumenata = new ArrayList<Object>();
+		System.out.println("BRM BRMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA DAO: "+destinacijaId);
+
+		String sql = "SELECT p.id, p.sifraPutovanja, p.idDestinacije, p.idPrevoznoSredstvo, p.idSmestajnaJedinica, p.kategorija, p.brojNocenja, p.slika, d.grad, ps.tipSredstva, ps.brojSedista, s.nazivJedinice, s.kapacitet, " +
+				"pr.id, pr.destinationId, pr.putovanjeId, pr.startDate, pr.endDate, pr.priceOfTravel " +
+				"from putovanja p left join destinacije d ON p.idDestinacije = d.id left join prevoznoSredstvo ps ON ps.id = p.idPrevoznoSredstvo " +
+				"left join smestajnaJedinica s ON p.idSmestajnaJedinica = s.id left join prices pr on p.id = pr.putovanjeId";
+
+		StringBuffer whereSql = new StringBuffer(" WHERE ");
+		boolean imaArgumenata = false;
+
+		if(destinacijaId!=null && !destinacijaId.isEmpty()) {
+			destinacijaId = "%" + destinacijaId + "%";
+			if(imaArgumenata)
+				whereSql.append(" AND ");
+			whereSql.append("p.idDestinacije LIKE ?");
+			imaArgumenata = true;
+			listaArgumenata.add(destinacijaId);
+		}
+
+		if (prevoznoSredstvoId != null && !prevoznoSredstvoId.isEmpty()) {
+			if (imaArgumenata)
+				whereSql.append(" AND ");
+			whereSql.append("p.idPrevoznoSredstvo LIKE ?");
+			imaArgumenata = true;
+			listaArgumenata.add("%" + prevoznoSredstvoId + "%");
+		}
+
+
+		if(smestajnaJedinicaId!=null && !smestajnaJedinicaId.isEmpty()) {
+			smestajnaJedinicaId = "%" + smestajnaJedinicaId + "%";
+			if(imaArgumenata)
+				whereSql.append(" AND ");
+			whereSql.append("p.idSmestajnaJedinica LIKE ?");
+			imaArgumenata = true;
+			listaArgumenata.add(smestajnaJedinicaId);
+		}
+
+		if(kategorijaPutovanja!=null && !kategorijaPutovanja.isEmpty()) {
+			kategorijaPutovanja = "%" + kategorijaPutovanja + "%";
+			if(imaArgumenata)
+				whereSql.append(" AND ");
+			whereSql.append("p.kategorija LIKE ?");
+			imaArgumenata = true;
+			listaArgumenata.add(kategorijaPutovanja);
+		}
+
+		if(datumPolaska!=null) {
+			if(imaArgumenata)
+				whereSql.append(" AND ");
+			whereSql.append("pr.startDate >= ?");
+			imaArgumenata = true;
+			listaArgumenata.add(datumPolaska);
+		}
+
+		if(datumPovratka!=null) {
+			if(imaArgumenata)
+				whereSql.append(" AND ");
+			whereSql.append("pr.endDate <= ?");
+			imaArgumenata = true;
+			listaArgumenata.add(datumPovratka);
+		}
+
+		if(cenaOd!=null) {
+			if(imaArgumenata)
+				whereSql.append(" AND ");
+			whereSql.append("pr.priceOfTravel >= ?");
+			imaArgumenata = true;
+			listaArgumenata.add(cenaOd);
+		}
+
+		if(cenaDo!=null) {
+			if(imaArgumenata)
+				whereSql.append(" AND ");
+			whereSql.append("pr.priceOfTravel <= ?");
+			imaArgumenata = true;
+			listaArgumenata.add(cenaDo);
+		}
+
+		if(brojNocenjaOd!=null) {
+			if(imaArgumenata)
+				whereSql.append(" AND ");
+			whereSql.append("p.brojNocenja >= ?");
+			imaArgumenata = true;
+			listaArgumenata.add(brojNocenjaOd);
+		}
+
+		if(brojNocenjaDo!=null) {
+			if(imaArgumenata)
+				whereSql.append(" AND ");
+			whereSql.append("p.brojNocenja <= ?");
+			imaArgumenata = true;
+			listaArgumenata.add(brojNocenjaDo);
+		}
+
+		if(brojMesta!=null) {
+			if(imaArgumenata)
+				whereSql.append(" AND ");
+			whereSql.append("ps.brojSedista >= ?");
+			imaArgumenata = true;
+			listaArgumenata.add(brojMesta);
+		}
+
+		if(brojMesta!=null) {
+			if(imaArgumenata)
+				whereSql.append(" AND ");
+			whereSql.append("s.kapacitet >= ?");
+			imaArgumenata = true;
+			listaArgumenata.add(brojMesta);
+		}
+
+		if(putId != null) {
+			if(imaArgumenata)
+				whereSql.append(" AND ");
+			whereSql.append("p.id = ?");
+			imaArgumenata = true;
+			listaArgumenata.add(putId);
+		}
+
+		boolean imaSort = false;
+
+		StringBuffer orderSQL = new StringBuffer(" ORDER BY ");
+
+		if(sortDes != null) {
+			orderSQL.append("d.id " + sortDes);
+			imaSort = true;
+		}
+
+		if(sortPS != null) {
+			if(imaSort) {
+				orderSQL.append(",ps.tipSredstva " + sortPS);
+			}else {
+				orderSQL.append("ps.tipSredstva " + sortPS);
+				imaSort = true;
+			}
+		}
+
+		if(sortSJ != null) {
+			if(imaSort) {
+				orderSQL.append(",s.nazivJedinice " + sortSJ);
+			}else {
+				orderSQL.append("s.nazivJedinice " + sortSJ);
+				imaSort = true;
+			}
+		}
+
+		if(sortKat != null) {
+			if(imaSort) {
+				orderSQL.append(",p.kategorija " + sortKat);
+			}else {
+				orderSQL.append("p.kategorija " + sortKat);
+				imaSort = true;
+			}
+		}
+
+		if(sortDatumStart  != null) {
+			if(imaSort) {
+				orderSQL.append(",pr.startDate " + sortDatumStart);
+			}else {
+				orderSQL.append("pr.startDate " + sortDatumStart);
+				imaSort = true;
+			}
+		}
+
+		if(sortDatumEnd != null) {
+			if(imaSort) {
+				orderSQL.append(",pr.endDate " + sortDatumEnd);
+			}else {
+				orderSQL.append("pr.endDate " + sortDatumEnd);
+				imaSort = true;
+			}
+		}
+
+		if(sortCena != null) {
+			if(imaSort) {
+				orderSQL.append(",pr.priceOfTravel " + sortCena);
+			}else {
+				orderSQL.append("pr.priceOfTravel " + sortCena);
+				imaSort = true;
+			}
+		}
+
+		if(sortNoc != null) {
+			if(imaSort) {
+				orderSQL.append(",p.brojNocenja " + sortNoc);
+			}else {
+				orderSQL.append("p.brojNocenja " + sortNoc);
+				imaSort = true;
+			}
+		}
+
+
+		StringBuffer orderId = new StringBuffer(" ORDER BY p.id");
+
+		if(imaArgumenata) {
+			if(imaSort) {
+				sql=sql + whereSql.toString()+orderSQL;
+			}else {
+				sql=sql + whereSql.toString()+orderId;
+			}
+		}else {
+			if(imaSort) {
+				sql=sql + orderSQL;
+			}else {
+				sql=sql + orderId;
+			}
+		}
+		List<Putovanje> putovanja = jdbcTemplate.query(sql, listaArgumenata.toArray(), new PutovanjeRowMapper());
+		List<Putovanje> filtrp = removeDuplicates(putovanja);
+		return filtrp;
+	}
+
+	private class PutovanjeRowMapper implements RowMapper<Putovanje> {
+
+		@Override
+		public Putovanje mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+			int index = 1;
+			Long id = resultSet.getLong(index++);
+			String sifraPutovanja = resultSet.getString(index++);
+			Long destinacijaId = resultSet.getLong(index++);
+			Destinacija destinacija = destinacijaDAO.findOne(destinacijaId);
+			Long prevoznoSredstvoId = resultSet.getLong(index++);
+			PrevoznoSredstvo prevoznoSredstvo = prevoznoSredstvoDAO.findOne(prevoznoSredstvoId);
+			Long smestajnaJedinicaId = resultSet.getLong(index++);
+			SmestajnaJedinica smestajnaJedinica = smestajnaJedinicaDAO.findOne(smestajnaJedinicaId);
+			Kategorija kategorija = Kategorija.valueOf(resultSet.getString(index++));
+			int brojNocenja = resultSet.getInt(index++);
+			String slika = resultSet.getString(index++);
+			List<Price> prices = priceDAO.findAllByPutovanjeId(id);
+
+
+			Putovanje putovanje = new Putovanje(id, sifraPutovanja, destinacijaId, prevoznoSredstvoId, smestajnaJedinicaId, kategorija, brojNocenja, slika);
+			putovanje.setDestinacija(destinacija);
+			putovanje.setPrevoznoSredstvo(prevoznoSredstvo);
+			putovanje.setSmestajnaJedinica(smestajnaJedinica);
+			putovanje.setPrices(prices);
+			for (Price price : prices){
+				System.out.println("cena"+price.getPriceOfTravel());
+			}
+			return putovanje;
+		}
 	}
 
 	@Transactional
