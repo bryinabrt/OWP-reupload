@@ -5,30 +5,59 @@
 		<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
 		<link rel="stylesheet" type="text/css" href="css/StiloviHorizontalniMeni.css"/>
 		<meta charset="UTF-8">
-		<title>Insert title here</title>
+		<title th:text="#{user.title}"></title>
 	</head>
 	<body>
 		<ul>
 			<li>
-				<a href="destinacije">Destinacije</a>
+				<a href="./" th:text="#{title.index}"></a>
 			</li>
 		</ul>
-		
+		<form method="get">
 		<table>
-			<caption>Korisnici</caption>
+			<caption th:text="#{user.title}"></caption>
 				<tr>
-					<th>Redni broj</th>
-					<th>Korisnicko Ime</th>
-					<th>Email</th>
-					<th>Ime</th>
-					<th>Prezime</th>
-					<th>Datum Rodjenja</th>
-					<th>Adresa</th>
-					<th>Broj Telefona</th>
+					<th></th>
+					<th>
+						<select name="korIme">
+							<option value="" th:text="#{search.choose}"></option>
+							<option th:each="itKor: ${korisnici}" th:value="${itKor.korisnickoIme}" th:text="${itKor.korisnickoIme}" th:selected="${#strings.equals(itKor.korisnickoIme, param.korIme)}"></option>
+						</select>
+						<select name="sortKorIme">
+							<option value="" th:text="#{search.sort}"></option>
+							<option value="asc" >asc</option>
+							<option value="desc" >desc</option>
+						</select>
+					</th>
+					<th>
+						<select name="ulogaBrt">
+							<option value="" th:text="#{search.choose}"></option>
+							<option th:each="itUloga: ${uloge}" th:value="${itUloga}" th:text="${itUloga}" th:selected="${#strings.equals(itUloga, param.ulogaBrt)}"></option>
+						</select>
+						<select name="sortUloga">
+							<option value="" th:text="#{search.sort}"></option>
+							<option value="asc" >asc</option>
+							<option value="desc" >desc</option>
+						</select>
+					</th>
+					<th></th>
+					<th><input type="submit" th:value="#{search.button}"/></th>
+				</tr>
+				<tr>
+					<th th:text="#{util.number}"></th>
+					<th th:text="#{user.username}"></th>
+					<th th:text="#{user.role}"></th>
+					<th th:text="#{user.email}"></th>
+					<th th:text="#{user.name}"></th>
+					<th th:text="#{user.surname}"></th>
+					<th th:text="#{user.dateBirth}"></th>
+					<th th:text="#{user.adress}"></th>
+					<th th:text="#{user.number}"></th>
 				</tr>
 				<tr th:each="itKorisnik, status : ${korisnici}">
 					<td th:text="${(status.index + 1) + '.'}"></td>
 					    <td th:text="${itKorisnik.korisnickoIme}"></td>
+						<td th:text="${itKorisnik.uloga}"></td>
 					    <td th:text="${itKorisnik.email}"></td>
 					    <td th:text="${itKorisnik.ime}"></td>
 					    <td th:text="${itKorisnik.prezime}"></td>
@@ -38,21 +67,21 @@
 					<td>
 						<form method="post" action="korisnici/delete">
 							<input type="hidden" name="id" th:value="${itKorisnik.id}"/>
-							<input type="submit" value="Obrisi"/>
+							<input type="submit" th:value="#{button.delete}"/>
 						</form>
 					</td>
 					<td>
-						<form th:action="@{/}">
-							<a th:href="|korisnici/details?id=${itKorisnik.id}|"
-								th:text="Izmeni">
-							</a>
+						<form  th:if="${itKorisnik.isBlokiran() == false && itKorisnik.isAdmin() == false}" method="post" action="korisnici/blokiraj">
+							<input type="hidden" name="id" th:value="${itKorisnik.id}"/>
+							<input th:if="${itKorisnik.isBlokiran() == true}" type="submit" th:value="#{blocked.true}"/>
+						</form>
+						<form th:if="${itKorisnik.isBlokiran() == true}" method="post" action="korisnici/deblokiraj">
+							<input type="hidden" name="id" th:value="${itKorisnik.id}"/>
+							<input th:if="${itKorisnik.isBlokiran() == false}" type="submit" th:value="#{blocked.false}"/>
 						</form>
 					</td>
 				</tr>
 		</table>
-		<ul>
-			<li><a href="korisnici/registracija">Registruj se</a></li>
-		</ul>
-	
+		</form>
 	</body>
 </html>

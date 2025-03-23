@@ -60,8 +60,9 @@ public class ShoppingCartDAOImpl implements ShoppingCartDAO {
 			Long putovanjeId = resultSet.getLong("rezervisanoPutovanjeId");
 			LocalDateTime startDate = resultSet.getTimestamp("startDate").toLocalDateTime();
 			LocalDateTime endDate = resultSet.getTimestamp("startDate").toLocalDateTime();
+			Integer numberOfSeats = resultSet.getInt("numberOfSeats");
 			Double priceOfTravel = resultSet.getDouble("priceOfTravel");
-			Price price = new Price(destinationId, putovanjeId, startDate, endDate, priceOfTravel);
+			Price price = new Price(destinationId, putovanjeId, startDate, endDate, numberOfSeats, priceOfTravel);
 			
 			ShoppingCart shoppingCart = shoppingCarts.get(id);
 			if (shoppingCart == null) {

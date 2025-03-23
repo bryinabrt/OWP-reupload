@@ -3,54 +3,52 @@
 <head>    
     <meta charset="UTF-8">    
     <base th:href="@{/}">  
-    <title>Dodaj putovanje</title>    
+    <title th:text="#{organiser.add}"></title>
     <link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>    
     <link rel="stylesheet" type="text/css" href="css/StiloviHorizontalniMeni.css"/>  
 </head>    
 <body>    
     <ul>
-        <li><a href="./">Pocetna</a></li>
-        <li><a href="destinacije">Destinacije</a></li>    
-        <li><a href="korisnici">Korisnici</a></li>    
+        <li><a href="./" th:text="#{title.index}"></a></li>
     </ul>    
     <form method="post" action="putovanja/add">    
         <table>
-            <caption>Putovanje</caption>
+            <caption th:text="#{organizer.reservation}"></caption>
             <input type="hidden" name="id" />
             <input type="hidden" th:name="grad" th:value="${param.grad}"/>
-            <tr><th>Sifra putovanja</th><td><input type="text" value="" name="sifraPutovanja"/></td><th></th></tr>   
+            <tr><th th:text="#{travel.id}"></th><td><input type="text" value="" name="sifraPutovanja"/></td><th></th></tr>
             <!-- <tr><th>Destinacija:</th><td><span th:text="grad" th:value="${param.grad}"></span></td><th></th></tr> -->
-            <tr><th>Prevozno sredstvo:</th><td>
+            <tr><th th:text="#{vehicle.type}"></th><td>
             <select class="form-control" id="dropDownListaPrevoznaSredstva" name="tipSredstva">
-                <option value="0">Izaberi Prevoz</option>
+                <option value="0" th:text="#{vehicle.title}"></option>
                 <option th:each="itPrevoznoSredstvo : ${prevoznaSredstva}" th:value="${itPrevoznoSredstvo.tipSredstva}" th:text="${itPrevoznoSredstvo.tipSredstva}"></option>
             </select>
             </td><th></th></tr>
-            <tr><th>Smestajna Jedinica:</th><td>    
+            <tr><th th:text="#{unit.title2}"></th><td>
             <select class="form-control" id="dropDownListaSmestajneJedinice" name="nazivJedinice">
                 <option value="0">Izaberi tip</option>
                 <option th:each="itSmestajnaJedinica : ${smestajneJedinice}" th:value="${itSmestajnaJedinica.nazivJedinice}" th:text="${itSmestajnaJedinica.nazivJedinice}"></option>
             </select>
             </td><th></th></tr>
-            <tr><th>Kategorija</th><td>
+            <tr><th th:text="#{travel.category}"></th><td>
             <select class="form-control" id="dropDownListaKategorija" name="kategorija">
-                <option value="0">Izaberi tip</option>
+                <option value="0" th:text="#{travel.categoryChoose}"></option>
                 <option th:each="itKategorija : ${T(com.ftn.PrviMavenVebProjekat.model.Kategorija).values()}" th:value="${itKategorija}" th:text="${itKategorija}"></option>
             </select>
             </td><th></th></tr>
-            <tr><th>Broj nocenja</th><td><input type="number" value="" name="brojNocenja"/></td><th></th></tr> 
-            <tr><th>Dodaj sliku</th><td>
+            <tr><th th:text="#{travel.nights}"></th><td><input type="number" value="" name="brojNocenja"/></td><th></th></tr>
+            <tr><th th:text="#{travelD.picture}"></th><td>
             <input type="file" id="slika" name="slika">
             </td><th></th></tr>
 
             <!-- Dynamic fields -->
             <tr>
-                <th>Broj redova:</th>
+                <th th:text="#{travel.numberOfTravels}"></th>
                 <td><input type="number" id="numberOfRows" name="numberOfRows" min="1" value="1"/></td>
                 <th></th>
             </tr>
             <tr>
-                <tr><th>Datum Polaska</th><th style="text-align:center">Datum Povratka</th><th style="text-align:left">Cena</th>
+                <tr><th th:text="#{travel.dateStart}"></th><th style="text-align:center" th:text="#{travel.dateEnd}"></th><th style="text-align:left" th:text="#{travel.price}"></th>
             </tr>
             <tr>
             <tbody id="dynamicFields">
@@ -58,7 +56,7 @@
             </tbody>
             <!-- Dynamic fields -->
             </tr>
-            <tr><th></th><td><input type="submit" value="Dodaj"/></td><th></th></tr>
+            <tr><th></th><td><input type="submit" th:value="#{organiser.add}"/></td><th></th></tr>
    
         </table>    
     </form>   

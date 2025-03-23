@@ -9,25 +9,28 @@ public class Price {
 	private Long putovanjeId;
 	private LocalDateTime startDate;
 	private LocalDateTime endDate;
+	private Integer numberOfSeats;
 	private Double priceOfTravel;
 	
 	
 	
-	public Price(Long destinationId, Long putovanjeId, LocalDateTime startDate, LocalDateTime endDate, Double priceOfTravel) {
+	public Price(Long destinationId, Long putovanjeId, LocalDateTime startDate, LocalDateTime endDate, Integer numberOfSeats, Double priceOfTravel) {
 		super();
 		this.destinationId = destinationId;
 		this.putovanjeId = putovanjeId;
 		this.startDate = startDate;
 		this.endDate = endDate;
+		this.numberOfSeats = numberOfSeats;
 		this.priceOfTravel = priceOfTravel;
 	}
-	public Price(Long id, Long destinationId, Long putovanjeId, LocalDateTime startDate, LocalDateTime endDate, Double priceOfTravel) {
+	public Price(Long id, Long destinationId, Long putovanjeId, LocalDateTime startDate, LocalDateTime endDate, Integer numberOfSeats, Double priceOfTravel) {
 		super();
 		this.id = id;
 		this.destinationId = destinationId;
 		this.putovanjeId = putovanjeId;
 		this.startDate = startDate;
 		this.endDate = endDate;
+		this.numberOfSeats = numberOfSeats;
 		this.priceOfTravel = priceOfTravel;
 	}
 	public Price(Long destinationId, Long putovanjeId, String formattedStartDate, String formattedEndDate, Double priceOfTravel) {
@@ -48,10 +51,11 @@ public class Price {
 		this.priceOfTravel = priceOfTravel;
 	}
 
-	public Price(Long id, LocalDateTime startDate, LocalDateTime endDate, Double priceOfTravel) {
+	public Price(Long id, LocalDateTime startDate, LocalDateTime endDate, Integer numberOfSeats, Double priceOfTravel) {
 		this.id = id;
 		this.startDate = startDate;
 		this.endDate = endDate;
+		this.numberOfSeats = numberOfSeats;
 		this.priceOfTravel = priceOfTravel;
 	}
 	public Long getId() {
@@ -90,9 +94,16 @@ public class Price {
 	public void setPriceOfTravel(Double priceOfTravel) {
 		this.priceOfTravel = priceOfTravel;
 	}
-	
 
-    public String getFormattedStartDate() {
+	public Integer getNumberOfSeats() {
+		return numberOfSeats;
+	}
+
+	public void setNumberOfSeats(Integer numberOfSeats) {
+		this.numberOfSeats = numberOfSeats;
+	}
+
+	public String getFormattedStartDate() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return startDate.format(formatter);
     }

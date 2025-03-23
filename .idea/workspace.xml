@@ -4,155 +4,58 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ff86dcf-ebaa-49e8-984d-5dc90aabd32b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Biblioteka.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TravelAgency.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/controller/BaseURLApliController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/controller/ListaZeljaController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/controller/ZahtevKarticeController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/dao/ListaZeljaDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/dao/LoyaltyKarticaDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/dao/ZahtevKarticeDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/dao/impl/ListaZeljaDAOImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/dao/impl/LoyaltyKarticaDAOImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/dao/impl/ZahtevKarticeDAOImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/model/ZahtevKartice.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/service/ListaZeljaService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/service/LoyaltyKarticaService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/service/ZahtevKarticeService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/service/impl/DatabaseListaZeljaServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/service/impl/DatabaseLoyaltyKarticaServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/service/impl/DatabaseZahtevKarticeServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/messages/messages.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/messages/messages_sr.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/base.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/putovanja.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/listeZelja.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/zahteviKartice.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_classic_1_2_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_core_1_2_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_classmate_1_5_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_annotations_2_10_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_10_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_databind_2_10_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_datatype_jackson_datatype_jdk8_2_10_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_datatype_jackson_datatype_jsr310_2_10_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_module_jackson_module_parameter_names_2_10_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_jayway_jsonpath_json_path_2_4_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_vaadin_external_google_android_json_0_0_20131108_vaadin1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__jakarta_activation_jakarta_activation_api_1_2_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__jakarta_annotation_jakarta_annotation_api_1_3_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__jakarta_validation_jakarta_validation_api_2_0_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__jakarta_xml_bind_jakarta_xml_bind_api_2_3_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_12.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__mysql_mysql_connector_java_5_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_bytebuddy_byte_buddy_1_10_8.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_bytebuddy_byte_buddy_agent_1_10_8.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_minidev_accessors_smart_1_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_minidev_json_smart_2_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_api_2_12_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_to_slf4j_2_12_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_core_9_0_31.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_el_9_0_31.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_websocket_9_0_31.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apiguardian_apiguardian_api_1_1_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_assertj_assertj_core_3_13_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_attoparser_attoparser_2_0_5_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_2_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_validator_hibernate_validator_6_0_18_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jboss_logging_jboss_logging_3_4_1_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jsoup_jsoup_1_14_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_5_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_api_5_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_engine_5_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_params_5_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_platform_junit_platform_commons_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_platform_junit_platform_engine_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_vintage_junit_vintage_engine_5_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_mockito_mockito_core_3_1_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_mockito_mockito_junit_jupiter_3_1_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_objenesis_objenesis_2_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_opentest4j_opentest4j_1_2_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_ow2_asm_asm_5_0_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_skyscreamer_jsonassert_1_5_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_jul_to_slf4j_1_7_30.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_30.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_2_2_5_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_autoconfigure_2_2_5_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_devtools_2_2_5_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_2_2_5_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_json_2_2_5_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_logging_2_2_5_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_test_2_2_5_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_thymeleaf_2_2_5_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_tomcat_2_2_5_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_validation_2_2_5_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_web_2_2_5_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_test_2_2_5_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_test_autoconfigure_2_2_5_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_aop_5_2_4_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_beans_5_2_4_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_context_5_2_4_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_core_5_2_4_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_expression_5_2_4_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_jcl_5_2_4_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_test_5_2_4_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_web_5_2_4_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_webmvc_5_2_4_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_thymeleaf_extras_thymeleaf_extras_java8time_3_0_4_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_thymeleaf_thymeleaf_3_0_11_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_thymeleaf_thymeleaf_spring5_3_0_11_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_unbescape_unbescape_1_1_6_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_webjars_bootstrap_3_3_7.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_webjars_jquery_3_2_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_xmlunit_xmlunit_core_2_6_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_yaml_snakeyaml_1_25.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+    <list default="true" id="5ff86dcf-ebaa-49e8-984d-5dc90aabd32b" name="Default Changelist" comment="Odradjeno dosta">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/dodavanjePrevoznogSredstva.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/bean/SecondConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/bean/SecondConfiguration.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/controller/KorisnikController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/controller/KorisnikController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/controller/PrevoznoSredstvoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/controller/PrevoznoSredstvoController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/controller/PutovanjeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/controller/PutovanjeController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/controller/ShoppingCartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/controller/ShoppingCartController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/dao/PutovanjeDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/dao/PutovanjeDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/controller/ZahtevKarticeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/controller/ZahtevKarticeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/dao/KorisnikDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/dao/KorisnikDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/dao/impl/KorisnikDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/dao/impl/KorisnikDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/dao/impl/LoyaltyKarticaDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/dao/impl/LoyaltyKarticaDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/dao/impl/PrevoznoSredstvoDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/dao/impl/PrevoznoSredstvoDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/dao/impl/PriceDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/dao/impl/PriceDAOImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/dao/impl/PutovanjeDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/dao/impl/PutovanjeDAOImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/dao/impl/ShoppingCartDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/dao/impl/ShoppingCartDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/dao/impl/SmestajnaJedinicaDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/dao/impl/SmestajnaJedinicaDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/model/Korisnik.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/model/Korisnik.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/model/LoyaltyKartica.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/model/LoyaltyKartica.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/model/Price.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/model/Price.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/model/Putovanje.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/model/Putovanje.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/model/Rezervacije.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/model/Rezervacije.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/model/ShoppingCart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/model/ShoppingCart.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/service/PutovanjeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/service/PutovanjeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/service/ShoppingCartService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/service/ShoppingCartService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/service/impl/DatabasePutovanjaServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/service/impl/DatabasePutovanjaServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/service/impl/DatabaseShoppingCartImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/service/impl/DatabaseShoppingCartImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/destinacija.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/destinacija.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/destinacije.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/destinacije.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/service/KorisnikService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/service/KorisnikService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/service/impl/DatabaseKorisnikServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftn/PrviMavenVebProjekat/service/impl/DatabaseKorisnikServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/messages/messages.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/messages/messages.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/messages/messages_sr.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/messages/messages_sr.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dodavanjeDestinacije.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/dodavanjeDestinacije.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dodavanjePutovanja.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/dodavanjePutovanja.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dodavanjeSmestajneJedinice.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/dodavanjeSmestajneJedinice.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dodavanjeUKolica.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/dodavanjeUKolica.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/korisnici.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/korisnici.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/korisnik.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/korisnik.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/listeZelja.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/listeZelja.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/odabirDestinacije.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/odabirDestinacije.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/prevoznaSredstva.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/prevoznaSredstva.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/prevoznoSredstvo.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/prevoznoSredstvo.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/putovanja.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/putovanja.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/putovanje.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/putovanje.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/ftn/PrviMavenVebProjekat/PrviMavenVebProjekatApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftn/PrviMavenVebProjekat/PrviMavenVebProjekatApplication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/ftn/PrviMavenVebProjekat/bean/SecondConfiguration$ApplicationMemory.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftn/PrviMavenVebProjekat/bean/SecondConfiguration$ApplicationMemory.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/ftn/PrviMavenVebProjekat/bean/SecondConfiguration.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftn/PrviMavenVebProjekat/bean/SecondConfiguration.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/ftn/PrviMavenVebProjekat/controller/DestinacijeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftn/PrviMavenVebProjekat/controller/DestinacijeController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/registracija.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/registracija.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/smestajnaJedinica.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/smestajnaJedinica.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/smestajneJedinice.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/smestajneJedinice.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/zahteviKartice.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/zahteviKartice.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/ftn/PrviMavenVebProjekat/controller/KorisnikController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftn/PrviMavenVebProjekat/controller/KorisnikController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/ftn/PrviMavenVebProjekat/model/Destinacija.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftn/PrviMavenVebProjekat/model/Destinacija.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/ftn/PrviMavenVebProjekat/model/Korisnik.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftn/PrviMavenVebProjekat/model/Korisnik.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/ftn/PrviMavenVebProjekat/model/Uloga.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftn/PrviMavenVebProjekat/model/Uloga.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/ftn/PrviMavenVebProjekat/service/DestinacijaService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftn/PrviMavenVebProjekat/service/DestinacijaService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/ftn/PrviMavenVebProjekat/service/KorisnikService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftn/PrviMavenVebProjekat/service/KorisnikService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/destinacija.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/destinacija.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/destinacije.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/destinacije.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/dodavanjeDestinacije.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/dodavanjeDestinacije.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/korisnici.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/korisnici.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/templates/korisnik.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/korisnik.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/registracija.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/registracija.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -163,9 +66,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="HTML File" />
         <option value="JavaScript File" />
         <option value="Class" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -188,7 +91,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/bprol/Desktop/TravelAgency/src/main/resources/static/js&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/bprol/Desktop/kvt/svt7/v7-backend&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -262,12 +165,40 @@
       <workItem from="1719228101774" duration="1818000" />
       <workItem from="1719322374145" duration="35046000" />
       <workItem from="1719584170353" duration="17000" />
-      <workItem from="1719584231021" duration="19552000" />
+      <workItem from="1719584231021" duration="76047000" />
+      <workItem from="1720167644490" duration="1431000" />
+      <workItem from="1724675167925" duration="1799000" />
+      <workItem from="1724953288495" duration="41000" />
+      <workItem from="1742759276075" duration="670000" />
     </task>
+    <task id="LOCAL-00001" summary="Odradjeno dosta">
+      <option name="closed" value="true" />
+      <created>1719660301329</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1719660301329</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Odradjeno dosta" />
+    <option name="LAST_COMMIT_MESSAGE" value="Odradjeno dosta" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

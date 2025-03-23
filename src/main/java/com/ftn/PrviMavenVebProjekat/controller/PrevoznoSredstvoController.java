@@ -25,7 +25,6 @@ import com.ftn.PrviMavenVebProjekat.model.SmestajnaJedinica;
 import com.ftn.PrviMavenVebProjekat.model.TipJedinice;
 import com.ftn.PrviMavenVebProjekat.service.DestinacijaService;
 import com.ftn.PrviMavenVebProjekat.service.PrevoznoSredstvoService;
-
 @Controller
 @RequestMapping(value="/prevoznaSredstva")
 public class PrevoznoSredstvoController implements ServletContextAware{
@@ -65,17 +64,22 @@ public class PrevoznoSredstvoController implements ServletContextAware{
 	}
 	
 	@GetMapping(value="/add")
-	public String dodajPrevoznoSredstvo(HttpServletResponse response) throws IOException {
-		return "dodavanjePrevoznihSredstava";
+	@ResponseBody
+	public ModelAndView dodajPrevoznoSredstvo(HttpServletResponse response) throws IOException {
+		List<Destinacija> destinacije = destinacijaService.findAll();
+		ModelAndView result = new ModelAndView("dodavanjePrevoznogSredstva");
+		result.addObject("destinacije", destinacije);
+		return result;
 	}
 	
 	@PostMapping(value="/add")
-	public void dodajPrevoznoSredstvo(HttpServletResponse response, @RequestParam Long id, @RequestParam String tipSredstva, 
-			@RequestParam Integer brojSedista, @RequestParam Long krajnjaDestinacija, @RequestParam String opis) throws IOException {
+	public void dodajPrevoznoSredstvo(HttpServletResponse response, @RequestParam String tipSredstva,
+			@RequestParam Integer brojSedista, @RequestParam String grad, @RequestParam String opis) throws IOException {
+		Destinacija destinacija = destinacijaService.findOneByGrad(grad);
 		PrevoznoSredstvo prevoznoSredstvo = new PrevoznoSredstvo(
 				tipSredstva,
 				brojSedista,
-				krajnjaDestinacija,
+				destinacija.getId(),
 				opis);
 		
 		prevoznoSredstvoService.save(prevoznoSredstvo);

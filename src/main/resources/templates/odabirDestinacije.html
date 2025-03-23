@@ -5,15 +5,15 @@
 	<meta charset="UTF-8" />
 	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
 	<link rel="stylesheet" type="text/css" href="css/StiloviHorizontalniMeni.css"/>
-	<title>Odabir destinacije</title>
+	<title th:text="#{travelD.pick}"></title>
 </head>
 <body>
 	<br/>
 		<form method="post" action="/add">
 			<table>
-				<caption>Prijava korisnika na sistem</caption>
+				<caption th:text="#{travelD.pick}"></caption>
 				<input type="hidden" name="id" />
-				<tr><th>Odabir destinacije:</th><td>   
+				<tr><th th:text="#{destination.add}">:</th><td>
 				<ul>
            		<li th:each="destinacija : ${destinacije}">
             		<a th:href="@{/putovanja/add(grad=${destinacija.grad})}" th:text="${destinacija.grad}"></a>

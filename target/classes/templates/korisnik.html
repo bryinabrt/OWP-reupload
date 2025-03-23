@@ -5,48 +5,25 @@
 	<base th:href="@{/}"><!-- popuni href atribut vrednosšću context path-a -->
 	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
 	<link rel="stylesheet" type="text/css" href="css/StiloviKorisnik.css"/>
-	<title>Korisnik</title>
+	<title th:text="#{user.title2}"></title>
 </head>
 <body>
-	<table class="korisnik" th:unless="${session.prijavljeniKorisnik == null}">
-		<tr><th>Prijavljeni ste kao</th><td><a th:href="|korisnici/details?id=${session.prijavljeniKorisnik.id}|" th:text="${session.prijavljeniKorisnik.korisnickoIme}"></a>.</td></tr>
-		<tr>
-			<td colspan="2">
-				<ul>
-					<li><a th:href="|kolica?id=${session.prijavljeniKorisnik.id}|">Kolica</a></li>
-					<li><a href="korisnici/logout">odjava</a></li>
-				</ul>
-			</td>
-		</tr>
-	</table>
-	<table class="korisnik" th:if="${session.prijavljeniKorisnik == null}">
-		<tr><th>Niste prijavljeni</th></tr>
-		<tr>
-			<td>
-				<ul>
-					<li><a href="korisnici/registracija">registracija</a></li>
-					<li><a href="korisnici/login">prijava</a></li>
-				</ul>
-			</td>
-		</tr>
-	</table>
-	<ul>    
- 		<li><a href="destinacije">Destinacije</a></li>    
- 		<li><a href="korisnici">Korisnici</a></li>    
+	<ul>
+ 		<li><a href="./" th:text="#{title.index}"></a></li>
  	</ul>  
 	<form method="post" action="korisnici/edit">
 		<input type="hidden" name="id" th:value="${korisnik.id}"/>
 		<input type="hidden" name="uloga" th:value="${korisnik.uloga}"/>
 		<table class="forma">
-			<caption>Korisnik</caption>
-			<tr><th>Korisnicko Ime:</th><td><input type="text" th:value="${korisnik.korisnickoIme}" name="korisnickoIme"/></td></tr>
-			<tr><th>Lozinka:</th><td><input type="password" th:value="${korisnik.lozinka}" name="lozinka"/></td></tr>
-			<tr><th>Email:</th><td><input type="text" th:value="${korisnik.email}" name="email"/></td></tr>
-			<tr><th>Ime:</th><td><input type="text" th:value="${korisnik.ime}" name="ime"/></td></tr>
-			<tr><th>Prezime:</th><td><input type="text" th:value="${korisnik.prezime}" name="prezime"/></td></tr>
-			<tr><th>Datum Rodjenja:</th><td><input type="date" th:value="${korisnik.datumRodjenja}" name="datumRodjenja"/></td></tr>
-			<tr><th>Adresa:</th><td><input type="text" th:value="${korisnik.adresa}" name="adresa"/></td></tr>
-			<tr><th>Broj Telefona:</th><td><input type="text" th:value="${korisnik.brojTelefona}" name="brojTelefona"/></td></tr>
+			<caption th:text="#{user.title2}"></caption>
+			<tr><th th:text="#{user.username}">:</th><td><input type="text" th:value="${korisnik.korisnickoIme}" name="korisnickoIme"/></td></tr>
+			<tr><th th:text="#{user.password}">:</th><td><input type="password" th:value="${korisnik.lozinka}" name="lozinka"/></td></tr>
+			<tr><th th:text="#{user.email}">:</th><td><input type="text" th:value="${korisnik.email}" name="email"/></td></tr>
+			<tr><th th:text="#{user.name}">:</th><td><input type="text" th:value="${korisnik.ime}" name="ime"/></td></tr>
+			<tr><th th:text="#{user.surname}">:</th><td><input type="text" th:value="${korisnik.prezime}" name="prezime"/></td></tr>
+			<tr><th th:text="#{user.dateBirth}">:</th><td><input type="date" th:value="${korisnik.datumRodjenja}" name="datumRodjenja"/></td></tr>
+			<tr><th th:text="#{user.adress}">:</th><td><input type="text" th:value="${korisnik.adresa}" name="adresa"/></td></tr>
+			<tr><th th:text="#{user.number}">:</th><td><input type="text" th:value="${korisnik.brojTelefona}" name="brojTelefona"/></td></tr>
 			<tr><th></th><td><input type="hidden" th:value="${korisnik.datumRegistracije}" name="datumRegistracije"/></td></tr>
 			<!-- <tr><th></th><td><input type="hidden" th:value="${korisnik.uloga}" name="uloga"/></td></tr> --> 
 			<tr><th></th><td><input type="submit" value="Izmeni"/></td></tr>
@@ -55,10 +32,10 @@
 	<form method="post" action="korisnici/delete">
 		<input type="hidden" name="id" th:value="${korisnik.id}"/>
 		<table class="forma">
-			<tr><th></th><td><input type="submit" value="Obriši"/></td></tr>
+			<tr><th></th><td><input type="submit" th:value="#{button.delete}"/></td></tr>
 		</table>
 	</form>
-	<form method="post" action="zahtevi/naruci">
+	<form th:if="${session.prijavljeniKorisnik.isPutnik()}" method="post" action="zahtevi/naruci">
 		<input type="hidden" name="id" th:value="${korisnik.id}"/>
 		<table class="forma">
 			<tr><th></th><td><input type="submit" value="ZahtevajKarticu"/></td></tr>

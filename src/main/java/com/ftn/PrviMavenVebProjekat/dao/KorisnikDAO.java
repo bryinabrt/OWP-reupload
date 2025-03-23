@@ -6,13 +6,15 @@ import com.ftn.PrviMavenVebProjekat.model.Korisnik;
 import com.ftn.PrviMavenVebProjekat.model.Uloga;
 
 public interface KorisnikDAO {
-	public Korisnik findOneById(Long id);
-	public Korisnik findOne(String email); 
-	public Korisnik findOne(String email, String sifra);
-	public List<Korisnik> findOneForSort(String korisnickoIme, String uloga);
-	public List<Korisnik> findAll(); 
-	public int save(Korisnik korisnik); 
-	public int update(Korisnik korisnik); 
-	public int delete(Long id); 
+	Korisnik findOneById(Long id);
+	Korisnik findOne(String email);
+	Korisnik findOne(String email, String sifra);
+	List<Korisnik> findAll();
+	List<Korisnik> find(String korisnickoIme,String uloga,String sortKI, String SortU);
+	int save(Korisnik korisnik);
+	int update(Korisnik korisnik);
+	int delete(Long id);
+	int deblokiraj(Long id);
+	int blokiraj(Long id);
 	String datumRegistracije();
 }

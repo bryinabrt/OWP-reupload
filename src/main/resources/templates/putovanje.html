@@ -5,75 +5,52 @@
 	<base th:href="@{/}"><!-- popuni href atribut vrednosšću context path-a -->
 	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
 	<link rel="stylesheet" type="text/css" href="css/StiloviKorisnik.css"/>
-	<title>Putovanje</title>
+	<title th:text="#{travel.title2}"></title>
 </head>
 <body>
-	<ul>    
- 		<li><a href="destinacije">Destinacije</a></li>    
- 		<li><a href="korisnici">Korisnici</a></li>    
- 		<li><a href="./">Pocetna</a></li> 
+	<ul>
+ 		<li><a href="./" th:text="#{title.index}"></a></li>
  	</ul>
- 	<table class="korisnik" th:unless="${session.prijavljeniKorisnik == null}">
-		<tr><th>Prijavljeni ste kao</th><td><a th:href="|Korisnici/Details?korisnickoIme=${session.prijavljeniKorisnik.korisnickoIme}|" th:text="${session.prijavljeniKorisnik.korisnickoIme}"></a>.</td></tr>
-		<tr>
-			<td colspan="2">
-				<ul>
-					<li><a href="korisnici/logout">odjava</a></li>
-				</ul>
-			</td>
-		</tr>
-	</table>
-	<table class="korisnik" th:if="${session.prijavljeniKorisnik == null}">
-		<tr><th>Niste prijavljeni</th></tr>
-		<tr>
-			<td>
-				<ul>
-					<li><a href="korisnici/registracija">registracija</a></li>
-					<li><a href="korisnici/login">prijava</a></li>
-				</ul>
-			</td>
-		</tr>
-	</table>  
 	<form method="post" action="putovanje/edit">
 		<input type="hidden" name="id" th:value="${putovanje.id}"/>
 		<table class="forma">
-			<caption>Putovanje</caption>
-			<tr><th>Sifra putovanja:</th><td><input type="text" th:value="${putovanje.sifraPutovanja}" name="sifraPutovanja"/></td></tr>
-			<tr><th>Destinacija:</th><td><input type="text" th:value="${destinacija.grad}" name="grad"/></td></tr>
-			<tr><th>Prevozno Sredstvo:</th><td><input type="text" th:value="${prevoznoSredstvo.tipSredstva}" name="tipSredstva"/></td></tr>
-			<tr><th>Smestajna Jedinica:</th><td><input type="text" th:value="${smestajnaJedinica.nazivJedinice}" name="nazivJedinice"/></td></tr>
-			<tr><th>Kategorija:</th><td><input type="text" th:value="${putovanje.kategorija}" name="kategorija"/></td></tr>
+			<caption th:text="#{travel.title2}"></caption>
+			<tr><th th:text="#{travel.id}">:</th><td><input type="text" th:value="${putovanje.sifraPutovanja}" name="sifraPutovanja"/></td></tr>
+			<tr><th th:text="#{destination.city}">:</th><td><input type="text" th:value="${destinacija.grad}" name="grad"/></td></tr>
+			<tr><th th:text="#{vehicle.type}">:</th><td><input type="text" th:value="${prevoznoSredstvo.tipSredstva}" name="tipSredstva"/></td></tr>
+			<tr><th th:text="#{unit.title2}">:</th><td><input type="text" th:value="${smestajnaJedinica.nazivJedinice}" name="nazivJedinice"/></td></tr>
+			<tr><th th:text="#{travel.category}">:</th><td><input type="text" th:value="${putovanje.kategorija}" name="kategorija"/></td></tr>
 			<tr>
-				<th>Datum Polaska:</th>
+				<th th:text="#{travel.dateStart}">:</th>
 				<td>
 					<input type="datetime-local" th:each="itPrice: ${prices}" th:value="${itPrice.startDate}" name="startDate"/>
 				</td>
 			</tr>
 			<tr>
-				<th>Datum Povratka:</th>
+				<th th:text="#{travel.dateEnd}">:</th>
 				<td>
 					<input type="datetime-local" th:each="itPrice: ${prices}" th:value="${itPrice.endDate}" name="endDate"/>
 				</td>
 			</tr>
 			
-			<tr><th>Broj Nocenja:</th><td><input type="number" th:value="${putovanje.brojNocenja}" name="brojNocenja"/></td></tr>
-			<tr><th>Dodaj sliku</th><td>
+			<tr><th th:text="#{travel.nights}">:</th><td><input type="number" th:value="${putovanje.brojNocenja}" name="brojNocenja"/></td></tr>
+			<tr><th th:text="#{travelD.picture}"></th><td>
             	<input type="file" id="slika" name="slika" th:value="${putovanje.slika}">
             </td></tr>
 			<tr>
-				<th>Cene:</th>
+				<th th:text="#{travel.price}">:</th>
 				<td>
 					<input type="number" th:each="itPrice: ${prices}" th:value="${itPrice.priceOfTravel}" name="price"/>
 				</td>
 			</tr>
 			<!-- <tr><th></th><td><input type="hidden" th:value="${korisnik.uloga}" name="uloga"/></td></tr> --> 
-			<tr><th></th><td><input type="submit" value="Izmeni"/></td></tr>
+			<tr><th></th><td><input type="submit" th:value="#{button.edit}"/></td></tr>
 		</table>
 	</form>
 	<form method="post" action="putovanja/delete">
 		<input type="hidden" name="id" th:value="${putovanje.id}"/>
 		<table class="forma">
-			<tr><th></th><td><input type="submit" value="Obriši"/></td></tr>
+			<tr><th></th><td><input type="submit" th:value="#{button.delete}"/></td></tr>
 		</table>
 	</form>
 </body>

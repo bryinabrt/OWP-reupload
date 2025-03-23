@@ -62,7 +62,7 @@ public class ZahtevKarticeController {
 
     @PostMapping("/odobri")
     public void odobri(HttpServletResponse response, @RequestParam Long id, @RequestParam Long idKorisnika) throws IOException {
-        LoyaltyKartica loyaltyKartica = new LoyaltyKartica(idKorisnika, 5, 0);
+        LoyaltyKartica loyaltyKartica = new LoyaltyKartica(idKorisnika, 5, 0.0);
         zahtevKarticeService.odbij(id);
         loyaltyKarticaService.save(loyaltyKartica);
         response.sendRedirect(bURL);

@@ -22,34 +22,33 @@
 		</script>
 	</head>
 	<body>
-		<table class="korisnik" th:unless="${session.prijavljeniKorisnik == null}">
-			<tr><th>Prijavljeni ste kao</th><td><a th:href="|korisnici/details?id=${session.prijavljeniKorisnik.id}|" th:text="${session.prijavljeniKorisnik.korisnickoIme}"></a>.</td></tr>
-			<tr>
-				<td colspan="2">
-					<ul>
-						<li><a th:href="|kolica?id=${session.prijavljeniKorisnik.id}|">Kolica</a></li>
-						<li><a href="korisnici/logout">odjava</a></li>
-						<li th:if="${session.prijavljeniKorisnik.isAdmin()}"><a href="zahtevi">Zahtevi</a></li>
-					</ul>
-				</td>
-			</tr>
-		</table>
-		<table class="korisnik" th:if="${session.prijavljeniKorisnik == null}">
-			<tr><th>Niste prijavljeni</th></tr>
-			<tr>
-				<td>
-					<ul>
-						<li><a href="korisnici/registracija">registracija</a></li>
-						<li><a href="korisnici/login">prijava</a></li>
-					</ul>
-				</td>
-			</tr>
-		</table>
+	<table class="korisnik" th:unless="${session.prijavljeniKorisnik == null}">
+		<tr><th th:text="#{login.name}"></th><td><a th:href="|korisnici/details?id=${session.prijavljeniKorisnik.id}|" th:text="${session.prijavljeniKorisnik.korisnickoIme}"></a>.</td></tr>
+		<tr>
+			<td colspan="2">
+				<ul>
+					<li><a th:href="|kolica?id=${session.prijavljeniKorisnik.id}|" th:text="#{putnik.cart}"></a></li>
+					<li><a href="korisnici/logout" th:text="#{page.logout}"></a></li>
+					<li th:if="${session.prijavljeniKorisnik.isAdmin()}"><a href="zahtevi" th:text="#{admin.card}"></a></li>
+					<li><a href="./" th:text="#{title.index}"></a></li>
+				</ul>
+			</td>
+		</tr>
+	</table>
+	<table class="korisnik" th:if="${session.prijavljeniKorisnik == null}">
+		<tr><th th:text="#{logged.out}"></th></tr>
+		<tr>
+			<td>
+				<ul>
+					<li><a href="korisnici/registracija" th:text="#{user.registration}"></a></li>
+					<li><a href="korisnici/login" th:text="#{user.login}"></a></li>
+				</ul>
+			</td>
+		</tr>
+	</table>
 		<ul>
 			<li>
-				<a href="destinacije">Destinacije</a>
-				<a href="korisnici">Korisnici</a>
-				<a href="./">Pocetna</a>
+				<a href="./" th:text="#{title.index}"></a>
 			</li>
 		</ul>
 
@@ -61,7 +60,8 @@
 		</select>
 		<form method="get">
 		<table class="table">
-			<caption>Putovanja</caption>
+			<caption th:text="#{travel.title}"></caption>
+
 				<tr>
 					<th></th>
 					<th></th>
@@ -71,7 +71,7 @@
 							<option value="" th:text="#{search.choose}"></option>
 							<option th:each="itDestinacija: ${destinacije}" th:value="${itDestinacija.id}" th:text="${itDestinacija.grad}" th:selected="${#strings.equals(itDestinacija.id, param.destinacijaId)}"></option>
 						</select>
-						<select name="sortiranjeDes">
+						<select name="sortDes">
 							<option value="" th:text="#{search.sort}"></option>
 							<option value="asc" >asc</option>
 							<option value="desc" >desc</option>
@@ -83,7 +83,7 @@
 							<option th:each="itSj: ${smestajneJedinice}" th:value="${itSj.id}" th:text="${itSj.nazivJedinice}" th:selected="${#strings.equals(itSj, param.smestajnaJedinicaId)}"></option>
 						</select>
 
-						<select name="sortiranjeSJ">
+						<select name="sortSJ">
 							<option value="" th:text="#{search.sort}"></option>
 							<option value="asc" >asc</option>
 							<option value="desc" >desc</option>
@@ -95,7 +95,7 @@
 							<option th:each="itPs: ${prevoznaSredstva}" th:value="${itPs.id}" th:text="${itPs.tipSredstva}" th:selected="${#strings.equals(itPs, param.prevoznoSredstvoId)}"></option>
 						</select>
 
-						<select name="sortiranjePS">
+						<select name="sortPS">
 							<option value="" th:text="#{search.sort}"></option>
 							<option value="asc" >asc</option>
 							<option value="desc" >desc</option>
@@ -106,7 +106,7 @@
 							<option value="" th:text="#{search.choose}"></option>
 							<option th:each="itKategorija: ${kategorija}" th:value="${itKategorija}" th:text="${itKategorija}" th:selected="${#strings.equals(itKategorija, param.kategorijaId)}"></option>
 						</select>
-						<select name="sortiranjeKat">
+						<select name="sortKat">
 							<option value="" th:text="#{search.sort}"></option>
 							<option value="asc" >asc</option>
 							<option value="desc" >desc</option>
@@ -114,7 +114,7 @@
 					</th>
 					<th>
 						<span th:text="#{search.from}"></span><input type="datetime-local" th:value="${param.datumOd?: '2024-01-01T00:00'}" name="datumOd"/>>
-						<select name="sortiranjeDatumStart">
+						<select name="sortDatumStart">
 							<option value="" th:text="#{search.sort}"></option>
 							<option value="asc" >asc</option>
 							<option value="desc" >desc</option>
@@ -123,7 +123,7 @@
 					<th>
 						<span th:text="#{search.to}"></span><input type="datetime-local" th:value="${param.datumDo?: '2026-01-01T00:00'}" name="datumDo"/>
 						<br/>
-						<select name="sortiranjeDatumEnd">
+						<select name="sortDatumEnd">
 							<option value="" th:text="#{search.sort}"></option>
 							<option value="asc" >asc</option>
 							<option value="desc" >desc</option>
@@ -132,7 +132,7 @@
 					<th>
 						<span th:text="#{search.from}"></span><input type="number" th:value="${param.cenaOd?: '0.0'}" min="0" step="0.1" name="cenaOd"/><br/>
 						<span th:text="#{search.to}"></span><input type="number" th:value="${param.cenaDo?: '100000.0'}" min="0" step="0.1" name="cenaDo"/><br/>
-						<select name="sortiranjeCena">
+						<select name="sortCena">
 							<option value="" th:text="#{search.sort}"></option>
 							<option value="asc" >asc</option>
 							<option value="desc" >desc</option>
@@ -142,7 +142,7 @@
 						<span th:text="#{search.from}"></span><input type="number" th:value="${param.brojNocenjaOd?: '0'}" min="0" step="1" name="brojNocenjaOd"/><br/>
 						<span th:text="#{search.to}"></span><input type="number" th:value="${param.brojNocenjaDo?: '55'}" min="0" step="1" name="brojNocenjaDo"/><br/>
 						<br/>
-						<select name="sortiranjeBrojaNocenja">
+						<select name="sortBrojaNocenja">
 							<option value="" th:text="#{search.sort}"></option>
 							<option value="asc" >asc</option>
 							<option value="desc" >desc</option>
@@ -158,18 +158,18 @@
 					<th><input type="submit" th:value="#{search.button}"/></th>
 				</tr>
 				<tr>
-					<th>Redni Broj</th>
-					<th>Sifra putovanja</th>
-					<th>Slika</th>
-					<th>Destinacija</th>
-					<th>Smestajna Jedinica</th>
-					<th>Prevozno Sredstvo</th>
-					<th>Kategorija</th>
-					<th>Datum Polaska</th>
-					<th>Datum Povratka</th>
-					<th>Cena</th>
-					<th>Broj Nocenja</th>
-					<th>Broj mesta</th>
+					<th th:text="#{util.number}"></th>
+					<th th:text="#{travel.id}"></th>
+					<th th:text="#{travelD.picture}"></th>
+					<th th:text="#{destination.title2}"></th>
+					<th th:text="#{unit.title2}"></th>
+					<th th:text="#{vehicle.title2}"></th>
+					<th th:text="#{travel.category}"></th>
+					<th th:text="#{travel.dateStart}"></th>
+					<th th:text="#{travel.dateEnd}"></th>
+					<th th:text="#{travel.price}"></th>
+					<th th:text="#{travel.nights}"></th>
+					<th th:text="#{vehicle.numberSeats}"></th>
 					<th></th>
 				</tr>
 				<tr th:each="itPutovanje, status : ${putovanja}">
@@ -204,32 +204,35 @@
 					</td>
 					<!-- <ul><span th:text="${pricesList[status.index].class.simpleName}"></span></ul> -->
 					<td th:text="${itPutovanje.brojNocenja}"></td>
-					<td th:text="${itPutovanje.prevoznoSredstvo.brojSedista}"></td>
+					<td>
+						<ul>
+							<li th:each="itPrice: ${itPutovanje.prices}"><p th:text="${itPrice.numberOfSeats}"></p></li>
+						</ul>
+					</td>
 					<td th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.isPutnik()}">
 					<li th:each="itPrice, priceStatus : ${pricesList[status.index]}">
 						<form th:action="@{/}">
 							<a th:href="|kolica/add?id=${itPutovanje.id}&grad=${itPutovanje.destinacija.grad}&tipSredstva=${itPutovanje.prevoznoSredstvo.tipSredstva}
 								&nazivJedinice=${itPutovanje.smestajnaJedinica.nazivJedinice}&priceId=${itPrice.id}&startDate=${itPrice.startDate}&endDate=${itPrice.endDate}&priceOfTravel=${itPrice.priceOfTravel}|"
-
-								th:text="DodajUKorpu">
+							   th:text="#{cart.add}">
 							</a>
 						</form>
 					</li>
 					<form method="post" action="listeZelja/add">
 						<input type="hidden" name="id" th:value="${itPutovanje.id}"/>
-						<input type="submit" value="Dodaj u listu zelja"/>
+						<input type="submit" th:value="#{wishlist.add}"/>
 					</form>
 					</td>
 					<td th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.isOrganizator()}">
 						<form method="post" action="putovanja/delete">
 							<input type="hidden" name="id" th:value="${itPutovanje.id}"/>
-							<input type="submit" value="Obrisi"/>
+							<input type="submit" th:value="#{button.delete}"/>
 						</form>
 					</td>
 					<td th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.isOrganizator()}">
 						<form th:action="@{/}">
 							<a th:href="|putovanja/details?id=${itPutovanje.id}|"
-								th:text="Izmeni">
+								th:text="#{button.edit}">
 							</a>
 						</form>
 					</td>
@@ -237,7 +240,7 @@
 		</table>
 		</form>
 		<ul>
-			<li th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.isAdmin()}"><a href="putovanja/odabirDestinacije">Dodaj putovanje</a></li>
+			<li th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.isOrganizator()}"><a href="putovanja/odabirDestinacije" th:text="#{travel.add}"></a></li>
 		</ul>
 	
 	</body>

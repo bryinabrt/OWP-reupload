@@ -40,6 +40,11 @@ public class DatabaseKorisnikServiceImpl implements KorisnikService{
 	}
 
 	@Override
+	public List<Korisnik> find(String korisnickoIme,String uloga,String sortKI, String SortU) {
+		return korisnikDAO.find(korisnickoIme, uloga, sortKI, SortU);
+	}
+
+	@Override
 	public Korisnik save(Korisnik korisnik) {
 		korisnikDAO.save(korisnik);
 		return korisnik;
@@ -55,6 +60,20 @@ public class DatabaseKorisnikServiceImpl implements KorisnikService{
 	public Korisnik delete(Long id) {
 		Korisnik korisnik = korisnikDAO.findOneById(id);
 		korisnikDAO.delete(id);
+		return korisnik;
+	}
+
+	@Override
+	public  Korisnik blokiraj(Long id) {
+		Korisnik korisnik = korisnikDAO.findOneById(id);
+		korisnikDAO.blokiraj(id);
+		return korisnik;
+	}
+
+	@Override
+	public  Korisnik deblokiraj(Long id) {
+		Korisnik korisnik = korisnikDAO.findOneById(id);
+		korisnikDAO.deblokiraj(id);
 		return korisnik;
 	}
 	

@@ -1,24 +1,24 @@
-<!DOCTYPE html>    
- <html>    
- <head>    
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<base th:href="@{/}">
  	<meta charset="UTF-8">    
  	<base href="bURL">    
- 	<title>Dodaj knjigu</title>    
+ 	<title th:text="#{destination.add}"></title>
  	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>    
  	<link rel="stylesheet" type="text/css" href="css/StiloviHorizontalniMeni.css"/>  
  </head>    
  <body>    
  	<ul>    
- 		<li><a href="destinacije">Destinacije</a></li>    
- 		<li><a href="korisnici">Korisnici</a></li>    
+ 		<li><a href="./" th:text="#{title.index}"></a></li>
  	</ul>    
- 	<form method="post" action="add">    
+ 	<form method="post" action="destinacije/add">
  		<table>    
- 			<caption>Destinacija</caption>    
- 			<tr><th>Grad<td><input type="text" value="" name="grad"/></td></tr>   
- 			<tr><th>Drzava:</th><td><input type="text" value="" name="drzava" /></td></tr>
- 			<tr><th>Kontinent:</th><td><input type="text" value="" name="kontinent" /></td></tr>    
- 			<tr><th></th><td><input type="submit" value="Dodaj"/></td>    
+ 			<caption th:text="#{destination.add}"></caption>
+ 			<tr><th th:text="#{destination.city}"><td><input type="text" value="" name="grad"/></td></tr>
+ 			<tr><th th:text="#{destination.country}"></th><td><input type="text" value="" name="drzava" /></td></tr>
+ 			<tr><th th:text="#{destination.continent}"></th><td><input type="text" value="" name="kontinent" /></td></tr>
+ 			<tr><th></th><td><input type="submit" th:value="#{destination.add}"/></td>
  		</table>    
  	</form>   
  	<br/>  

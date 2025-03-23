@@ -5,25 +5,28 @@
 	<meta charset="UTF-8" />
 	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
 	<link rel="stylesheet" type="text/css" href="css/StiloviHorizontalniMeni.css"/>
-	<title>Registracija</title>
+	<title th:text="#{user.registration}"></title>
 </head>
 <body>
+	<ul>
+		<li><a href="./" th:text="#{title.index}"></a></li>
+	</ul>
 	<br/>
 		<form method="post" action="korisnici/add">
 			<table>
-				<caption>Prijava korisnika na sistem</caption>
+				<caption th:text="#{user.registration}"></caption>
 				<input type="hidden" name="id" />
-				<tr><th>Korisnickoo Ime:</th><td><input type="text" value="" name="korisnickoIme" required/></td></tr>
-				<tr><th>Lozinka:</th><td><input type="password" value="" name="lozinka" required/></td></tr>
-				<tr><th>Email:</th><td><input type="text" value="" name="email" required/></td></tr>
-				<tr><th>Ime:</th><td><input type="text" value="" name="ime" required/></td></tr>
-				<tr><th>Prezime:</th><td><input type="text" value="" name="prezime" required/></td></tr>
-				<tr><th>Datum Rodjenja:</th><td><input type="date" value="" name="datumRodjenja" required/></td></tr>
-				<tr><th>Adresa:</th><td><input type="text" value="" name="adresa" required/></td></tr>
-				<tr><th>Broj Telefona:</th><td><input type="text" value="" name="brojTelefona" required/></td></tr>
+				<tr><th th:text="#{user.username}">:</th><td><input type="text" value="" name="korisnickoIme" required/></td></tr>
+				<tr><th th:text="#{user.password}">:</th><td><input type="password" value="" name="lozinka" required/></td></tr>
+				<tr><th th:text="#{user.email}">:</th><td><input type="text" value="" name="email" required/></td></tr>
+				<tr><th th:text="#{user.name}">:</th><td><input type="text" value="" name="ime" required/></td></tr>
+				<tr><th th:text="#{user.surname}">:</th><td><input type="text" value="" name="prezime" required/></td></tr>
+				<tr><th th:text="#{user.dateBirth}">:</th><td><input type="date" value="" name="datumRodjenja" required/></td></tr>
+				<tr><th th:text="#{user.adress}">:</th><td><input type="text" value="" name="adresa" required/></td></tr>
+				<tr><th th:text="#{user.number}">:</th><td><input type="text" value="" name="brojTelefona" required/></td></tr>
 				<input type="hidden" name="datumRegistracije" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd HH:mm:ss')}" />
 				<input type="hidden" name="uloga" value="putnik" />
-				<tr><th></th><td><input type="submit" name="dugme" value="Submit"/></td>
+				<tr><th></th><td><input type="submit" name="dugme" th:value="#{user.add}"/></td>
 			</table>
 		</form>
 </body>

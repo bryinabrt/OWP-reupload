@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <base th:href="@{/}">
+    <meta charset="UTF-8">
+    <base href="bURL">
+    <title th:text="#{destination.add}"></title>
+    <link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
+    <link rel="stylesheet" type="text/css" href="css/StiloviHorizontalniMeni.css"/>
+    <title th:text="#{vehicle.add}"></title>
+</head>
+<body>
+<ul>
+    <li><a href="./" th:text="#{title.index}"></a></li>
+</ul>
+<form method="post" action="prevoznaSredstva/add">
+    <table>
+        <caption th:text="#{vehicle.add}"></caption>
+        <tr><th th:text="#{vehicle.type}"><td><input type="text" value="" name="tipSredstva" required/></td></tr>
+        <tr><th th:text="#{vehicle.numberSeats}"></th><td><input type="number" value="" name="brojSedista" required/></td></tr>
+        <tr><th th:text="#{destination.city}"></th><td>
+            <select class="form-control" id="dropDownListaDestinacija" name="grad" required>
+            <option th:each="itDes : ${destinacije}" th:value="${itDes.grad}" th:text="${itDes.grad}"></option>
+            </select>
+        </td></tr>
+        <tr><th th:text="#{vehicle.description}"><td><input type="text" value="" name="opis" required/></td></tr>
+        <tr><th></th><td><input type="submit" th:value="#{destination.add}"/></td>
+    </table>
+</form>
+<br/>
+</body>
+</html>

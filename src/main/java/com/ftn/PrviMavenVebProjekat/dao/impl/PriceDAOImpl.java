@@ -40,10 +40,9 @@ public class PriceDAOImpl implements PriceDAO{
 			Long putovanjeId = resultSet.getLong(index++);
 			LocalDateTime startDate = resultSet.getTimestamp(index++).toLocalDateTime();
 			LocalDateTime endDate = resultSet.getTimestamp(index++).toLocalDateTime();
+			Integer numberOfSeats = resultSet.getInt(index++);
 			Double priceOfTravel = resultSet.getDouble(index++);
-			
-	        System.out.println("start: " + startDate);
-	        System.out.println("end: " + endDate);
+
 			/*
 	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	        String formattedStartDate = startDate.format(formatter);
@@ -54,13 +53,12 @@ public class PriceDAOImpl implements PriceDAO{
 			*/
 			Price price = prices.get(id);
 			if (price == null) {
-				price = new Price(id, destinationId, putovanjeId, startDate, endDate, priceOfTravel);
+				price = new Price(id, destinationId, putovanjeId, startDate, endDate, numberOfSeats, priceOfTravel);
 				prices.put(price.getId(), price);
 			}
 
 		}
 		public List<Price> getPrice() {
-			System.out.println("Number of users in map: " + prices.size());
 			return new ArrayList<>(prices.values());
 		}
 
@@ -69,7 +67,7 @@ public class PriceDAOImpl implements PriceDAO{
 	@Override
 	public List<Price> findAll() {
 		String sql = 
-				"SELECT p.id, p.destinationId, p.putovanjeId, p.startDate, p.endDate, p.priceOfTravel "
+				"SELECT p.id, p.destinationId, p.putovanjeId, p.startDate, p.endDate, p.numberOfSeats, p.priceOfTravel "
 				+ "FROM prices p "
 				+ "ORDER BY p.id";
 
@@ -82,7 +80,7 @@ public class PriceDAOImpl implements PriceDAO{
 	@Override
 	public Price findOne(Long id) {
 		String sql = 
-				"SELECT p.id, p.destinationId, p.putovanjeId, p.startDate, p.endDate, p.priceOfTravel "
+				"SELECT p.id, p.destinationId, p.putovanjeId, p.startDate, p.endDate, p.numberOfSeats, p.priceOfTravel "
 				+ "FROM prices p "
 				+ "WHERE p.id = ? "
 				+ "ORDER BY p.id";
@@ -96,7 +94,7 @@ public class PriceDAOImpl implements PriceDAO{
 	@Override
 	public Price findOneByDestinationId(Long destinationId) {
 		String sql = 
-				"SELECT p.id, p.destinationId, p.putovanjeId, p.startDate, p.endDate, p.priceOfTravel "
+				"SELECT p.id, p.destinationId, p.putovanjeId, p.startDate, p.endDate, p.numberOfSeats, p.priceOfTravel "
 				+ "FROM prices p "
 				+ "WHERE p.destinationId = ? "
 				+ "ORDER BY p.destinationId";
@@ -110,7 +108,7 @@ public class PriceDAOImpl implements PriceDAO{
 	@Override
 	public Price findOneByPutovanjeId(Long putovanjeId) {
 		String sql = 
-				"SELECT p.id, p.destinationId, p.putovanjeId, p.startDate, p.endDate, p.priceOfTravel, put.id "
+				"SELECT p.id, p.destinationId, p.putovanjeId, p.startDate, p.endDate, p.priceOfTravel, p.numberOfSeats, put.id "
 				+ "FROM prices p "
 				+ "LEFT JOIN putovanja put on put.id = p.putovanjeId "
 				+ "WHERE p.putovanjeId = ? "
@@ -124,9 +122,8 @@ public class PriceDAOImpl implements PriceDAO{
 	
 	@Override
 	public List<Price> findAllByDestinationId(Long destinationId) {
-		System.out.println("id" + destinationId);
 		String sql = 
-				"SELECT p.id, p.destinationId, p.putovanjeId, p.startDate, p.endDate, p.priceOfTravel "
+				"SELECT p.id, p.destinationId, p.putovanjeId, p.startDate, p.endDate, p.numberOfSeats, p.priceOfTravel "
 				+ "FROM prices p "
 				+ "WHERE p.destinationId = ? "
 				+ "ORDER BY p.destinationId";
@@ -139,9 +136,8 @@ public class PriceDAOImpl implements PriceDAO{
 	
 	@Override
 	public List<Price> findAllByPutovanjeId(Long putovanjeId) {
-		System.out.println("id" + putovanjeId);
 		String sql = 
-				"SELECT p.id, p.destinationId, p.putovanjeId, p.startDate, p.endDate, p.priceOfTravel, put.id "
+				"SELECT p.id, p.destinationId, p.putovanjeId, p.startDate, p.endDate, p.numberOfSeats, p.priceOfTravel, put.id "
 				+ "FROM prices p "
 				+ "LEFT JOIN putovanja put on put.id = p.putovanjeId "		
 				+ "WHERE p.putovanjeId = ? "
@@ -160,8 +156,8 @@ public class PriceDAOImpl implements PriceDAO{
 			
 			@Override
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-				String sql = "INSERT INTO prices (destinationId, putovanjeId, startDate, endDate, priceOfTravel)"
-						+ " VALUES (?, ?, ?, ?, ?)";
+				String sql = "INSERT INTO prices (destinationId, putovanjeId, startDate, endDate, numberOfSeats, priceOfTravel)"
+						+ " VALUES (?, ?, ?, ?, ?, ?)";
 
 				PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 				int index = 1;
@@ -169,6 +165,7 @@ public class PriceDAOImpl implements PriceDAO{
 				preparedStatement.setLong(index++, price.getPutovanjeId());
 				preparedStatement.setString(index++, price.getFormattedStartDate());
 				preparedStatement.setString(index++, price.getFormattedEndDate());
+				preparedStatement.setInt(index++, price.getNumberOfSeats());
 				preparedStatement.setDouble(index++, price.getPriceOfTravel());
 
 				return preparedStatement;
@@ -183,8 +180,9 @@ public class PriceDAOImpl implements PriceDAO{
 	@Transactional
 	@Override
 	public int update(Price price) {
-		String sql = "UPDATE prices SET destinationId = ?, putovanjeId = ?, startDate = ?, endDate = ?, priceOfTravel = ? WHERE id = ?";	
-		boolean uspeh = jdbcTemplate.update(sql, price.getDestinationId(), price.getPutovanjeId(), price.getFormattedStartDate(), price.getFormattedEndDate(), price.getPriceOfTravel()) == 1;
+		String sql = "UPDATE prices SET destinationId = ?, putovanjeId = ?, startDate = ?, endDate = ?, numberOfSeats = ?, priceOfTravel = ? WHERE id = ?";
+		boolean uspeh = jdbcTemplate.update(sql, price.getDestinationId(), price.getPutovanjeId(), price.getFormattedStartDate(),
+				price.getFormattedEndDate(), price.getNumberOfSeats(), price.getPriceOfTravel(), price.getId()) == 1;
 		
 		return uspeh?1:0;
 	}

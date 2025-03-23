@@ -5,12 +5,11 @@
 	<base th:href="@{/}"><!-- popuni href atribut vrednosšću context path-a -->
 	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
 	<link rel="stylesheet" type="text/css" href="css/StiloviKorisnik.css"/>
-	<title>Destinacija</title>
+	<title th:text="#{admin.destination}"></title>
 </head>
 <body>
-	<ul>    
- 		<li><a href="destinacije">Destinacije</a></li>    
- 		<li><a href="korisnici">Korisnici</a></li>    
+	<ul>
+		<li><a href="./" th:text="#{title.index}"></a></li>
  	</ul>  
 	<form method="post" action="destinacije/edit">
 		<input type="hidden" name="id" th:value="${destinacija.id}"/><!-- popuni value atribut vrednošću -->
@@ -19,13 +18,13 @@
 			<tr><th>Grad:</th><td><input type="text" th:value="${destinacija.grad}" name="grad"/></td></tr>
 			<tr><th>Drzava:</th><td><input type="text" th:value="${destinacija.drzava}" name="drzava"/></td></tr>
 			<tr><th>Kontinent:</th><td><input type="text" th:value="${destinacija.kontinent}" name="kontinent"/></td></tr>
-			<tr><th></th><td><input type="submit" value="Izmeni"/></td></tr>
+			<tr><th></th><td><input type="submit" th:value="#{button.edit}"/></td></tr>
 		</table>
 	</form>
 	<form method="post" action="destinacije/delete">
 		<input type="hidden" name="id" th:value="${destinacija.id}"/>
 		<table class="forma">
-			<tr><th></th><td><input type="submit" value="Obriši"/></td></tr>
+			<tr><th></th><td><input type="submit" th:value="#{button.delete}"/></td></tr>
 		</table>
 	</form>
 </body>

@@ -5,26 +5,23 @@
 		<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
 		<link rel="stylesheet" type="text/css" href="css/StiloviHorizontalniMeni.css"/>
 		<meta charset="UTF-8">
-		<title>Prevozna Sredstva</title>
+		<title th:text="#{vehicle.title}"></title>
 	</head>
 	<body>
 		<ul>
 			<li>
-				<a href="destinacije">Destinacije</a>
-				<a href="korisnici">Korisnici</a>
-				<a href="putovanja">Putovanja</a>
-				<a href="smestajneJedinice">Smestajne Jedinice</a>
+				<a href="./" th:text="#{title.index}"></a>
 			</li>
 		</ul>
 		
 		<table>
-			<caption>Prevozna Sredstva</caption>
+			<caption th:text="#{vehicle.title}"></caption>
 				<tr>
 					<th>Redni Broj</th>
-					<th>Tip Sredstva</th>
-					<th>Broj sedista</th>
-					<th>Destinacija</th>
-					<th>Opis</th>
+					<th th:text="#{vehicle.type}"></th>
+					<th th:text="#{vehicle.numberSeats}"></th>
+					<th th:text="#{vehicle.destination}"></th>
+					<th th:text="#{vehicle.description}"></th>
 				</tr>
 				<tr th:each="itPrevoznoSredstvo, status : ${prevoznaSredstva}">
 					<td th:text="${(status.index + 1) + '.'}"></td>
@@ -35,20 +32,20 @@
 					<td>
 						<form method="post" action="smestajneJedinice/delete">
 							<input type="hidden" name="id" th:value="${itPrevoznoSredstvo.id}"/>
-							<input type="submit" value="Obrisi"/>
+							<input type="submit" th:value="Obrisi"/>
 						</form>
 					</td>
 					<td>
 						<form th:action="@{/}">
 							<a th:href="|prevoznaSredstva/details?id=${itPrevoznoSredstvo.id}|"
-								th:text="Izmeni">
+								th:text="#{button.edit}">
 							</a>
 						</form>
 					</td>
 				</tr>
 		</table>
 		<ul>
-			<li><a href="destinacije/add">Dodaj Destinaciju</a></li>
+			<li><a href="prevoznaSredstva/add" th:text="#{vehicle.add}"></a></li>
 		</ul>
 	
 	</body>

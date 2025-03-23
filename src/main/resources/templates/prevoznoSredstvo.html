@@ -5,30 +5,27 @@
 	<base th:href="@{/}"><!-- popuni href atribut vrednosšću context path-a -->
 	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
 	<link rel="stylesheet" type="text/css" href="css/StiloviKorisnik.css"/>
-	<title>Prevozno Sredstvo</title>
+	<title th:text="#{vehicle.title2}"></title>
 </head>
 <body>
-	<ul>    
- 		<li><a href="destinacije">Destinacije</a></li>    
- 		<li><a href="korisnici">Korisnici</a></li>
- 		<li><a href="smestajneJedinice">Smestajne Jedinice</a></li>
- 		<li><a href="putovanja">Putovanja</a></li>    
+	<ul>
+ 		<li><a href="./" th:text="#{title.index}"></a></li>
  	</ul>  
 	<form method="post" action="prevoznaSredstva/edit">
 		<input type="hidden" name="id" th:value="${prevoznoSredstvo.id}"/><!-- popuni value atribut vrednošću -->
 		<table class="forma">
-			<caption>Prevozno Sredstvo</caption>
-			<tr><th>Naziv sredstva:</th><td><input type="text" th:value="${prevoznoSredstvo.tipSredstva}" name="tipSredstva"/></td></tr>
-			<tr><th>Broj Sedista:</th><td><input type="number" th:value="${prevoznoSredstvo.brojSedista}" name="brojSedista"/></td></tr>
-			<tr><th>Destinacija:</th><td><input type="text" th:value="${destinacija.grad}" name="grad" disabled/></td></tr>
-			<tr><th>Opis:</th><td><input type="text" th:value="${prevoznoSredstvo.opis}" name="opis"/></td></tr>
+			<caption th:text="#{vehicle.title2}"></caption>
+			<tr><th th:text="#{vehicle.type}">:</th><td><input type="text" th:value="${prevoznoSredstvo.tipSredstva}" name="tipSredstva"/></td></tr>
+			<tr><th th:text="#{vehicle.numberSeats}">:</th><td><input type="number" th:value="${prevoznoSredstvo.brojSedista}" name="brojSedista"/></td></tr>
+			<tr><th th:text="#{vehicle.destination}">:</th><td><input type="text" th:value="${destinacija.grad}" name="grad" disabled/></td></tr>
+			<tr><th th:text="#{vehicle.description}">:</th><td><input type="text" th:value="${prevoznoSredstvo.opis}" name="opis"/></td></tr>
 			<tr><th></th><td><input type="submit" value="Izmeni"/></td></tr>
 		</table>
 	</form>
 	<form method="post" action="prevoznaSredstva/delete">
 		<input type="hidden" name="id" th:value="${prevoznoSredstvo.id}"/>
 		<table class="forma">
-			<tr><th></th><td><input type="submit" value="Obriši"/></td></tr>
+			<tr><th></th><td><input type="submit" th:value="#{button.edit}"/></td></tr>
 		</table>
 	</form>
 </body>

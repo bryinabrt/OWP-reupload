@@ -5,30 +5,27 @@
 	<base th:href="@{/}"><!-- popuni href atribut vrednosšću context path-a -->
 	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
 	<link rel="stylesheet" type="text/css" href="css/StiloviKorisnik.css"/>
-	<title>Destinacija</title>
+	<title th:text="#{unit.title2}"></title>
 </head>
 <body>
-	<ul>    
- 		<li><a href="destinacije">Destinacije</a></li>    
- 		<li><a href="korisnici">Korisnici</a></li>
- 		<li><a href="smestajneJedinice">Smestajne Jedinice</a></li>
- 		<li><a href="prevoznaSredstva">prevoznaSredstva</a></li>    
+	<ul>
+ 		<li><a href="./" th:text="#{title.index}"></a></li>
  	</ul>  
 	<form method="post" action="smestajneJedinice/edit">
 		<input type="hidden" name="id" th:value="${smestajnaJedinica.id}"/><!-- popuni value atribut vrednošću -->
 		<table class="forma">
-			<caption>Smestajna Jedinica</caption>
-			<tr><th>Naziv jedinice:</th><td><input type="text" th:value="${smestajnaJedinica.nazivJedinice}" name="nazivJedinice"/></td></tr>
-			<tr><th>Tip jedinice:</th><td><input type="text" th:value="${tipJedinice.nazivTipaJedinice}" name="nazivTipaJedinice" disabled/></td></tr>
-			<tr><th>Kapacitet:</th><td><input type="text" th:value="${smestajnaJedinica.kapacitet}" name="kapacitet"/></td></tr>
-			<tr><th>Opis:</th><td><input type="text" th:value="${smestajnaJedinica.opis}" name="opis"/></td></tr>
+			<caption th:text="#{title.index}"></caption>
+			<tr><th th:text="#{unit.name}">:</th><td><input type="text" th:value="${smestajnaJedinica.nazivJedinice}" name="nazivJedinice"/></td></tr>
+			<tr><th th:text="#{unit.type}">:</th><td><input type="text" th:value="${tipJedinice.nazivTipaJedinice}" name="nazivTipaJedinice" disabled/></td></tr>
+			<tr><th th:text="#{unit.capacity}">:</th><td><input type="text" th:value="${smestajnaJedinica.kapacitet}" name="kapacitet"/></td></tr>
+			<tr><th th:text="#{unit.description}">:</th><td><input type="text" th:value="${smestajnaJedinica.opis}" name="opis"/></td></tr>
 			<tr><th></th><td><input type="submit" value="Izmeni"/></td></tr>
 		</table>
 	</form>
 	<form method="post" action="smestajneJedinice/delete">
 		<input type="hidden" name="id" th:value="${smestajnaJedinica.id}"/>
 		<table class="forma">
-			<tr><th></th><td><input type="submit" value="Obriši"/></td></tr>
+			<tr><th></th><td><input type="submit" th:value="#{button.delete}"/></td></tr>
 		</table>
 	</form>
 </body>

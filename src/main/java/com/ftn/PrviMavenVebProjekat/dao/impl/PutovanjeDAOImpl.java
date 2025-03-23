@@ -96,13 +96,14 @@ public class PutovanjeDAOImpl implements PutovanjeDAO{
 		    Long putovanjeId = resultSet.getLong("putovanjeId");
 			LocalDateTime startDate = resultSet.getTimestamp("startDate").toLocalDateTime();
 			LocalDateTime endDate = resultSet.getTimestamp("endDate").toLocalDateTime();
+			Integer numberOfSeats = resultSet.getInt("numberOfSeats");
 			Double priceOfTravel = resultSet.getDouble("priceOfTravel");
 			
 	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 	        String formattedStartDate = startDate.format(formatter);
 	        String formattedEndDate = endDate.format(formatter);
 
-	        Price price = new Price(destinationId, putovanjeId, startDate, endDate, priceOfTravel);
+	        Price price = new Price(destinationId, putovanjeId, startDate, endDate, numberOfSeats, priceOfTravel);
 			
 
 			Putovanje putovanje = putovanja.get(id);
@@ -152,7 +153,7 @@ public class PutovanjeDAOImpl implements PutovanjeDAO{
 				+ "ps.id, ps.tipSredstva, ps.brojSedista, ps.krajnjaDestinacija, ps.opis, "
 				+ "s.id, s.nazivJedinice, s.idTipJedinice, s.kapacitet, s.idDestinacijeSmestaja, s.recenzija, s.uslugaWifi, s.uslugaKupatilo, "
 				+ "s.uslugaTv, s.opis, "
-				+ "pr.id, pr.destinationId, pr.putovanjeId, pr.startDate, pr.endDate, pr.priceOfTravel from putovanja p "
+				+ "pr.id, pr.destinationId, pr.putovanjeId, pr.startDate, pr.endDate, pr.numberOfSeats, pr.priceOfTravel from putovanja p "
 						+ "left join destinacije d on d.id = p.idDestinacije "
 						+ "left join prevoznosredstvo ps on ps.id = p.idPrevoznoSredstvo "
 						+ "left join smestajnaJedinica s on s.id = p.idSmestajnaJedinica "
@@ -214,7 +215,7 @@ public class PutovanjeDAOImpl implements PutovanjeDAO{
 				+ "ps.id, ps.tipSredstva, ps.brojSedista, ps.krajnjaDestinacija, ps.opis, "
 				+ "s.id, s.nazivJedinice, s.idTipJedinice, s.kapacitet, s.idDestinacijeSmestaja, s.recenzija, s.uslugaWifi, s.uslugaKupatilo, "
 				+ "s.uslugaTv, s.opis, "
-				+ "pr.id, pr.destinationId, pr.putovanjeId, pr.startDate, pr.endDate, pr.priceOfTravel from putovanja p "
+				+ "pr.id, pr.destinationId, pr.putovanjeId, pr.startDate, pr.endDate, pr.numberOfSeats, pr.priceOfTravel from putovanja p "
 						+ "left join destinacije d on d.id = p.idDestinacije "
 						+ "left join prevoznoSredstvo ps on ps.id = p.idPrevoznoSredstvo "
 						+ "left join smestajnaJedinica s on s.id = p.idSmestajnaJedinica "
@@ -228,14 +229,15 @@ public class PutovanjeDAOImpl implements PutovanjeDAO{
 	}
 
 	@Override
-	public List<Putovanje> find(String destinacijaId, String prevoznoSredstvoId, String smestajnaJedinicaId, String kategorijaPutovanja , String datumPolaska , String datumPovratka , Double cenaOd , Double cenaDo,
-								String sortDes, String sortPS, String sortSJ, String sortKat, String sortDatumStart, String sortDatumEnd, String sortCena, Integer brojNocenjaOd, Integer brojNocenjaDo, String sortNoc, Integer brojMesta, Integer putId) {
+	public List<Putovanje> find(String destinacijaId, String prevoznoSredstvoId, String smestajnaJedinicaId, String kategorijaPutovanja ,
+								String datumPolaska , String datumPovratka , Double cenaOd , Double cenaDo,
+								String sortDes, String sortPS, String sortSJ, String sortKat, String sortDatumStart, String sortDatumEnd,
+								String sortCena, Integer brojNocenjaOd, Integer brojNocenjaDo, String sortNoc, Integer brojMesta, Integer putId) {
 
 		ArrayList<Object> listaArgumenata = new ArrayList<Object>();
-		System.out.println("BRM BRMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA DAO: "+destinacijaId);
 
 		String sql = "SELECT p.id, p.sifraPutovanja, p.idDestinacije, p.idPrevoznoSredstvo, p.idSmestajnaJedinica, p.kategorija, p.brojNocenja, p.slika, d.grad, ps.tipSredstva, ps.brojSedista, s.nazivJedinice, s.kapacitet, " +
-				"pr.id, pr.destinationId, pr.putovanjeId, pr.startDate, pr.endDate, pr.priceOfTravel " +
+				"pr.id, pr.destinationId, pr.putovanjeId, pr.startDate, pr.endDate, pr.numberOfSeats, pr.priceOfTravel " +
 				"from putovanja p left join destinacije d ON p.idDestinacije = d.id left join prevoznoSredstvo ps ON ps.id = p.idPrevoznoSredstvo " +
 				"left join smestajnaJedinica s ON p.idSmestajnaJedinica = s.id left join prices pr on p.id = pr.putovanjeId";
 
@@ -329,7 +331,7 @@ public class PutovanjeDAOImpl implements PutovanjeDAO{
 		if(brojMesta!=null) {
 			if(imaArgumenata)
 				whereSql.append(" AND ");
-			whereSql.append("ps.brojSedista >= ?");
+			whereSql.append("pr.numberOfSeats >= ?");
 			imaArgumenata = true;
 			listaArgumenata.add(brojMesta);
 		}
@@ -355,7 +357,7 @@ public class PutovanjeDAOImpl implements PutovanjeDAO{
 		StringBuffer orderSQL = new StringBuffer(" ORDER BY ");
 
 		if(sortDes != null) {
-			orderSQL.append("d.id " + sortDes);
+			orderSQL.append("d.grad " + sortDes);
 			imaSort = true;
 		}
 
@@ -438,6 +440,7 @@ public class PutovanjeDAOImpl implements PutovanjeDAO{
 				sql=sql + orderId;
 			}
 		}
+		System.out.println(sql);
 		List<Putovanje> putovanja = jdbcTemplate.query(sql, listaArgumenata.toArray(), new PutovanjeRowMapper());
 		List<Putovanje> filtrp = removeDuplicates(putovanja);
 		return filtrp;

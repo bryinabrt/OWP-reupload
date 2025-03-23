@@ -5,7 +5,7 @@
 		<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
 		<link rel="stylesheet" type="text/css" href="css/StiloviHorizontalniMeni.css"/>
 		<meta charset="UTF-8">
-		<title>Smestajne Jedinice</title>
+		<title></title>
 	</head>
 	<body>
 		<ul>
@@ -17,15 +17,15 @@
 		</ul>
 		
 		<table>
-			<caption>Smestajne Jedinice</caption>
+			<caption th:text="#{unit.title}"></caption>
 				<tr>
-					<th>Redni Broj</th>
-					<th>Naziv Jedinice</th>
-					<th>Tip jedinice</th>
-					<th>Kapacitet</th>
-					<th>Destinacija</th>
-					<th>Recenzija</th>
-					<th>Wifi, Kupatilo, TV</th>
+					<th th:text="#{util.number}"></th>
+					<th th:text="#{unit.name}"></th>
+					<th th:text="#{unit.type}"></th>
+					<th th:text="#{unit.capacity}"></th>
+					<th th:text="#{unit.destination}"></th>
+					<th th:text="#{unit.rating}"></th>
+					<th th:text="#{unit.services}"></th>
 					<th>Opis</th>
 				</tr>
 				<tr th:each="itSmestajnaJedinica, status : ${smestajneJedinice}">
@@ -58,14 +58,14 @@
 					<td>
 						<form th:action="@{/}">
 							<a th:href="|smestajneJedinice/details?id=${itSmestajnaJedinica.id}|"
-								th:text="Izmeni">
+								th:text="#{button.edit}">
 							</a>
 						</form>
 					</td>
 				</tr>
 		</table>
 		<ul>
-			<li><a href="smestajneJedinice/add">Dodaj Smestajnu Jedinicu</a></li>
+			<li><a href="smestajneJedinice/add" th:text="#{unit.add}"></a></li>
 		</ul>
 	
 	</body>

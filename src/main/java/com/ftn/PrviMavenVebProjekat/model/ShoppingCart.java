@@ -7,6 +7,7 @@ public class ShoppingCart {
 	private Long id;
 	private Long korisnikId;
 	private Long rezervisanoPutovanjeId;
+	private Long smestajnaJedinicaId;
 	private Integer brojPutnika;
 	private Double ukupnaCena;
 	private Long pricesId;
@@ -23,6 +24,19 @@ public class ShoppingCart {
 		this.id = id;
 		this.korisnikId = korisnikId;
 		this.rezervisanoPutovanjeId = rezervisanoPutovanjeId;
+		this.brojPutnika = brojPutnika;
+		this.ukupnaCena = ukupnaCena;
+		this.pricesId = pricesId;
+		this.putovanja = new ArrayList<Putovanje>();
+		this.prices = new ArrayList<Price>();
+	}
+
+	public ShoppingCart(Long id, Long korisnikId, Long rezervisanoPutovanjeId, Long smestajnaJedinicaId, Integer brojPutnika, Double ukupnaCena, Long pricesId) {
+		super();
+		this.id = id;
+		this.korisnikId = korisnikId;
+		this.rezervisanoPutovanjeId = rezervisanoPutovanjeId;
+		this.smestajnaJedinicaId = smestajnaJedinicaId;
 		this.brojPutnika = brojPutnika;
 		this.ukupnaCena = ukupnaCena;
 		this.pricesId = pricesId;
@@ -106,9 +120,14 @@ public class ShoppingCart {
 	public void setPrices(List<Price> prices) {
 		this.prices = prices;
 	}
-	
-	
-	
+
+	public Long getSmestajnaJedinicaId() {
+		return smestajnaJedinicaId;
+	}
+
+	public void setSmestajnaJedinicaId(Long smestajnaJedinicaId) {
+		this.smestajnaJedinicaId = smestajnaJedinicaId;
+	}
 }
 
 

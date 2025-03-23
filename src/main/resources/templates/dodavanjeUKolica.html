@@ -5,12 +5,10 @@
 	<base th:href="@{/}"><!-- popuni href atribut vrednosšću context path-a -->
 	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
 	<link rel="stylesheet" type="text/css" href="css/StiloviKorisnik.css"/>
-	<title>Dodavanje u kolica</title>
+	<title th:text="#{cart.add}"></title>
 </head>
 <body>
-	<ul>    
- 		<li><a href="destinacije">Destinacije</a></li>    
- 		<li><a href="korisnici">Korisnici</a></li>
+	<ul>
  		<li><a href="./">Pocetna</a></li>   
  	</ul>  
 	<form method="post" action="kolica/add">
@@ -19,34 +17,34 @@
 		<input type="hidden" name="pricesId" th:value="${price.id}"/>
 		<div th:text="${price.id}"></div>
 		<table class="forma">
-			<caption>Putovanje</caption>
+			<caption th:text="#{cart.add}"></caption>
 			<input type="hidden" id="originalPriceOfTravel" th:value="${price.priceOfTravel}" />
-			<tr><th>Sifra putovanja:</th><td><input disabled th:value="${putovanje.sifraPutovanja}" name="sifraPutovanja"/></td></tr>
-			<tr><th>Destinacija:</th><td><input type="text" disabled th:value="${destinacija.grad}" name="grad"/></td></tr>
-			<tr><th>Prevozno Sredstvo:</th><td><input type="text" disabled th:value="${prevoznoSredstvo.tipSredstva}" name="tipSredstva"/></td></tr>
-			<tr><th>Smestajna Jedinica:</th><td>
-	            <select class="form-control" id="dropDownListaSmestajneJedinice" name="smestajnaJedinica">
-	                <option value="0">Izaberi Jedinicu</option>
+			<tr><th th:text="#{travel.id}">:</th><td><input disabled th:value="${putovanje.sifraPutovanja}" name="sifraPutovanja"/></td></tr>
+			<tr><th th:text="#{destination.city}">:</th><td><input type="text" disabled th:value="${destinacija.grad}" name="grad"/></td></tr>
+			<tr><th th:text="#{vehicle.type}">:</th><td><input type="text" disabled th:value="${prevoznoSredstvo.tipSredstva}" name="tipSredstva"/></td></tr>
+			<tr><th th:text="#{unit.title2}">:</th><td>
+	            <select class="form-control" id="dropDownListaSmestajneJedinice" name="nazivJedinice">
+	                <option value="0" th:text="#{unit.name}"></option>
 	                <option th:each="itSmestajnaJedinica : ${smestajneJedinice}" th:value="${itSmestajnaJedinica.nazivJedinice}" th:text="${itSmestajnaJedinica.nazivJedinice}"></option>
 	            </select>
 			</td></tr>
-			<tr><th>Broj Putnika:</th><td><input type="number" min="1" max="6" value="1" id="brojPutnika" name="brojPutnika" oninput="updatePrice()"/></td></tr>
-			<tr><th>Datum polaska:</th><td>
+			<tr><th th:text="#{cart.numberOfPassengers}">:</th><td><input type="number" min="1" max="6" value="1" id="brojPutnika" name="brojPutnika" oninput="updatePrice()"/></td></tr>
+			<tr><th th:text="#{travel.dateStart}">:</th><td>
 			    <input type="datetime-local" id="startDate" name="startDate" th:value="${price.startDate}" disabled/>
 			</td></tr>
-			<tr><th>Datum povratka:</th><td>
+			<tr><th th:text="#{travel.dateEnd}">:</th><td>
 			    <input type="datetime-local" id="endDate" name="endDate" th:value="${price.endDate}" disabled></input>
 			</td></tr>
 			
-			<tr><th>Broj Nocenja:</th><td><input type="number" disabled th:value="${putovanje.brojNocenja}" name="brojNocenja"/></td></tr>
+			<tr><th th:text="#{travel.numberOfTravels}">:</th><td><input type="number" disabled th:value="${putovanje.brojNocenja}" name="brojNocenja"/></td></tr>
 			<tr>
-				<th>Cene:</th>
+				<th th:text="#{travel.price}">:</th>
 				<td>
 					<input type="number" id="priceOfTravel" name="ukupnaCena" th:value="${price.priceOfTravel}" readonly/>
 				</td>
 			</tr>
 			<!-- <tr><th></th><td><input type="hidden" th:value="${korisnik.uloga}" name="uloga"/></td></tr> --> 
-			<tr><th></th><td><input type="submit" value="Dodaj U korpu"/></td></tr>
+			<tr><th></th><td><input type="submit" th:value="#{cart.add}"/></td></tr>
 		</table>
 
 	</form>

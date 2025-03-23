@@ -48,10 +48,17 @@ public class KorisnikController implements ServletContextAware {
 	
 	@GetMapping()
 	@ResponseBody
-	public ModelAndView index() {
+	public ModelAndView index(
+			@RequestParam(required=false) String korIme,
+			@RequestParam(required=false) String sortKorIme,
+			@RequestParam(required=false) String ulogaBrt,
+			@RequestParam(required=false) String sortUloga,
+			HttpSession session,HttpServletResponse response)  {
 		
-		List<Korisnik> korisnici = korisnikService.findAll();
+		List<Korisnik> korisnici = korisnikService.find(korIme, ulogaBrt, sortKorIme, sortUloga);
+		System.out.println("Korisnici: "+korisnici);
 		ModelAndView result = new ModelAndView("korisnici");
+		result.addObject("uloge", Uloga.values());
 		result.addObject("korisnici", korisnici);
 		return result;
 	}
@@ -85,38 +92,39 @@ public class KorisnikController implements ServletContextAware {
 		response.sendRedirect(bURL);
 	}
 	
-	@GetMapping(value="/login")
+	@GetMapping(value="login")
 	public String login(HttpServletResponse response) throws IOException {
 		return "login";
 	}
 	
 	@PostMapping(value="/login")
-	public void login(@RequestParam String email, @RequestParam String lozinka, 
-			HttpSession session, HttpServletResponse response) throws IOException {
+	public ModelAndView login(@RequestParam String email, @RequestParam String lozinka,
+									 HttpSession session, HttpServletResponse response) throws IOException {
 		try {
 			Korisnik korisnik = korisnikService.findOne(email, lozinka);
 			if (korisnik == null) {
 				System.out.println("neuspeh: ");
 				throw new Exception("Neispravno korisničko ime ili lozinka!");
-			}			
+			}
 			if (korisnik.isPrijavljen()) {
 				System.out.println("vec prijavljen ");
 				throw new Exception("Već ste prijavljeni!");
 			}
 
-			// prijava
 			korisnik.setUlogovan(true);
 			System.out.println("uspeh jej");
 			session.setAttribute(KorisnikController.KORISNIK_KEY, korisnik);
 			
 			response.sendRedirect(bURL);
+			return null;
 		} 	catch (Exception ex) {
 			// ispis greške
-			String poruka = ex.getMessage();
-			if (poruka == "") {
-				System.out.println("neuspeh");
-				poruka = "Neuspešna prijava!";
-			}
+			String greska = ex.getMessage();
+
+			ModelAndView rezultat = new ModelAndView("login");
+			rezultat.addObject("greska", greska);
+
+			return rezultat;
 		}
 	}
 	
@@ -147,6 +155,18 @@ public class KorisnikController implements ServletContextAware {
 	@PostMapping(value="/delete")
 	public void delete(@RequestParam Long id, HttpServletResponse response) throws IOException {
 		korisnikService.delete(id);
+		response.sendRedirect(bURL+"korisnici");
+	}
+
+	@PostMapping(value="/blokiraj")
+	public void blokiraj(@RequestParam Long id, HttpServletResponse response) throws IOException {
+		korisnikService.blokiraj(id);
+		response.sendRedirect(bURL+"korisnici");
+	}
+
+	@PostMapping(value = "/deblokiraj")
+	public void deblokiraj(@RequestParam Long id, HttpServletResponse response) throws IOException {
+		korisnikService.deblokiraj(id);
 		response.sendRedirect(bURL+"korisnici");
 	}
 	

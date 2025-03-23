@@ -152,7 +152,7 @@ public class ShoppingCartController implements ServletContextAware {
         LocalDateTime endDateString = LocalDateTime.parse(endDate, formatter);
         System.out.println("end " + endDate);
 		
-		Price price = new Price(priceId, startDateString, endDateString, priceOfTravel);
+		Price price = new Price(priceId, startDateString, endDateString, prevoznoSredstvo.getBrojSedista(), priceOfTravel);
 		
 		ModelAndView result = new ModelAndView("dodavanjeUKolica");
 		
@@ -168,11 +168,13 @@ public class ShoppingCartController implements ServletContextAware {
 	
 	@PostMapping(value="/add")
 	public void dodajUKolica(HttpServletResponse response, @RequestParam Long korisnikId,
-			@RequestParam Long rezervisanoPutovanjeId,
+			@RequestParam Long rezervisanoPutovanjeId, @RequestParam String nazivJedinice,
 			@RequestParam Integer brojPutnika, @RequestParam Double ukupnaCena,
 			@RequestParam Long pricesId, HttpSession session) throws IOException {
 		
 		System.out.println("Prices ID: " +pricesId);
+
+		SmestajnaJedinica smestajnaJedinica = smestajnaJedinicaService.findOneByNaziv(nazivJedinice);
 
 		List<ShoppingCart> cartinjo = (List<ShoppingCart>) session.getAttribute(KOLICA_KEY);
 		if (cartinjo == null) {
@@ -181,7 +183,7 @@ public class ShoppingCartController implements ServletContextAware {
 
 		Long idKolica = Long.valueOf(cartinjo.size()+1);
 
-		ShoppingCart shoppingCart = new ShoppingCart(idKolica, korisnikId, rezervisanoPutovanjeId, brojPutnika, ukupnaCena, pricesId);
+		ShoppingCart shoppingCart = new ShoppingCart(idKolica, korisnikId, rezervisanoPutovanjeId, smestajnaJedinica.getId(), brojPutnika, ukupnaCena, pricesId);
 
 		cartinjo.add(shoppingCart);
 

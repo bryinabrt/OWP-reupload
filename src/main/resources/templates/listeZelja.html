@@ -5,46 +5,48 @@
     <link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
     <link rel="stylesheet" type="text/css" href="css/StiloviHorizontalniMeni.css"/>
     <meta charset="UTF-8">
-    <title>Lista zelja</title>
+    <title th:text="#{wishlist.title}"></title>
 </head>
 <body>
-    <table class="korisnik" th:unless="${session.prijavljeniKorisnik == null}">
-        <tr><th>Prijavljeni ste kao</th><td><a th:href="|Korisnici/Details?korisnickoIme=${session.prijavljeniKorisnik.korisnickoIme}|" th:text="${session.prijavljeniKorisnik.korisnickoIme}"></a>.</td></tr>
-        <tr>
-            <td colspan="2">
-                <ul>
-                    <li><a th:href="|kolica?id=${session.prijavljeniKorisnik.id}|">Kolica</a></li>
-                    <li><a href="korisnici/logout">odjava</a></li>
-                </ul>
-            </td>
-        </tr>
-    </table>
-    <table class="korisnik" th:if="${session.prijavljeniKorisnik == null}">
-        <tr><th>Niste prijavljeni</th></tr>
-        <tr>
-            <td>
-                <ul>
-                    <li><a href="korisnici/registracija">registracija</a></li>
-                    <li><a href="korisnici/login">prijava</a></li>
-                </ul>
-            </td>
-        </tr>
-    </table>
+<table class="korisnik" th:unless="${session.prijavljeniKorisnik == null}">
+    <tr><th th:text="#{login.name}"></th><td><a th:href="|korisnici/details?id=${session.prijavljeniKorisnik.id}|" th:text="${session.prijavljeniKorisnik.korisnickoIme}"></a>.</td></tr>
+    <tr>
+        <td colspan="2">
+            <ul>
+                <li><a th:href="|kolica?id=${session.prijavljeniKorisnik.id}|" th:text="#{putnik.cart}"></a></li>
+                <li><a href="korisnici/logout" th:text="#{page.logout}"></a></li>
+                <li th:if="${session.prijavljeniKorisnik.isAdmin()}"><a href="zahtevi" th:text="#{admin.card}"></a></li>
+                <li><a href="./" th:text="#{title.index}"></a></li>
+            </ul>
+        </td>
+    </tr>
+</table>
+<table class="korisnik" th:if="${session.prijavljeniKorisnik == null}">
+    <tr><th th:text="#{logged.out}"></th></tr>
+    <tr>
+        <td>
+            <ul>
+                <li><a href="korisnici/registracija" th:text="#{user.registration}"></a></li>
+                <li><a href="korisnici/login" th:text="#{user.login}"></a></li>
+            </ul>
+        </td>
+    </tr>
+</table>
 
     <table>
-        <caption>Putovanja</caption>
+        <caption th:text="#{wishlist.title}"></caption>
         <tr>
-            <th>Redni Broj</th>
-            <th>Slika</th>
-            <th>Sifra Putovanja</th>
-            <th>Destinacija</th>
-            <th>Smestajna Jedinica</th>
-            <th>Prevozno Sredstvo</th>
-            <th>Kategorija</th>
-            <th>Datum Polaska</th>
-            <th>Datum Povratka</th>
-            <th>Cena</th>
-            <th>Broj Nocenja</th>
+            <th th:text="#{util.number}"></th>
+            <th th:text="#{destination.picture}"></th>
+            <th th:text="#{travel.id}"></th>
+            <th th:text="#{destination.title2}"></th>
+            <th th:text="#{unit.title2}"></th>
+            <th th:text="#{vehicle.title2}"></th>
+            <th th:text="#{travel.category}"></th>
+            <th th:text="#{travel.dateStart}"></th>
+            <th th:text="#{travel.dateEnd}"></th>
+            <th th:text="#{travel.price}"></th>
+            <th th:text="#{travel.price}"></th>
         </tr>
         <tr th:each="itPutovanje, status : ${putovanja}">
             <td th:text="${(status.index + 1) + '.'}"></td>
@@ -84,7 +86,7 @@
                         <a th:href="|kolica/add?id=${itPutovanje.id}&grad=${destinacije[status.index].grad}&tipSredstva=${prevoznaSredstva[status.index].tipSredstva}
 								&nazivJedinice=${smestajneJedinice[status.index].nazivJedinice}&priceId=${itPrice.id}&startDate=${itPrice.startDate}&endDate=${itPrice.endDate}&priceOfTravel=${itPrice.priceOfTravel}|"
 
-                           th:text="DodajUKorpu">
+                           th:text="#{cart.add}">
                         </a>
                     </form>
                 </li>
@@ -92,7 +94,7 @@
             <td th:if="${session.prijavljeniKorisnik != null}">
                 <form method="post" action="listeZelja/delete">
                     <input type="hidden" name="id" th:value="${listeZelja[status.index].id}"/>
-                    <input type="submit" value="Obrisi"/>
+                    <input type="submit" th:value="#{button.delete}"/>
                 </form>
             </td>
         </tr>

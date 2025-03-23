@@ -27,6 +27,7 @@
 			<td colspan="2">
 				<ul>
 					<li><a th:href="|kolica?id=${session.prijavljeniKorisnik.id}|" th:text="#{putnik.cart}"></a></li>
+					li><a href="/listeZelja" th:text="#{putnik.wishes}"></a></li>
 					<li><a href="korisnici/logout" th:text="#{page.logout}"></a></li>
 					<li th:if="${session.prijavljeniKorisnik.isAdmin()}"><a href="zahtevi" th:text="#{admin.card}"></a></li>
 					<li><a href="./" th:text="#{title.index}"></a></li>
@@ -51,13 +52,12 @@
 		<option value="en" th:text="#{lang.eng}"></option>
 		<option value="sr" th:text="#{lang.sr}"></option>
 	</select>
-	<ul>
-		<li><a href="/PrviMavenVebProjekat/korisnici">Korisnici</a></li>
-		<li><a href="/PrviMavenVebProjekat/korisnici/registracija">Registruj se</a></li>
-		<li><a href="/PrviMavenVebProjekat/korisnici/login">Uloguj se</a></li>
-		<li><a href="/PrviMavenVebProjekat/korisnici/logout">Izloguj se</a></li>
-		<li><a href="/PrviMavenVebProjekat/destinacije">Destinacije</a></li>
-		<li><a href="/PrviMavenVebProjekat/putovanja">Putovanja</a></li>
+	<ul th:unless="${session.prijavljeniKorisnik == null}">
+		<li th:if="${session.prijavljeniKorisnik.isAdmin()}"><a href="/PrviMavenVebProjekat/korisnici" th:text="#{admin.users}"></a></li>
+		<li th:if="${session.prijavljeniKorisnik.isAdmin()}"><a href="/PrviMavenVebProjekat/destinacije" th:text="#{admin.destination}"></a></li>
+		<li th:if="${session.prijavljeniKorisnik.isAdmin()}"><a href="/PrviMavenVebProjekat/prevoznaSredstva" th:text="#{admin.vehicle}"></a></li>
+		<li th:if="${session.prijavljeniKorisnik.isAdmin()}"><a href="/PrviMavenVebProjekat/rezervacije" th:text="#{admin.report}"></a></li>
+		<li><a href="/PrviMavenVebProjekat/putovanja" th:text="#{travel.title}"></a></li>
 	</ul>
 	<br/>
 </body>

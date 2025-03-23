@@ -5,25 +5,22 @@
 	<base th:href="@{/}">
 	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
 	<link rel="stylesheet" type="text/css" href="css/StiloviKorisnik.css"/>
-	<title>Prijava</title>
+	<title th:text="#{user.login}"></title>
 </head>
 <body>
-	<h2>Travel Agency</h2>
 	<ul>
-		<li><a href="">početna</a></li>
+		<li><a href="./" th:text="#{title.index}"></a></li>
 	</ul>
-	<ul>
-		<li><a href="destinacije">Destinacije</a></li>
-		<li><a href="putovanja">Putovanja</a></li>
-	</ul>
+	<div>
 	<form method="post" action="korisnici/login">
 		<table class="forma">
-			<caption>Prijava</caption>
-			<tr><th>mail:</th><td><input type="text" name="email"/></td></tr>
-			<tr><th>lozinka:</th><td><input type="password" name="lozinka"/></td></tr>
-			<tr><th></th><td><input type="submit" value="Prijava"/></td></tr>
+			<caption th:text="#{user.login}"></caption>
+			<tr><th th:text="#{user.email}">:</th><td><input type="text" name="email"/></td></tr>
+			<tr><th th:text="#{user.password}">:</th><td><input type="password" name="lozinka"/></td></tr>
+			<tr><th></th><td><input type="submit" th:value="#{user.login}"/></td></tr>
 		</table>
 	</form>
-	<p class="greska"></p>
+	<p th:text="${greska}"></p>
+	</div>
 </body>
 </html>

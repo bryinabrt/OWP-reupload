@@ -31,7 +31,7 @@ public class LoyaltyKarticaDAOImpl implements LoyaltyKarticaDAO {
             Long id = resultSet.getLong(index++);
             Long idKorisnika = resultSet.getLong(index++);
             int brojBodova = resultSet.getInt(index++);
-            int potrosenNovac = resultSet.getInt(index++);
+            Double potrosenNovac = resultSet.getDouble(index++);
 
             LoyaltyKartica loyaltyKartica = loyaltyKartice.get(id);
             if (loyaltyKartica == null) {

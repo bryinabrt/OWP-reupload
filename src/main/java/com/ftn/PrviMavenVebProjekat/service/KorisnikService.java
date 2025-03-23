@@ -11,6 +11,9 @@ public interface KorisnikService {
 	List<Korisnik> findAll(); 
 	Korisnik save(Korisnik korisnik); 
 	Korisnik update(Korisnik korisnik); 
-	Korisnik delete(Long id); 
+	Korisnik delete(Long id);
+	Korisnik deblokiraj(Long id);
+	List<Korisnik> find(String korisnickoIme,String uloga,String sortKI, String SortU);
+	Korisnik blokiraj(Long id);
 	String datumRegistracije();
 }

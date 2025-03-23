@@ -49,7 +49,38 @@ public class Korisnik {
 		this.brojTelefona = brojTelefona;
 		this.uloga = uloga;
 	}
-	
+
+	public Korisnik(Long id, String korisnickoIme, String lozinka, String email, String ime, String prezime,
+					String datumRodjenja, String adresa, String brojTelefona, String datumRegistracije, Uloga uloga, Boolean blokiran) {
+		super();
+		this.id = id;
+		this.korisnickoIme = korisnickoIme;
+		this.lozinka = lozinka;
+		this.email = email;
+		this.ime = ime;
+		this.prezime = prezime;
+		this.datumRodjenja = datumRodjenja;
+		this.adresa = adresa;
+		this.brojTelefona = brojTelefona;
+		this.datumRegistracije = datumRegistracije;
+		this.uloga = uloga;
+		this.blokiran = blokiran;
+	}
+
+	public Korisnik(String korisnickoIme, String lozinka, String email, String ime, String prezime,
+					String datumRodjenja, String adresa, String brojTelefona, Uloga uloga, Boolean blokiran) {
+		super();
+		this.korisnickoIme = korisnickoIme;
+		this.lozinka = lozinka;
+		this.email = email;
+		this.ime = ime;
+		this.prezime = prezime;
+		this.datumRodjenja = datumRodjenja;
+		this.adresa = adresa;
+		this.brojTelefona = brojTelefona;
+		this.uloga = uloga;
+		this.blokiran = blokiran;
+	}
 
 
 	public Long getId() { return id; }

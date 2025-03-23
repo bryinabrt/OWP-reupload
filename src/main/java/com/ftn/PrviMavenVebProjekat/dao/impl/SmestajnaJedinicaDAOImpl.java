@@ -46,7 +46,6 @@ public class SmestajnaJedinicaDAOImpl implements SmestajnaJedinicaDAO{
 		    Boolean uslugaKupatilo = resultSet.getBoolean(index++);
 		    Boolean uslugaTv = resultSet.getBoolean(index++);
 			String opis = resultSet.getString(index++);
-			System.out.println("wifi: " + uslugaWifi + " kupatilo: " + uslugaKupatilo + " tv: " + uslugaTv);
 			
 			
 			String nazivTipaJedinice = resultSet.getString(index++);

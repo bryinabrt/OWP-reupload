@@ -110,7 +110,6 @@ public class PutovanjeController implements ServletContextAware {
 		// Convert the dates to the desired format
 		String formattedDateOd = dateOd.format(outputFormatter);
 		String formattedDateDo = dateDo.format(outputFormatter);
-		System.out.println("BRM BRMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA contr: "+smestajnaJedinicaId);
 
 		List<Putovanje> putovanja = putovanjeService.find(destinacijaId, prevoznoSredstvoId, smestajnaJedinicaId,
 				kategorijaPutovanjaId, formattedDateOd, formattedDateDo, cenaOd, cenaDo, sortDes, sortPS,
@@ -118,6 +117,7 @@ public class PutovanjeController implements ServletContextAware {
 
 		for (Putovanje putovanje : putovanja) {
 			Long putovanjeId = putovanje.getId();
+			System.out.println("Id put: "+putovanjeId);
 
 			// Fetch prices for the current Putovanje
 			List<Price> prices = priceService.findAllByPutovanjeId(putovanjeId);
@@ -146,7 +146,6 @@ public class PutovanjeController implements ServletContextAware {
 		List<List<Price>> pricesList = putovanja.stream()
 				.map(putovanje -> priceService.findAllByPutovanjeId(putovanje.getId()))
 				.collect(Collectors.toList());
-		System.out.println("Prices controller: " + pricesList);
 		ModelAndView result = new ModelAndView("putovanja");
 		result.addObject("putovanja", putovanja);
 		result.addObject("destinacije", destinacije);
@@ -216,7 +215,7 @@ public class PutovanjeController implements ServletContextAware {
 				idSmestajnaJedinica,
 				kategorija,
 				brojNocenja,
-				slika);
+				"images/"+slika);
 		putovanjeService.save(putovanje);
 		
 		Putovanje putovanjePrices = putovanjeService.findOneBySifra(sifraPutovanja);
@@ -241,7 +240,7 @@ public class PutovanjeController implements ServletContextAware {
 	        LocalDateTime endDate = LocalDateTime.parse(endDateString, formatter);
 	        System.out.println("end " + endDate);
 
-	        Price prices = new Price(idDestinacije, putovanjeId, startDate, endDate, priceOfTravel);
+	        Price prices = new Price(idDestinacije, putovanjeId, startDate, endDate, prevoznoSredstvo.getBrojSedista(), priceOfTravel);
 	        priceService.save(prices);
 	    }
 		

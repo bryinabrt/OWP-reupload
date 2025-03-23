@@ -42,20 +42,10 @@ public class PrevoznoSredstvoDAOImpl implements PrevoznoSredstvoDAO{
 			Long krajnjaDestinacija = resultSet.getLong("krajnjaDestinacija");
 			String opis = resultSet.getString("opis");
 			
-
-			System.out.println("id: " + id);
-			System.out.println("tips: " + tipSredstva);
-			System.out.println("brojSedstista: " + brojSedista);
-			System.out.println("krajnja d " + krajnjaDestinacija);
-			System.out.println("opis: " + opis);
-			
 			String grad = resultSet.getString("grad");
 			String drzava = resultSet.getString("drzava");
 			String kontinent = resultSet.getString("kontinent");
 
-			System.out.println("grad: " + grad);
-			System.out.println("drzava: " + drzava);
-			System.out.println("kontinent: " + kontinent);
 			Destinacija destinacija = new Destinacija(grad, drzava, kontinent);
 			
 			PrevoznoSredstvo prevoznoSredstvo = prevoznaSredstva.get(id);
@@ -155,8 +145,8 @@ public class PrevoznoSredstvoDAOImpl implements PrevoznoSredstvoDAO{
 			
 			@Override
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-				String sql = "INSERT INTO prevoznoSredstvo tipSredstva = ?, brojSedista = ?, krajnjaDestinacija = ?, "
-						+ "opis = ? VALUES (?, ?, ?, ?)";
+				String sql = "INSERT INTO prevoznoSredstvo (tipSredstva, brojSedista, krajnjaDestinacija, "
+						+ "opis) VALUES (?, ?, ?, ?)";
 
 				PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 				int index = 1;
